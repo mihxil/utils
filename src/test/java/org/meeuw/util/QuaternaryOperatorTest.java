@@ -14,25 +14,49 @@ class QuaternaryOperatorTest {
 
     @Test
     void testMinBy() {
-        assertThat(minBy(String::compareTo).apply("a", "b", "c", "d")).isEqualTo("a");
-        assertThat(minBy(String::compareTo).apply("a", "c", "b", "d")).isEqualTo("a");
-        assertThat(minBy(String::compareTo).apply("b", "a", "c", "d")).isEqualTo("a");
-        assertThat(minBy(String::compareTo).apply("b", "c", "a", "d")).isEqualTo("a");
-        assertThat(minBy(String::compareTo).apply("c", "a", "b", "d")).isEqualTo("a");
-        assertThat(minBy(String::compareTo).apply("c", "b", "a", "d")).isEqualTo("a");
-
+        for (String[] args : permute()) {
+            assertThat(minBy(String::compareTo).apply(args[0], args[1], args[2], args[3])).isEqualTo("a");
+        }
     }
 
 
     @Test
     void testMaxBy() {
-        assertThat(maxBy(String::compareTo).apply("a", "b", "c", "d")).isEqualTo("d");
-        assertThat(maxBy(String::compareTo).apply("a", "c", "b", "d")).isEqualTo("d");
-        assertThat(maxBy(String::compareTo).apply("b", "a", "c", "d")).isEqualTo("d");
-        assertThat(maxBy(String::compareTo).apply("b", "c", "a", "d")).isEqualTo("d");
-        assertThat(maxBy(String::compareTo).apply("c", "a", "b", "d")).isEqualTo("d");
-        assertThat(maxBy(String::compareTo).apply("c", "b", "a", "d")).isEqualTo("d");
+        for (String[] args : permute()) {
+            assertThat(maxBy(String::compareTo).apply(args[0], args[1], args[2], args[3])).isEqualTo("d");
+        }
+    }
 
+    String[][] permute() {
+        return new String[][] {
+            {"a", "b", "c", "d"},
+            {"a", "b", "d", "c"},
+            {"a", "c", "b", "d"},
+            {"a", "c", "d", "b"},
+            {"a", "d", "b", "c"},
+            {"a", "d", "c", "b"},
+
+            {"b", "a", "c", "d"},
+            {"b", "a", "d", "c"},
+            {"b", "c", "a", "d"},
+            {"b", "c", "d", "a"},
+            {"b", "d", "a", "c"},
+            {"b", "d", "c", "a"},
+
+            {"c", "a", "b", "d"},
+            {"c", "a", "d", "b"},
+            {"c", "b", "a", "d"},
+            {"c", "b", "d", "a"},
+            {"c", "d", "a", "b"},
+            {"c", "d", "b", "a"},
+
+            {"d", "a", "b", "c"},
+            {"d", "a", "c", "b"},
+            {"d", "b", "a", "c"},
+            {"d", "b", "c", "a"},
+            {"d", "c", "a", "b"},
+            {"d", "c", "b", "a"}
+        };
     }
 
 }
