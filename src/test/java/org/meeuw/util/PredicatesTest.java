@@ -23,6 +23,9 @@ public class PredicatesTest {
         assertThat(Predicates.<String>alwaysFalse()).isEqualTo(Predicates.alwaysFalse());
         assertThat(Predicates.<String>alwaysFalse()).isNotEqualTo(Predicates.alwaysTrue());
 
+        assertThat(Predicates.<String>alwaysFalse().hashCode()).isEqualTo(Predicates.alwaysFalse().hashCode());
+        assertThat(Predicates.<String>alwaysFalse().hashCode()).isNotEqualTo(Predicates.alwaysTrue().hashCode());
+
     }
 
     @Test
@@ -84,6 +87,7 @@ public class PredicatesTest {
         assertThat(ignoreArg2(mono).test("123456", new Object())).isTrue();
     }
 
+
     @Test
     public void biIgnoreArg1() {
         assertThat(ignoreArg1(bi).test(new Object(), "1234", 4)).isTrue();
@@ -97,9 +101,26 @@ public class PredicatesTest {
         assertThat(ignoreArg2(bi).test("1234567", new Object(), 6)).isFalse();
     }
 
-     @Test
+    @Test
     public void biIgnoreArg3() {
         assertThat(ignoreArg3(bi).test("123456", 6, new Object())).isTrue();
     }
 
+    @Test
+    public void biWithArg2() {
+        assertThat(withArg2(bi, 1).test("x")).isTrue();
+
+        assertThat(withArg2(bi, 1)).isEqualTo(withArg2(bi, 1));
+        assertThat(withArg2(bi, 1)).isNotEqualTo(withArg2(bi, 2));
+    }
+
+    @Test
+    public void biWithArg1() {
+        assertThat(withArg1(bi, "x").test(1)).isTrue();
+        assertThat(withArg1(bi, "xx").test(1)).isFalse();
+
+        assertThat(withArg1(bi, "x")).isEqualTo(withArg1(bi, "x"));
+        assertThat(withArg1(bi, "x")).isNotEqualTo(withArg1(bi, "xx"));
+
+    }
 }
