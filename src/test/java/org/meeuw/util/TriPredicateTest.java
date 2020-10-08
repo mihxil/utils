@@ -55,6 +55,7 @@ public class TriPredicateTest {
     public void and() {
         assertThat(my.and(you).test("123", 120, 120f)).isTrue();
         assertThat(my.and(you).test("120", 120, 120f)).isFalse();
+        assertThat(you.and(my).test("120", 120, 120f)).isFalse();
     }
 
     @Test
