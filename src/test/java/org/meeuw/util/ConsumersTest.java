@@ -1,15 +1,15 @@
 package org.meeuw.util;
 
-import org.junit.jupiter.api.Test;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
-import static nl.vpro.util.Consumers.ignoreArg1;
-import static nl.vpro.util.Consumers.ignoreArg2;
+import org.junit.jupiter.api.Test;
+
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.meeuw.util.Consumers.ignoreArg1;
+import static org.meeuw.util.Consumers.ignoreArg2;
 
 /**
  * @author Michiel Meeuwissen

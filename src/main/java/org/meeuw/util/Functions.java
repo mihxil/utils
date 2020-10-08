@@ -1,8 +1,7 @@
 package org.meeuw.util;
 
 import java.util.Objects;
-import java.util.function.BiFunction;
-import java.util.function.Function;
+import java.util.function.*;
 
 /**
  * Provides functions implementation which always return the same value, no matter their arguments.
@@ -46,12 +45,27 @@ public final class Functions {
     }
 
     /**
+     * Morphs a given {@link Function} into a {@link Supplier}, which a certain given value for the first argument.
+     *
+     * See {@link TriFunction#withArg1(Object)}
+     */
+    public static <A1, R> Supplier<R> withArg1(Function<A1, R> function, A1 value) {
+        return () -> function.apply(value);
+    }
+
+    /**
      * Morphs a given {@link BiFunction} into a {@link Function}, which a certain given value for the first argument.
      *
      * See {@link TriFunction#withArg1(Object)}
      */
     public static <A1, A2, R> Function<A2, R> withArg1(BiFunction<A1, A2, R> function, A1 value) {
-        return (a2) -> function.apply(value, a2);
+        return new MonoWrapper<BiFunction<A1, A2, R>, A2, R>(function, value, "with arg1 " + value) {
+
+            @Override
+            public R apply(A2 a2) {
+                return wrapped.apply(value, a2);
+            }
+        };
     }
 
     /**
@@ -60,7 +74,13 @@ public final class Functions {
      * See {@link TriFunction#withArg2(Object)}
      */
     public static <A1, A2, R> Function<A1, R> withArg2(BiFunction<A1, A2, R> function, A2 value) {
-        return (a1) -> function.apply(a1, value);
+        return new MonoWrapper<BiFunction<A1, A2, R>, A1, R>(function, value, "with arg2 " + value) {
+
+            @Override
+            public R apply(A1 a1) {
+                return wrapped.apply(a1, value);
+            }
+        };
     }
 
     /**
@@ -114,13 +134,61 @@ public final class Functions {
 
 
     /**
-     * Creates a new {@link TriFunction} but implement it using a {@link BiFunction}, simply completely ignoring the second argument
+     * Creates a new {@link TriFunction} but implement it using a {@link BiFunction}, simply completely ignoring the first argument
      */
     public static <T, U, V, R> TriFunction<T, U, V, R> ignoreArg1(BiFunction<U, V, R> function) {
         return new TriWrapper<BiFunction<U, V, R>, T, U, V, R>(function, null, "ignore arg1") {
             @Override
             public R apply(T t, U u, V v) {
                 return function.apply(u, v);
+            }
+        };
+    }
+
+     /**
+     * Creates a new {@link QuadriFunction} but implement it using a {@link TriFunction}, simply completely ignoring the fourth argument
+     */
+    public static <T, U, V, W, R> QuadriFunction<T, U, V, W,  R> ignoreArg4(TriFunction<T, U, V,  R> function) {
+        return new QuadriWrapper<TriFunction<T, U, V, R>, T, U, V, W, R>(function, null, "ignore arg4") {
+            @Override
+            public R apply(T t, U u, V v, W w) {
+                return function.apply(t, u, v);
+            }
+        };
+    }
+
+    /**
+     * Creates a new {@link QuadriFunction} but implement it using a {@link TriFunction}, simply completely ignoring the third argument
+     */
+    public static <T, U, V, W, R> QuadriFunction<T, U, V, W,  R> ignoreArg3(TriFunction<T, U, W,  R> function) {
+        return new QuadriWrapper<TriFunction<T, U, W, R>, T, U, V, W, R>(function, null, "ignore arg1") {
+            @Override
+            public R apply(T t, U u, V v, W w) {
+                return function.apply(t, u, w);
+            }
+        };
+    }
+
+    /**
+     * Creates a new {@link QuadriFunction} but implement it using a {@link TriFunction}, simply completely ignoring the first argument
+     */
+    public static <T, U, V, W, R> QuadriFunction<T, U, V, W,  R> ignoreArg2(TriFunction<T, V, W,  R> function) {
+        return new QuadriWrapper<TriFunction<T, V, W, R>, T, U, V, W, R>(function, null, "ignore arg1") {
+            @Override
+            public R apply(T t, U u, V v, W w) {
+                return function.apply(t, v, w);
+            }
+        };
+    }
+
+    /**
+     * Creates a new {@link QuadriFunction} but implement it using a {@link TriFunction}, simply completely ignoring the first argument
+     */
+    public static <T, U, V, W, R> QuadriFunction<T, U, V, W,  R> ignoreArg1(TriFunction<U, V, W,  R> function) {
+        return new QuadriWrapper<TriFunction<U, V,W, R>, T, U, V, W, R>(function, null, "ignore arg1") {
+            @Override
+            public R apply(T t, U u, V v, W w) {
+                return function.apply(u, v, w);
             }
         };
     }
@@ -192,8 +260,20 @@ public final class Functions {
         }
     }
 
+    protected static abstract  class QuadriWrapper<W, A, B, C, D, R> extends Wrapper<W> implements QuadriFunction<A, B, C, D, R> {
+        public QuadriWrapper(W wrapped, Object value, String why) {
+            super(wrapped, value, why);
+        }
+    }
+
     protected static abstract  class BiWrapper<W, X, Y, R>  extends Wrapper<W> implements BiFunction<X, Y, R> {
         public BiWrapper(W wrapped, Object value, String why) {
+            super(wrapped, value, why);
+        }
+    }
+
+    protected static abstract  class MonoWrapper<W, X, R>  extends Wrapper<W> implements Function<X, R> {
+        public MonoWrapper(W wrapped, Object value, String why) {
             super(wrapped, value, why);
         }
     }

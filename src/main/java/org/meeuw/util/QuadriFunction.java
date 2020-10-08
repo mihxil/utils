@@ -21,8 +21,13 @@ public interface QuadriFunction<T,U,V,W,R> {
      * Morphs this {@link QuadriFunction} into a {@link TriFunction}, which a certain given value for the first argument.
      *
      */
-    default TriFunction<U, V, W, R> withArg1(T value) {
-        return (u, v, w) -> apply(value, u, v ,w);
+    default TriFunction<U, V, W, R> withArg1(T t) {
+        return new Functions.TriWrapper<QuadriFunction<T, U, V, W, R>, U, V, W, R>(this, t, "with arg 1 " + t) {
+            @Override
+            public R apply(U u, V v, W w) {
+                return wrapped.apply(t, u, v, w);
+            }
+        };
     }
 
     /**
@@ -30,22 +35,37 @@ public interface QuadriFunction<T,U,V,W,R> {
      *
      * See {@link Functions#withArg2(BiFunction, Object)}
      */
-    default TriFunction<T, V, W, R> withArg2(U value) {
-        return (t, v, w) -> apply(t, value, v, w);
+    default TriFunction<T, V, W, R> withArg2(U u) {
+        return new Functions.TriWrapper<QuadriFunction<T, U, V, W, R>, T, V, W, R>(this, u, "with arg 2 " + u) {
+            @Override
+            public R apply(T t, V v, W w) {
+                return wrapped.apply(t, u, v, w);
+            }
+        };
     }
 
     /**
      * Morphs this {@link QuadriFunction} into a {@link TriFunction}, which a certain given value for the third argument.
      */
-    default TriFunction<T, U, W, R> withArg3(V value) {
-        return (t, u, w) -> apply(t, u, value, w);
+    default TriFunction<T, U, W, R> withArg3(V v) {
+        return new Functions.TriWrapper<QuadriFunction<T, U, V, W, R>, T, U, W, R>(this, v, "with arg 3 " + v) {
+            @Override
+            public R apply(T t, U u, W w) {
+                return wrapped.apply(t, u, v, w);
+            }
+        };
     }
 
      /**
      * Morphs this {@link QuadriFunction} into a {@link TriFunction}, which a certain given value for the fourth argument.
      */
-    default TriFunction<T, U, V, R> withArg4(W value) {
-        return (t, u, v) -> apply(t, u, v, value);
+    default TriFunction<T, U, V, R> withArg4(W w) {
+        return new Functions.TriWrapper<QuadriFunction<T, U, V, W, R>, T, U, V, R>(this, w, "with arg 4 " + w) {
+            @Override
+            public R apply(T t, U u, V v) {
+                return wrapped.apply(t, u, v, w);
+            }
+        };
     }
 
     /**

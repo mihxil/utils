@@ -9,13 +9,11 @@ import java.util.function.Supplier;
 public class Suppliers {
 
     private Suppliers() {
-
     }
 
     static <T> Supplier<T> memoize(Supplier<T> supplier) {
         return new MemoizeSupplier<>(supplier);
     }
-
 
     protected static class MemoizeSupplier<T> implements Supplier<T> {
 
@@ -38,7 +36,6 @@ public class Suppliers {
                 }
             }
             return value;
-
         }
     }
 }

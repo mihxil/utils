@@ -17,10 +17,12 @@ class TriFunctionTest {
             return integer + ":" + s + ":" + aFloat;
         }
     }
+    Tri tri = new Tri();
+
 
     @Test
     void withArg1() {
-        Tri tri = new Tri();
+
         assertThat(tri.withArg1(1).apply("a", 2.0f)).isEqualTo("1:a:2.0");
         assertThat(tri.withArg1(1)).isEqualTo(tri.withArg1(1));
         assertThat(tri.withArg1(1)).isNotEqualTo(tri.withArg1(2));
@@ -29,13 +31,16 @@ class TriFunctionTest {
 
 	@Test
 	void withArg2() {
-        Tri tri = new Tri();
         assertThat(tri.withArg2("foo").apply(1, 2.0f)).isEqualTo("1:foo:2.0");
     }
 
 	@Test
 	void withArg3() {
-        Tri tri = new Tri();
         assertThat(tri.withArg3(3.0f).apply(1, "bar")).isEqualTo("1:bar:3.0");
+    }
+
+     @Test
+    void andThen() {
+        assertThat(tri.andThen((s) -> "[" + s + "]").apply(1, "2", 3.0f)).isEqualTo("[1:2:3.0]");
     }
 }
