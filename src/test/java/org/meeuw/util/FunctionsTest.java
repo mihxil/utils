@@ -6,6 +6,7 @@ import java.util.function.Function;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.meeuw.util.Functions.*;
 
 
 /**
@@ -17,8 +18,13 @@ class FunctionsTest {
     @Test
     void always() {
         assertThat(Functions.always("x").apply(new Object())).isEqualTo("x");
+
         assertThat(Functions.always("x")).isEqualTo(Functions.always("x"));
         assertThat(Functions.always("x")).isNotEqualTo(Functions.always("y"));
+
+        assertThat(Functions.always("x").hashCode()).isEqualTo(Functions.always("x").hashCode());
+        assertThat(Functions.always("x").hashCode()).isNotEqualTo(Functions.always("y").hashCode());
+
         assertThat(Functions.always("x").toString()).isEqualTo("always x");
         assertThat(Functions.always("x", "X").toString()).isEqualTo("X");
 
@@ -44,65 +50,127 @@ class FunctionsTest {
         assertThat(Functions.triAlways("x").toString()).isEqualTo("always x");
         assertThat(Functions.triAlways("x", "X").toString()).isEqualTo("X");
     }
+    Function<Float, String> mono = Object::toString;
+
 
     @Test
-    void withArg1() {
-        Function<Float, String> mono = Object::toString;
-        assertThat(Functions.withArg1(mono, 1.0f).get()).isEqualTo(("1.0"));
+    void monoWithArg1() {
+        assertThat(withArg1(mono, 1.0f).get()).isEqualTo(("1.0"));
     }
 
-    static class Bi implements BiFunction<String, Double, String> {
+    @Test
+    void monoIgnoreArg1() {
+        assertThat(Functions.ignoreArg1(mono).apply(new Object(), 1.0f)).isEqualTo("1.0");
 
+    }
+
+
+    @Test
+    void monoIgnoreArg2() {
+        assertThat(Functions.ignoreArg2(mono).apply(1.0f, new Object())).isEqualTo("1.0");
+
+    }
+
+
+    static class Bi implements BiFunction<String, Double, String> {
         @Override
         public String apply(String s, Double aDouble) {
             return s + "+" + aDouble;
         }
+
+        @Override
+        public String toString() {
+            return "Bi";
+        }
     }
+    Bi bi = new Bi();
+
+    static class Tri implements TriFunction<String, Double, Float, String> {
+
+        @Override
+        public String apply(String s, Double aDouble, Float aFloat) {
+            return s + "+" + aDouble + "+" + aFloat;
+        }
+        @Override
+        public String toString() {
+            return "Tri";
+        }
+    }
+    Tri tri = new Tri();
+
     @Test
     void biWithArg1() {
-        Bi bi = new Bi();
-        assertThat(Functions.withArg1(bi, "s").apply(2.0)).isEqualTo("s+2.0");
+        assertThat(withArg1(bi, "s").apply(2.0)).isEqualTo("s+2.0");
 
-        assertThat(Functions.withArg1(bi, "s")).isEqualTo(Functions.withArg1(bi, "s"));
+        assertThat(withArg1(bi, "s")).isEqualTo(withArg1(bi, "s"));
+        assertThat(withArg1(bi, "s").hashCode()).isEqualTo(withArg1(bi, "s").hashCode());
+        assertThat(withArg1(bi, "s").hashCode()).isNotEqualTo(withArg1(bi, "t").hashCode());
+
+        assertThat(withArg1(bi, "s")).isNotEqualTo(withArg1(bi, "t"));
+        assertThat(withArg1(bi, "s").toString()).isEqualTo("Bi(with arg1 s)");
+
+
     }
 
     @Test
-    void withArg2() {
+    void biWithArg2() {
+        assertThat(withArg2(bi, 2.0).apply("s")).isEqualTo("s+2.0");
+
+        assertThat(withArg2(bi, 2.0)).isEqualTo(withArg2(bi, 2.0));
+        assertThat(withArg2(bi, 2.0)).isNotEqualTo(withArg2(bi, 3.0));
     }
 
     @Test
-    void ignoreArg2() {
+    void biIgnoreArg3() {
+        assertThat(ignoreArg3(bi).apply("a", 2.0, new Object())).isEqualTo("a+2.0");
+    }
+    @Test
+    void biIgnoreArg2() {
+        assertThat(ignoreArg2(bi).apply("a", new Object(), 2.0)).isEqualTo("a+2.0");
     }
 
     @Test
-    void ignoreArg1() {
+    void biIgnoreArg1() {
+        assertThat(ignoreArg1(bi).apply(new Object(), "a", 2.0)).isEqualTo("a+2.0");
+    }
+
+
+    @Test
+    void triIgnoreArg4() {
+        assertThat(ignoreArg4(tri).apply("a", 1.0, 2.0f, new Object())).isEqualTo("a+1.0+2.0");
+
     }
 
     @Test
-    void ignoreArg3() {
+    void triIgnoreArg3() {
+        assertThat(ignoreArg3(tri).apply("a", 1.0,new Object(), 2.0f)).isEqualTo("a+1.0+2.0");
+
     }
 
     @Test
-    void testIgnoreArg2() {
+    void triIgnoreArg2() {
+        assertThat(ignoreArg2(tri).apply("a", new Object(), 1.0, 2.0f)).isEqualTo("a+1.0+2.0");
     }
 
     @Test
-    void testIgnoreArg1() {
+    void triIgnoreArg1() {
+        assertThat(ignoreArg1(tri).apply(new Object(), "a", 1.0, 2.0f)).isEqualTo("a+1.0+2.0");
+
     }
 
     @Test
-    void ignoreArg4() {
+    void quadriIgnoreArg4() {
     }
 
     @Test
-    void testIgnoreArg3() {
+    void quadriIgnoreArg3() {
     }
 
     @Test
-    void testIgnoreArg21() {
+    void quadriIgnoreArg2() {
     }
 
     @Test
-    void testIgnoreArg11() {
+    void quadriIgnoreArg1() {
     }
 }
