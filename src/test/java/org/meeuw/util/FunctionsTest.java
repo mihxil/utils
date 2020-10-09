@@ -17,13 +17,20 @@ class FunctionsTest {
 
     @Test
     void always() {
-        assertThat(Functions.always("x").apply(new Object())).isEqualTo("x");
+        Function<Object, String> x = Functions.always("x");
+        assertThat(x.apply(new Object())).isEqualTo("x");
 
-        assertThat(Functions.always("x")).isEqualTo(Functions.always("x"));
-        assertThat(Functions.always("x")).isNotEqualTo(Functions.always("y"));
+        assertThat(x).isEqualTo(Functions.always("x"));
+        assertThat(x).isEqualTo(x);
+        assertThat(x).isNotEqualTo(Functions.always("y"));
+        assertThat(x).isNotEqualTo(new Object());
 
-        assertThat(Functions.always("x").hashCode()).isEqualTo(Functions.always("x").hashCode());
-        assertThat(Functions.always("x").hashCode()).isNotEqualTo(Functions.always("y").hashCode());
+
+
+        assertThat(x.hashCode()).isEqualTo(Functions.always("x").hashCode());
+        assertThat(x.hashCode()).isEqualTo(Functions.always("x").hashCode());
+
+        assertThat(x.hashCode()).isNotEqualTo(Functions.always("y").hashCode());
 
         assertThat(Functions.always("x").toString()).isEqualTo("always x");
         assertThat(Functions.always("x", "X").toString()).isEqualTo("X");
@@ -100,16 +107,20 @@ class FunctionsTest {
 
     @Test
     void biWithArg1() {
-        assertThat(withArg1(bi, "s").apply(2.0)).isEqualTo("s+2.0");
 
-        assertThat(withArg1(bi, "s")).isEqualTo(withArg1(bi, "s"));
-        assertThat(withArg1(bi, "s").hashCode()).isEqualTo(withArg1(bi, "s").hashCode());
-        assertThat(withArg1(bi, "s").hashCode()).isNotEqualTo(withArg1(bi, "t").hashCode());
+        Function<Double, String> s = withArg1(bi, "s");
+        assertThat(s.apply(2.0)).isEqualTo("s+2.0");
 
-        assertThat(withArg1(bi, "s")).isNotEqualTo(withArg1(bi, "t"));
-        assertThat(withArg1(bi, "s").toString()).isEqualTo("Bi(with arg1 s)");
+        assertThat(s).isEqualTo(withArg1(bi, "s"));
+        assertThat(s).isEqualTo(s);
 
+        assertThat(s).isNotEqualTo(withArg1(bi, "t"));
+        assertThat(s).isNotEqualTo(new Object());
 
+        assertThat(s.hashCode()).isEqualTo(withArg1(bi, "s").hashCode());
+        assertThat(s.hashCode()).isNotEqualTo(withArg1(bi, "t").hashCode());
+
+        assertThat(s.toString()).isEqualTo("Bi(with arg1 s)");
     }
 
     @Test
