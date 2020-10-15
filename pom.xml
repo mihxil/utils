@@ -3,12 +3,16 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.meeuw</groupId>
   <artifactId>mihxil-util</artifactId>
+  <version>0.1-SNAPSHOT</version>
+  <packaging>pom</packaging>
   <name>Mihxil's Util</name>
 
-    <packaging>jar</packaging>
-  <version>0.1-SNAPSHOT</version>
 
   <url>https://github.com/mihxil/util</url>
+
+  <modules>
+    <module>mihxil-functional</module>
+  </modules>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -54,6 +58,7 @@
       <groupId>org.assertj</groupId>
       <artifactId>assertj-core</artifactId>
       <version>3.17.2</version>
+      <scope>test</scope>
     </dependency>
   </dependencies>
 
