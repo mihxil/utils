@@ -1,4 +1,20 @@
-# java.util extensions.
+= java.util extensions
+
 
 image:https://travis-ci.com/mihxil/utils.svg?[Build Status,link=https://travis-ci.com/mihxil/utils]
 image:https://codecov.io/gh/mihxil/utils/branch/master/graph/badge.svg[codecov,link=https://codecov.io/gh/mihxil/utils]
+
+
+== Functional extensions
+
+Classes related to `java.util.Function` and extensions like `Predicate`, `Consumer` and `Supplier`.
+
+- `TriFunction`, `QuadriFunction`
+- `TriConsumer`
+- `TriPredicate`
+- Consistent `equals` and `hashCode`
+- Morphing methods like
+  - `TriFunction#ignoreArg[1-4](..)` morphs a `TriFunction` to a `QuadriFunction`
+  - `TriFunction#withArg[1-3](..)` morhps a `TriFunction` to a `BiFunction`
+
+- Utilities for that in `Functions`, `Consumers`, `Predicates`
