@@ -2,6 +2,7 @@
 
 
 image:https://travis-ci.com/mihxil/utils.svg?[Build Status,link=https://travis-ci.com/mihxil/utils]
+image:https://img.shields.io/maven-central/v/org.meeuw/mihxil-functional-util.svg?label=Maven%20Central[Maven Central,link=https://search.maven.org/search?q=g:%22org.meeuw%22]
 image:https://codecov.io/gh/mihxil/utils/branch/master/graph/badge.svg[codecov,link=https://codecov.io/gh/mihxil/utils]
 
 
