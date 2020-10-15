@@ -4,12 +4,12 @@
   <parent>
     <groupId>org.meeuw</groupId>
     <artifactId>mihxil-util</artifactId>
-    <version>0.1-SNAPSHOT</version>
+    <version>0.1</version>
   </parent>
   <artifactId>mihxil-util-functional</artifactId>
   <name>Mihxil's Util</name>
   <packaging>jar</packaging>
-  <version>0.1-SNAPSHOT</version>
+  <version>0.1</version>
 
   <build>
     <defaultGoal>install</defaultGoal>
