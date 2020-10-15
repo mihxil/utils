@@ -10,6 +10,7 @@
   <name>Mihxil's Functional Utils</name>
   <packaging>jar</packaging>
   <version>0.3-SNAPSHOT</version>
+  <description>Utilities related and like java.util.Function</description>
 
   <build>
     <defaultGoal>install</defaultGoal>
