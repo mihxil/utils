@@ -1,5 +1,7 @@
 package org.meeuw.functional;
 
+import java.util.Objects;
+
 /**
  * @author Michiel Meeuwissen
  */
@@ -14,7 +16,7 @@ abstract class Wrapper<W> {
 
     @Override
     public String toString() {
-        return wrapped.toString() + "(" + why + ")";
+        return wrapped + "(" + why + ")";
     }
 
     @Override
@@ -24,12 +26,12 @@ abstract class Wrapper<W> {
 
         Wrapper<?> wrapper = (Wrapper<?>) o;
 
-        return wrapped.equals(wrapper.wrapped);
+        return Objects.equals(wrapped, wrapper.wrapped);
     }
 
     @Override
     public int hashCode() {
-        int result = wrapped.hashCode();
+        int result = Objects.hashCode(wrapped);
         result = 31 * result;
         return result;
     }
