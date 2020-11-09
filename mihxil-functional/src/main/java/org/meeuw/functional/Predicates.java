@@ -12,13 +12,13 @@ import java.util.function.Predicate;
  * So if they are important than you could use
  * <pre>
  * {@code
- *    Preditor<MyObject> predicate = Predicates.alwaysTrue();
+ *    Predicate<MyObject> predicate = Predicates.alwaysTrue();
  * }
  * </pre>
  * rather then:
  * <pre>
  *  {@code
- *     Preditor<MyObject> predicate = (o) -> true;
+ *     Predicate<MyObject> predicate = (o) -> true;
  *  }
  * </pre>
  *

@@ -4,8 +4,6 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 
 import org.junit.jupiter.api.Test;
-import org.meeuw.functional.Functions;
-import org.meeuw.functional.TriFunction;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.meeuw.functional.Functions.*;
@@ -59,7 +57,7 @@ class FunctionsTest {
         assertThat(Functions.triAlways("x").toString()).isEqualTo("always x");
         assertThat(Functions.triAlways("x", "X").toString()).isEqualTo("X");
     }
-    Function<Float, String> mono = Object::toString;
+    final Function<Float, String> mono = Object::toString;
 
 
     @Test
@@ -92,7 +90,7 @@ class FunctionsTest {
             return "Bi";
         }
     }
-    Bi bi = new Bi();
+    final Bi bi = new Bi();
 
     static class Tri implements TriFunction<String, Double, Float, String> {
 
@@ -105,7 +103,7 @@ class FunctionsTest {
             return "Tri";
         }
     }
-    Tri tri = new Tri();
+    final Tri tri = new Tri();
 
     @Test
     void biWithArg1() {
@@ -169,21 +167,5 @@ class FunctionsTest {
     void triIgnoreArg1() {
         assertThat(ignoreArg1(tri).apply(new Object(), "a", 1.0, 2.0f)).isEqualTo("a+1.0+2.0");
 
-    }
-
-    @Test
-    void quadriIgnoreArg4() {
-    }
-
-    @Test
-    void quadriIgnoreArg3() {
-    }
-
-    @Test
-    void quadriIgnoreArg2() {
-    }
-
-    @Test
-    void quadriIgnoreArg1() {
     }
 }

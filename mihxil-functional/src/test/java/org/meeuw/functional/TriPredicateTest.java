@@ -42,8 +42,8 @@ public class TriPredicateTest {
     }
 
 
-    My my = new My();
-    You you = new You();
+    final My my = new My();
+    final You you = new You();
 
     @Test
     public void test1() {

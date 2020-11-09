@@ -1,6 +1,5 @@
 package org.meeuw.functional;
 
-import java.util.function.BiFunction;
 import java.util.function.UnaryOperator;
 
 import org.junit.jupiter.api.Test;
@@ -24,10 +23,7 @@ class TriFunctionTest {
         }
     }
 
-    Tri tri = new Tri();
-
-
-
+    final Tri tri = new Tri();
 
     @Test
     void withArg1() {
@@ -51,7 +47,7 @@ class TriFunctionTest {
     }
 
 
-    UnaryOperator<String> brackets = new UnaryOperator<String>() {
+    final UnaryOperator<String> brackets = new UnaryOperator<String>() {
         @Override
         public String apply(String s) {
             return "[" + s + "]";

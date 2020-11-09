@@ -1,7 +1,6 @@
 package org.meeuw.functional;
 
 import org.junit.jupiter.api.Test;
-import org.meeuw.functional.QuadriFunction;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -19,7 +18,8 @@ class QuadriFunctionTest {
         }
     }
 
-    Quadri quadri = new Quadri();
+    final Quadri quadri = new Quadri();
+
     @Test
     void withArg1() {
 

@@ -5,7 +5,6 @@ import java.util.function.BiPredicate;
 import java.util.function.Predicate;
 
 import org.junit.jupiter.api.Test;
-import org.meeuw.functional.Predicates;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.meeuw.functional.Predicates.*;
@@ -59,8 +58,8 @@ public class PredicatesTest {
         assertThat(Predicates.<String, Integer, Float>triAlwaysTrue().toString()).isEqualTo("TRUE");
     }
 
-    Predicate<String> mono = (s) -> s.length() > 5;
-    public class Bi implements BiPredicate<String, Integer> {
+    final Predicate<String> mono = (s) -> s.length() > 5;
+    public static class Bi implements BiPredicate<String, Integer> {
 
         @Override
         public boolean test(String s, Integer length) {
@@ -72,7 +71,7 @@ public class PredicatesTest {
         }
     }
 
-    Bi bi = new Bi();
+    final Bi bi = new Bi();
 
 
     @Test
