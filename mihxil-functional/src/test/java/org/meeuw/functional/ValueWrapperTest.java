@@ -15,6 +15,9 @@ class ValueWrapperTest {
         public W(String wrapped) {
             super(wrapped, "value", "why");
         }
+        public W(String wrapped, String value) {
+            super(wrapped, value, "why");
+        }
     }
 
     @Test
@@ -22,6 +25,10 @@ class ValueWrapperTest {
 
         W w = new W(null);
         assertThat(w).isEqualTo(new W(null));
+        assertThat(w).isNotEqualTo(new W(null, "abc"));
+        assertThat(w.hashCode()).isEqualTo(new W(null).hashCode());
+        assertThat(w.hashCode()).isNotEqualTo(new W(null, "abc").hashCode());
+
         assertThat(w).isEqualTo(w);
         assertThat(w).isNotEqualTo(null);
         assertThat(w).isNotEqualTo("foobar");
@@ -31,6 +38,10 @@ class ValueWrapperTest {
 
         W w = new W("foobar");
         assertThat(w).isEqualTo(new W("foobar"));
+        assertThat(w).isNotEqualTo(new W(null));
+        assertThat(w).isNotEqualTo(new W("foobar", "xyz"));
+        assertThat(w.hashCode()).isEqualTo(new W("foobar").hashCode());
+        assertThat(w.hashCode()).isNotEqualTo(new W("foobar", "xyz").hashCode());
         assertThat(w).isEqualTo(w);
         assertThat(w).isNotEqualTo(null);
         assertThat(w).isNotEqualTo("foobar");

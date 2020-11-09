@@ -3,20 +3,21 @@ package org.meeuw.functional;
 import java.util.Objects;
 
 /**
+ * Wraps some object with a reason.
  * @author Michiel Meeuwissen
  */
 abstract class Wrapper<W> {
     final W wrapped;
-    private final String why;
+    private final String reason;
 
-    public Wrapper(W wrapped, String why) {
+    public Wrapper(W wrapped, String reason) {
         this.wrapped = wrapped;
-        this.why = why;
+        this.reason = reason;
     }
 
     @Override
     public String toString() {
-        return wrapped + "(" + why + ")";
+        return wrapped + "(" + reason + ")";
     }
 
     @Override

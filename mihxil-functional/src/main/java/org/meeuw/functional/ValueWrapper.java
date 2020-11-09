@@ -15,18 +15,16 @@ abstract class ValueWrapper<W> extends Wrapper<W> {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
+        if (! super.equals(o)) {
+            return false;
+        }
         ValueWrapper<?> wrapper = (ValueWrapper<?>) o;
-
-        if (! Objects.equals(wrapped, wrapper.wrapped)) return false;
         return Objects.equals(value, wrapper.value);
     }
 
     @Override
     public int hashCode() {
-        int result = wrapped.hashCode();
+        int result = super.hashCode();
         result = 31 * result + (value != null ? value.hashCode() : 0);
         return result;
     }
