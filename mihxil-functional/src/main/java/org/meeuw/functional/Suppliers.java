@@ -12,9 +12,8 @@ public class Suppliers {
     private Suppliers() {
     }
 
-
     static <T> Supplier<T> always(T value) {
-        return new Always<T>(value, "always");
+        return new Always<>(value, "always");
     }
 
     static <T> Supplier<T> memoize(Supplier<T> supplier) {
@@ -70,6 +69,5 @@ public class Suppliers {
             return wrapped;
         }
     }
-
 
 }
