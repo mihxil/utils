@@ -3,6 +3,8 @@ package org.meeuw.functional;
 import java.util.Objects;
 
 /**
+ * Wraps another object with a reason, and an extra value. This extra value just influences {@link #equals(Object)} and {@link #hashCode()}.
+ *
  * @author Michiel Meeuwissen
  */
 abstract class ValueWrapper<W> extends Wrapper<W> {
