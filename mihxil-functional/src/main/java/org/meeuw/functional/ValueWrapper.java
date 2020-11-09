@@ -17,6 +17,7 @@ abstract class ValueWrapper<W> extends Wrapper<W> {
 
     @Override
     public boolean equals(Object o) {
+        if (this == o) return true;
         if (! super.equals(o)) {
             return false;
         }
