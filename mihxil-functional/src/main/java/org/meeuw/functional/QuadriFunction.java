@@ -18,7 +18,7 @@ public interface QuadriFunction<T,U,V,W,R> {
     R apply(T t, U u, V v, W w);
 
     /**
-     * Morphs this {@link QuadriFunction} into a {@link TriFunction}, which a certain given value for the first argument.
+     * Morphs this {@link QuadriFunction} into a {@link TriFunction}, with a certain given value for the first argument.
      *
      */
     default TriFunction<U, V, W, R> withArg1(T t) {
@@ -31,7 +31,7 @@ public interface QuadriFunction<T,U,V,W,R> {
     }
 
     /**
-     * Morphs this {@link QuadriFunction} into a {@link TriFunction}, which a certain given value for the second argument.
+     * Morphs this {@link QuadriFunction} into a {@link TriFunction}, with a certain given value for the second argument.
      *
      * See {@link Functions#withArg2(BiFunction, Object)}
      */
@@ -45,7 +45,7 @@ public interface QuadriFunction<T,U,V,W,R> {
     }
 
     /**
-     * Morphs this {@link QuadriFunction} into a {@link TriFunction}, which a certain given value for the third argument.
+     * Morphs this {@link QuadriFunction} into a {@link TriFunction}, with a certain given value for the third argument.
      */
     default TriFunction<T, U, W, R> withArg3(V v) {
         return new Functions.TriWrapper<QuadriFunction<T, U, V, W, R>, T, U, W, R>(this, v, "with arg 3 " + v) {
@@ -57,7 +57,7 @@ public interface QuadriFunction<T,U,V,W,R> {
     }
 
      /**
-     * Morphs this {@link QuadriFunction} into a {@link TriFunction}, which a certain given value for the fourth argument.
+     * Morphs this {@link QuadriFunction} into a {@link TriFunction}, with a certain given value for the fourth argument.
      */
     default TriFunction<T, U, V, R> withArg4(W w) {
         return new Functions.TriWrapper<QuadriFunction<T, U, V, W, R>, T, U, V, R>(this, w, "with arg 4 " + w) {

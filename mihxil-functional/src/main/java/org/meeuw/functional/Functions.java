@@ -45,7 +45,7 @@ public final class Functions {
     }
 
     /**
-     * Morphs a given {@link Function} into a {@link Supplier}, which a certain given value for the first argument.
+     * Morphs a given {@link Function} into a {@link Supplier}, with a certain given value for the first argument.
      *
      * See {@link TriFunction#withArg1(Object)}
      */
@@ -54,7 +54,7 @@ public final class Functions {
     }
 
     /**
-     * Morphs a given {@link BiFunction} into a {@link Function}, which a certain given value for the first argument.
+     * Morphs a given {@link BiFunction} into a {@link Function}, with a certain given value for the first argument.
      *
      * See {@link TriFunction#withArg1(Object)}
      */
@@ -69,7 +69,7 @@ public final class Functions {
     }
 
     /**
-     * Morphs a given {@link BiFunction} into a {@link Function}, which a certain given value for the second argument.
+     * Morphs a given {@link BiFunction} into a {@link Function}, with a certain given value for the second argument.
      *
      * See {@link TriFunction#withArg2(Object)}
      */

@@ -18,7 +18,7 @@ public interface TriFunction <T,U,V,R> {
     R apply(T t, U u, V v);
 
     /**
-     * Morphs this {@link TriFunction} into a {@link BiFunction}, which a certain given value for the first argument.
+     * Morphs this {@link TriFunction} into a {@link BiFunction}, with a certain given value for the first argument.
      *
      * See {@link Functions#withArg1(BiFunction, Object)}
      */
@@ -32,7 +32,7 @@ public interface TriFunction <T,U,V,R> {
     }
 
     /**
-     * Morphs this {@link TriFunction} into a {@link BiFunction}, which a certain given value for the second argument.
+     * Morphs this {@link TriFunction} into a {@link BiFunction}, with a certain given value for the second argument.
      *
      * See {@link Functions#withArg2(BiFunction, Object)}
      */
@@ -46,7 +46,7 @@ public interface TriFunction <T,U,V,R> {
     }
 
     /**
-     * Morphs this {@link TriFunction} into a {@link BiFunction}, which a certain given value for the third argument.
+     * Morphs this {@link TriFunction} into a {@link BiFunction}, with a certain given value for the third argument.
      */
     default BiFunction<T, U, R> withArg3(V value) {
         return new Functions.BiWrapper<TriFunction<T, U, V, R>, T, U, R>(this, value, "with arg 3 " + value) {
