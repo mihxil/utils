@@ -3,7 +3,6 @@ package org.meeuw.functional;
 import java.util.function.UnaryOperator;
 
 import org.junit.jupiter.api.Test;
-import org.meeuw.functional.TriFunction;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -14,7 +13,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 class TriFunctionTest {
 
     static class Tri implements TriFunction<Integer, String, Float, String> {
-
         @Override
         public String apply(Integer integer, String s, Float aFloat) {
             return integer + ":" + s + ":" + aFloat;
@@ -24,6 +22,7 @@ class TriFunctionTest {
             return "Tri";
         }
     }
+
     Tri tri = new Tri();
 
 
@@ -32,6 +31,9 @@ class TriFunctionTest {
 
         assertThat(tri.withArg1(1).apply("a", 2.0f)).isEqualTo("1:a:2.0");
         assertThat(tri.withArg1(1)).isEqualTo(tri.withArg1(1));
+        assertThat(tri.withArg1(null)).isEqualTo(tri.withArg1(null));
+        assertThat(tri.withArg1(null).hashCode()).isEqualTo(tri.withArg1(null).hashCode());
+
         assertThat(tri.withArg1(1)).isNotEqualTo(tri.withArg1(2));
         assertThat(tri.withArg1(1)).isNotEqualTo(tri.withArg2("two"));
     }
