@@ -20,7 +20,7 @@ abstract class ValueWrapper<W> extends Wrapper<W> {
 
         ValueWrapper<?> wrapper = (ValueWrapper<?>) o;
 
-        if (!wrapped.equals(wrapper.wrapped)) return false;
+        if (! Objects.equals(wrapped, wrapper.wrapped)) return false;
         return Objects.equals(value, wrapper.value);
     }
 
