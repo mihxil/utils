@@ -8,7 +8,7 @@ import java.util.function.*;
  *
  * The point is that these kind of things won't happen if you use lambdas.
  * @author Michiel Meeuwissen
- * @since 2.16
+ * @since 0.1
  */
 public final class Consumers {
 

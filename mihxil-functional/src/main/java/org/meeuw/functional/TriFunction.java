@@ -10,7 +10,7 @@ import java.util.function.Function;
  * A function with three arguments
  *
  * @author Michiel Meeuwissen
- * @since 1.72
+ * @since 0.1
  */
 @FunctionalInterface
 public interface TriFunction <T,U,V,R> {

@@ -11,7 +11,7 @@ import java.util.function.*;
  * Also a place for some other 'Function' related utilities.
  *
  * @author Michiel Meeuwissen
- * @since 2.12
+ * @since 0.1
  */
 
 public final class Functions {

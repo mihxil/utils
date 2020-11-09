@@ -13,7 +13,7 @@ import java.util.function.BinaryOperator;
  * @see BinaryOperator
  * @see TernaryOperator
  * @author Michiel Meeuwissen
- * @since 2.12
+ * @since 0.1
  */
 @FunctionalInterface
 public interface QuaternaryOperator<T> extends QuadriFunction<T, T, T, T, T> {

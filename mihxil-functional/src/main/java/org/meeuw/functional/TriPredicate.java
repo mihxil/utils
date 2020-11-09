@@ -9,7 +9,7 @@ import java.util.function.BiPredicate;
  * A predicate with three arguments
  *
  * @author Michiel Meeuwissen
- * @since 2.12.0
+ * @since 0.1
  */
 @FunctionalInterface
 public interface TriPredicate<T, U, V> {

@@ -4,18 +4,25 @@ import java.util.Objects;
 import java.util.function.Supplier;
 
 /**
+ * Utilities related to {@link Supplier}s.
  * @author Michiel Meeuwissen
- * @since 2.12
+ * @since 0.1
  */
 public class Suppliers {
 
     private Suppliers() {
     }
 
+    /**
+     * Aways supply the same value
+     */
     static <T> Supplier<T> always(T value) {
         return new Always<>(value, "always");
     }
 
+    /**
+     * Wrap a given supplier. The result of the suppletion is memoized after the first call. Subsequent calls will give the same value, without calling the supplier again.
+     */
     static <T> Supplier<T> memoize(Supplier<T> supplier) {
         return new MemoizeSupplier<>(supplier);
     }

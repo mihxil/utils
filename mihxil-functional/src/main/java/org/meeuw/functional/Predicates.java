@@ -23,7 +23,7 @@ import java.util.function.Predicate;
  * </pre>
  *
  * @author Michiel Meeuwissen
- * @since 2.18
+ * @since 0.1
  */
 public final class Predicates {
 

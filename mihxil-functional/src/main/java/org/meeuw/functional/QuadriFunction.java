@@ -10,7 +10,7 @@ import java.util.function.Function;
  * A function with four arguments
  *
  * @author Michiel Meeuwissen
- * @since 2.12
+ * @since 0.1
  */
 @FunctionalInterface
 public interface QuadriFunction<T,U,V,W,R> {

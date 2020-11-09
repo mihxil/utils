@@ -10,7 +10,7 @@ import java.util.function.Consumer;
  * A function with three arguments
  *
  * @author Michiel Meeuwissen
- * @since 2.7.0
+ * @since 0.1
  */
 @FunctionalInterface
 public interface TriConsumer<T, U, V> {
