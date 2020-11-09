@@ -17,10 +17,9 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <java.target.version>8</java.target.version>
-    <lombok.version>1.18.12</lombok.version>
+    <lombok.version>1.18.16</lombok.version>
     <jacoco.version>0.8.5</jacoco.version>
   </properties>
-
 
   <licenses>
     <license>
@@ -36,7 +35,7 @@
       <id>mihxil</id>
       <name>Michiel Meeuwissen</name>
       <email>michiel.meeuwissen+github@gmail.com</email>
-      <url>http://www.meeuw.org</url>
+      <url>https://meeuw.org</url>
       <roles>
         <role>architect</role>
         <role>developer</role>
@@ -44,8 +43,6 @@
       <timezone>Europe/Amsterdam</timezone>
     </developer>
   </developers>
-
-
 
   <dependencies>
     <dependency>
@@ -57,7 +54,7 @@
     <dependency>
       <groupId>org.assertj</groupId>
       <artifactId>assertj-core</artifactId>
-      <version>3.17.2</version>
+      <version>3.18.0</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
@@ -80,7 +77,6 @@
       <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
     </repository>
   </distributionManagement>
-
 
   <build>
     <defaultGoal>install</defaultGoal>
