@@ -3,7 +3,6 @@ package org.meeuw.functional;
 import java.util.function.Supplier;
 
 import org.junit.jupiter.api.Test;
-import org.meeuw.functional.Suppliers;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -39,7 +38,10 @@ class SuppliersTest {
 
         i++;
         assertThat(memoize.get()).isEqualTo(1);
+
         assertThat(memoize).isEqualTo(memoize);
+        assertThat(memoize).isNotEqualTo("something else");
+        assertThat(memoize).isNotEqualTo(null);
         assertThat(memoize.toString()).isEqualTo("I(memoize)");
 
         Supplier<Integer> memoize2 = Suppliers.memoize(isup);
@@ -57,7 +59,5 @@ class SuppliersTest {
         assertThat(a1.get()).isEqualTo("a");
         Supplier<String> b = Suppliers.always("b");
         assertThat(a1).isNotEqualTo(b);
-
-
     }
 }
