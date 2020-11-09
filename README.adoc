@@ -10,7 +10,7 @@ image:https://codecov.io/gh/mihxil/utils/branch/master/graph/badge.svg[codecov,l
 
 Classes related to `java.util.Function` and extensions like `Predicate`, `Consumer` and `Supplier`.
 
-- `TriFunction`, `QuadriFunction`
+- link:mihxil-functional/src/main/java/org/meeuw/functional/TriFunction.java[`TriFunction`], `QuadriFunction`
 - `TriConsumer`
 - `TriPredicate`
 - Consistent `equals` and `hashCode`
@@ -18,4 +18,4 @@ Classes related to `java.util.Function` and extensions like `Predicate`, `Consum
   - `TriFunction#ignoreArg[1-4](..)` morphs a `TriFunction` to a `QuadriFunction`
   - `TriFunction#withArg[1-3](..)` morhps a `TriFunction` to a `BiFunction`
 
-- Utilities for that in `Functions`, `Consumers`, `Predicates`
+- Utilities for that in link:mihxil-functional/src/main/java/org/meeuw/functional/Functions.java[`Functions`], link:mihxil-functional/src/main/java/org/meeuw/functional/Consumers.java[`Consumers`], link:mihxil-functional/src/main/java/org/meeuw/functional/Predicates.java[`Predicates`]
