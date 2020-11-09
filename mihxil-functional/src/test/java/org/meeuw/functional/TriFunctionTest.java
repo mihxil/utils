@@ -1,5 +1,6 @@
 package org.meeuw.functional;
 
+import java.util.function.BiFunction;
 import java.util.function.UnaryOperator;
 
 import org.junit.jupiter.api.Test;
@@ -26,13 +27,14 @@ class TriFunctionTest {
     Tri tri = new Tri();
 
 
+
+
     @Test
     void withArg1() {
 
         assertThat(tri.withArg1(1).apply("a", 2.0f)).isEqualTo("1:a:2.0");
         assertThat(tri.withArg1(1)).isEqualTo(tri.withArg1(1));
-        assertThat(tri.withArg1(null)).isEqualTo(tri.withArg1(null));
-        assertThat(tri.withArg1(null).hashCode()).isEqualTo(tri.withArg1(null).hashCode());
+
 
         assertThat(tri.withArg1(1)).isNotEqualTo(tri.withArg1(2));
         assertThat(tri.withArg1(1)).isNotEqualTo(tri.withArg2("two"));
