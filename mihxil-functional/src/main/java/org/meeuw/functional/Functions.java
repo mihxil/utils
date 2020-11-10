@@ -44,13 +44,26 @@ public final class Functions {
         return triAlways(v, "always " + v);
     }
 
+     public static <A1, A2, A3, A4,  R> QuadriFunction<A1, A2, A3, A4,  R> quadriAlways(R v, String s) {
+        return new QuadriAlways<>(v, s);
+    }
+
+    public static <A1, A2, A3, A4, R> QuadriFunction<A1, A2, A3,  A4, R> quadriAlways(R v) {
+        return quadriAlways(v, "always " + v);
+    }
+
     /**
      * Morphs a given {@link Function} into a {@link Supplier}, with a certain given value for the first argument.
      *
      * See {@link TriFunction#withArg1(Object)}
      */
     public static <A1, R> Supplier<R> withArg1(Function<A1, R> function, A1 value) {
-        return () -> function.apply(value);
+        return new Suppliers.SupplierWrapper<R, Function<A1, R>>(function, "with  arg1 " + value) {
+            @Override
+            public R get() {
+                return wrapped.apply(value);
+            }
+        };
     }
 
     /**
@@ -60,7 +73,6 @@ public final class Functions {
      */
     public static <A1, A2, R> Function<A2, R> withArg1(BiFunction<A1, A2, R> function, A1 value) {
         return new MonoWrapper<BiFunction<A1, A2, R>, A2, R>(function, value, "with arg1 " + value) {
-
             @Override
             public R apply(A2 a2) {
                 return wrapped.apply(value, a2);
@@ -75,7 +87,6 @@ public final class Functions {
      */
     public static <A1, A2, R> Function<A1, R> withArg2(BiFunction<A1, A2, R> function, A2 value) {
         return new MonoWrapper<BiFunction<A1, A2, R>, A1, R>(function, value, "with arg2 " + value) {
-
             @Override
             public R apply(A1 a1) {
                 return wrapped.apply(a1, value);
@@ -130,8 +141,6 @@ public final class Functions {
             }
         };
     }
-
-
 
     /**
      * Creates a new {@link TriFunction} but implement it using a {@link BiFunction}, simply completely ignoring the first argument
@@ -193,19 +202,23 @@ public final class Functions {
         };
     }
 
-
-
+    /**
+     * Abstract implementation of function returning always the same value, regardless of their arguments.
+     */
     protected static abstract class AbstractAlways<R>  {
         protected final R val;
-        private final String s;
+        private final String toString;
 
-        public AbstractAlways(R val, String s) {
+        /**
+         * @param val The value to always return
+         */
+        public AbstractAlways(R val, String toString) {
             this.val = val;
-            this.s = s;
+            this.toString = toString;
         }
         @Override
         public String toString() {
-            return s;
+            return toString;
         }
 
         @Override
@@ -222,6 +235,9 @@ public final class Functions {
         }
     }
 
+    /**
+     * Represent a fixed value as a  {@link Function}. So this function effectively ignores its parameter.
+     */
     protected static final class Always<A, R> extends AbstractAlways<R> implements Function<A, R> {
         public Always(R val, String s) {
             super(val, s);
@@ -233,6 +249,10 @@ public final class Functions {
         }
     }
 
+
+    /**
+     * Represent a fixed value as a  {@link BiFunction}. So this function effectively ignores its parameters.
+     */
     protected static final class BiAlways<A1, A2, R> extends AbstractAlways<R> implements BiFunction<A1, A2, R> {
         public BiAlways(R val, String s) {
             super(val, s);
@@ -243,6 +263,9 @@ public final class Functions {
         }
     }
 
+    /**
+     * Represent a fixed value as a  {@link TriFunction}. So this function effectively ignores all its parameters.
+     */
     protected static final class TriAlways<A1, A2, A3, R> extends AbstractAlways<R> implements TriFunction<A1, A2, A3, R> {
         public TriAlways(R val, String s) {
             super(val, s);
@@ -250,6 +273,20 @@ public final class Functions {
 
         @Override
         public R apply(A1 a1, A2 a2, A3 a3) {
+            return val;
+        }
+    }
+
+     /**
+     * Represent a fixed value as a  {@link QuadriFunction}. So this function effectively ignores all its parameters.
+     */
+    protected static final class QuadriAlways<A1, A2, A3, A4, R> extends AbstractAlways<R> implements QuadriFunction<A1, A2, A3, A4, R> {
+        public QuadriAlways(R val, String s) {
+            super(val, s);
+        }
+
+        @Override
+        public R apply(A1 a1, A2 a2, A3 a3, A4 a4) {
             return val;
         }
     }
@@ -277,6 +314,5 @@ public final class Functions {
             super(wrapped, value, why);
         }
     }
-
 
 }

@@ -27,7 +27,14 @@ public class Suppliers {
         return new MemoizeSupplier<>(supplier);
     }
 
-    protected static class MemoizeSupplier<T> extends Wrapper<Supplier<T>> implements Supplier<T> {
+    protected static abstract class SupplierWrapper<T, W> extends Wrapper<W> implements Supplier<T> {
+
+        public SupplierWrapper(W wrapped, String reason) {
+            super(wrapped, reason);
+        }
+    }
+
+    protected static class MemoizeSupplier<T> extends SupplierWrapper<T, Supplier<T>> {
 
         T value;
 

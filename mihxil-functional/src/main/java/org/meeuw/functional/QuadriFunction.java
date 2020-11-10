@@ -13,7 +13,7 @@ import java.util.function.Function;
  * @since 0.1
  */
 @FunctionalInterface
-public interface QuadriFunction<T,U,V,W,R> {
+public interface QuadriFunction<T, U, V, W, R> {
 
     R apply(T t, U u, V v, W w);
 
@@ -73,6 +73,12 @@ public interface QuadriFunction<T,U,V,W,R> {
      */
     default <S> QuadriFunction<T, U, V, W, S> andThen(Function<? super R, ? extends S> after) {
         Objects.requireNonNull(after);
-        return (T t, U u, V v, W w) -> after.apply(apply(t, u, v, w));
+        return new Functions.QuadriWrapper<QuadriFunction<T, U, V, W, R>, T, U, V, W, S>(this, after, "and then " + after) {
+            @Override
+            public S apply(T t, U u, V v, W w) {
+                return after.apply(wrapped.apply(t, u, v, w));
+            }
+        };
+
     }
 }

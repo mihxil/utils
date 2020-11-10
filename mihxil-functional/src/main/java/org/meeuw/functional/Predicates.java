@@ -157,19 +157,26 @@ public final class Predicates {
     }
 
 
+    /**
+     * The abstract base class for several fixed valued (tri|bi|)-predicates.
+     */
     protected static abstract class AbstractAlways {
         protected final boolean val;
-        private final String s;
+        private final String toString;
 
 
-        public AbstractAlways(boolean val, String s) {
+        /**
+         * @param val The fixed {@code boolean} value to return
+         * @param toString The String returned by {@link #toString()}
+         */
+        public AbstractAlways(boolean val, String toString) {
             this.val = val;
-            this.s = s;
+            this.toString = toString;
         }
 
         @Override
         public String toString() {
-            return s;
+            return toString;
         }
 
 
@@ -201,7 +208,6 @@ public final class Predicates {
     }
 
     protected static final class BiAlways<T, U> extends AbstractAlways implements BiPredicate<T, U> {
-
         public BiAlways(boolean val, String s) {
             super(val, s);
         }
@@ -224,10 +230,12 @@ public final class Predicates {
     }
 
     protected static abstract  class TriWrapper<W, X, Y, Z> extends ValueWrapper<W> implements TriPredicate<X, Y, Z> {
+
         public TriWrapper(W wrapped, Object value, String why) {
             super(wrapped, value, why);
         }
     }
+
     protected static abstract  class BiWrapper<W, X, Y>  extends ValueWrapper<W> implements BiPredicate<X, Y> {
         public BiWrapper(W wrapped, Object value, String why) {
             super(wrapped, value, why);

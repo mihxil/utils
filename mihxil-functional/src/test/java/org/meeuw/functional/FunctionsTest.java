@@ -57,6 +57,18 @@ class FunctionsTest {
         assertThat(Functions.triAlways("x").toString()).isEqualTo("always x");
         assertThat(Functions.triAlways("x", "X").toString()).isEqualTo("X");
     }
+
+    @Test
+    void quadriAlways() {
+        assertThat(Functions.quadriAlways("x").apply("y", "z", 1, 2)).isEqualTo("x");
+        assertThat(Functions.quadriAlways("x")).isEqualTo(Functions.quadriAlways("x"));
+        assertThat(Functions.quadriAlways("x")).isNotEqualTo(Functions.quadriAlways("y"));
+        assertThat(Functions.quadriAlways("x")).isNotEqualTo(Functions.always("y"));
+        assertThat(Functions.quadriAlways("x").toString()).isEqualTo("always x");
+        assertThat(Functions.quadriAlways("x", "X").toString()).isEqualTo("X");
+    }
+
+
     final Function<Float, String> mono = Object::toString;
 
 

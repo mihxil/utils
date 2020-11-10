@@ -35,7 +35,12 @@ public interface TriPredicate<T, U, V> {
      */
     default TriPredicate<T, U, V> and(TriPredicate<? super T, ? super U,? super V> other) {
         Objects.requireNonNull(other);
-        return (T t, U u, V v) -> test(t, u, v) && other.test(t, u, v);
+        return new Predicates.TriWrapper<TriPredicate<? super T, ? super U, ? super V>, T, U, V>(this, other, "and " + other) {
+            @Override
+            public boolean test(T t, U u, V v) {
+                return wrapped.test(t, u, v) && other.test(t, u, v);
+            }
+        };
     }
 
     /**
@@ -46,7 +51,12 @@ public interface TriPredicate<T, U, V> {
      * predicate
      */
     default TriPredicate<T, U, V> negate() {
-        return (T t, U u, V v) -> !test(t, u, v);
+        return new Predicates.TriWrapper<TriPredicate<T, U, V>, T, U, V>(this, null, " negated") {
+            @Override
+            public boolean test(T t, U u, V v) {
+                return ! wrapped.test(t, u, v);
+            }
+        };
     }
 
     /**
@@ -67,9 +77,17 @@ public interface TriPredicate<T, U, V> {
      */
     default TriPredicate<T, U, V> or(TriPredicate<? super T, ? super U, ? super V> other) {
         Objects.requireNonNull(other);
-        return (T t, U u, V v) -> test(t, u, v) || other.test(t, u, v);
+        return new Predicates.TriWrapper<TriPredicate<? super T, ? super U, ? super V>, T, U, V>(this, other, "and " + other) {
+            @Override
+            public boolean test(T t, U u, V v) {
+                return wrapped.test(t, u, v) || other.test(t, u, v);
+            }
+        };
     }
 
+    /**
+     * Morphs this {@link TriPredicate} into a {@link BiPredicate}, by filling in the first argument
+     */
     default BiPredicate<U, V> withArg1(T t) {
         return new Predicates.BiWrapper<TriPredicate<T, U, V>, U, V>(this, t, "with arg1 " + t) {
             @Override
@@ -79,6 +97,9 @@ public interface TriPredicate<T, U, V> {
         };
     }
 
+    /**
+     * Morphs this {@link TriPredicate} into a {@link BiPredicate}, by filling in the second argument
+     */
     default BiPredicate<T, V> withArg2(U u) {
         return new Predicates.BiWrapper<TriPredicate<T, U, V>, T, V>(this, u, "with arg2 " + u) {
             @Override

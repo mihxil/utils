@@ -62,6 +62,7 @@ public final class Consumers {
             }
         };
     }
+
     /**
      * Creates a new {@link BiPredicate} but implement it using a {@link Predicate}, simply completely ignoring the first argument
      */
@@ -79,15 +80,14 @@ public final class Consumers {
      *
      * See {@link TriConsumer#withArg1(Object)}
      */
-    public static <U, V> Consumer<V> withArg1(BiConsumer<U, V> biConsumer, U u) {
-        return new MonoWrapper<BiConsumer<U, V>, V>(biConsumer, u, "with arg1 " + u) {
+    public static <U, V> Consumer<V> withArg1(BiConsumer<U, V> biConsumer, U value) {
+        return new MonoWrapper<BiConsumer<U, V>, V>(biConsumer, value, "with arg1 " + value) {
             @Override
             public void accept(V v) {
-                wrapped.accept(u, v);
+                wrapped.accept(value, v);
             }
         };
     }
-
 
     /**
      * Morphs a given {@link BiConsumer} into a {@link Consumer}, which a certain given value for the first argument.
@@ -108,16 +108,16 @@ public final class Consumers {
      *
      * See {@link TriConsumer#withArg2(Object)}
      */
-    public static <U, V> Consumer<U> withArg2(BiConsumer<U, V> biConsumer, V v) {
-        return new MonoWrapper<BiConsumer<U, V>, U>(biConsumer, v, "with arg2 " + v) {
+    public static <U, V> Consumer<U> withArg2(BiConsumer<U, V> biConsumer, V value) {
+        return new MonoWrapper<BiConsumer<U, V>, U>(biConsumer, value, "with arg2 " + value) {
             @Override
             public void accept(U u) {
-                wrapped.accept(u, v);
+                wrapped.accept(u, value);
             }
         };
     }
 
-     /**
+    /**
      * Morphs a given {@link BiConsumer} into a {@link Consumer}, which a certain given value for the second argument.
      *
      * See {@link TriConsumer#withArg2(Object)}
@@ -131,24 +131,32 @@ public final class Consumers {
         };
     }
 
-
+    /**
+     * Abstract base class for implementing {@link TriConsumer}s based on wrapping something else.
+     */
     protected static abstract  class TriWrapper<W, X, Y, Z> extends ValueWrapper<W> implements TriConsumer<X, Y, Z> {
-        public TriWrapper(W wrapped, Object value,  String why) {
-            super(wrapped, value, why);
+        public TriWrapper(W wrapped, Object value,  String reason) {
+            super(wrapped, value, reason);
         }
     }
 
+    /**
+     * Abstract base class for implementing {@link BiConsumer}s based on wrapping something else.
+     */
     protected static abstract  class BiWrapper<W, X, Y> extends ValueWrapper<W> implements BiConsumer<X, Y> {
 
-        public BiWrapper(W wrapped, Object value, String why) {
-            super(wrapped, value, why);
+        public BiWrapper(W wrapped, Object value, String reason) {
+            super(wrapped, value, reason);
         }
     }
 
+    /**
+     * Abstract base class for implementing {@link Consumer}s based on wrapping something else.
+     */
     protected static abstract class MonoWrapper<W, X> extends ValueWrapper<W> implements Consumer<X> {
 
-        public MonoWrapper(W wrapped, Object value,  String why) {
-            super(wrapped, value, why);
+        public MonoWrapper(W wrapped, Object value,  String reason) {
+            super(wrapped, value, reason);
         }
     }
 

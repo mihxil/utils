@@ -10,8 +10,13 @@ import java.util.Objects;
 abstract class ValueWrapper<W> extends Wrapper<W> {
     private final Object value;
 
-    public ValueWrapper(W wrapped, Object value, String why) {
-        super(wrapped, why);
+    /**
+     * @param wrapped An object that this wrapper is wrapping, and can be used to implement it
+     * @param value An extra value, which only function is to influence   {@link #equals(Object)} and {@link #hashCode()}
+     * @param reason A description for why the wrapping happened
+     */
+    public ValueWrapper(W wrapped, Object value, String reason) {
+        super(wrapped, reason);
         this.value = value;
     }
 

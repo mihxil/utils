@@ -10,6 +10,11 @@ abstract class Wrapper<W> {
     final W wrapped;
     private final String reason;
 
+
+    /**
+     * @param wrapped An object that this wrapper is wrapping, and can be used to implement it
+     * @param reason A description for why the wrapping happened.
+     */
     public Wrapper(W wrapped, String reason) {
         this.wrapped = wrapped;
         this.reason = reason;
