@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.meeuw.util</groupId>
   <artifactId>mihxil-util-parent</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <version>1.0</version>
   <packaging>pom</packaging>
   <name>Mihxil's Util Parent</name>
   <description>Low level java utilities</description>
@@ -64,7 +64,7 @@
     <connection>scm:git:git://github.com/mihxil/util.git</connection>
     <developerConnection>scm:git:ssh://git@github.com/mihxil/util.git</developerConnection>
     <url>https://github.com/mihxil/util</url>
-    <tag>mihxil-util-parent-0.3</tag>
+    <tag>1.0</tag>
   </scm>
 
   <distributionManagement>
