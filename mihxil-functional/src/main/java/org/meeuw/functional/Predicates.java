@@ -195,7 +195,6 @@ public final class Predicates {
     }
 
     protected static final class Always<T> extends AbstractAlways implements Predicate<T> {
-
         public Always(boolean val, String s) {
             super(val, s);
         }

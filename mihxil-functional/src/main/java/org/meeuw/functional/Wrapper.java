@@ -7,8 +7,8 @@ import java.util.Objects;
  * @author Michiel Meeuwissen
  */
 abstract class Wrapper<W> {
-    final W wrapped;
-    private final String reason;
+    protected final W wrapped;
+    protected final String reason;
 
 
     /**
