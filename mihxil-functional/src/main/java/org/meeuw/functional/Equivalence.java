@@ -20,6 +20,7 @@ public interface Equivalence<E> extends BiPredicate<E, E>  {
 
     /**
      * Converts this equivalence to {@link Predicate} which checks if objects are equivalent to one certain value.
+     * @param value The test object to compare to
      */
     default Predicate<E> predicate(E value) {
         return new Predicates.MonoWrapper<Equivalence<E>, E>(this, value, "equivalent to " + value) {
