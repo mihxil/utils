@@ -16,12 +16,17 @@ import static org.meeuw.functional.Predicates.*;
  */
 public class PredicatesTest {
 
+    @SuppressWarnings({"ConstantConditions", "EqualsBetweenInconvertibleTypes", "EqualsWithItself"})
     @Test
     public void testAlwaysFalse() {
+        Predicate<String> always = Predicates.alwaysFalse();
         assertThat(Predicates.<String>alwaysFalse().test("a")).isFalse();
         assertThat(Predicates.<String>alwaysFalse().toString()).isEqualTo("FALSE");
-        assertThat(Predicates.<String>alwaysFalse()).isEqualTo(Predicates.alwaysFalse());
-        assertThat(Predicates.<String>alwaysFalse()).isNotEqualTo(Predicates.alwaysTrue());
+        assertThat(Predicates.<String>alwaysFalse().equals(Predicates.alwaysFalse())).isTrue();
+        assertThat(always.equals(always)).isTrue();
+        assertThat(always.equals(null)).isFalse();
+        assertThat(always.equals("foobar")).isFalse();
+        assertThat(Predicates.<String>alwaysFalse().equals(Predicates.alwaysTrue())).isFalse();
 
         assertThat(Predicates.<String>alwaysFalse().hashCode()).isEqualTo(Predicates.alwaysFalse().hashCode());
         assertThat(Predicates.<String>alwaysFalse().hashCode()).isNotEqualTo(Predicates.alwaysTrue().hashCode());
