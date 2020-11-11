@@ -30,10 +30,13 @@ public interface QuaternaryOperator<T> extends QuadriFunction<T, T, T, T, T> {
      */
     static <T> QuaternaryOperator<T> minBy(Comparator<? super T> comparator) {
         Objects.requireNonNull(comparator);
-        return (a, b, c, d) -> {
-            T smaller = comparator.compare(a, b) <= 0 ? a : b;
-            smaller = comparator.compare(smaller, c) <= 0 ? smaller : c;
-            return comparator.compare(smaller, d) <= 0 ? smaller : d;
+        return new Wrapper<Comparator<? super T>, T>(comparator, "min by " + comparator) {
+            @Override
+            public T apply(T a, T b, T c, T d) {
+                T smaller = wrapped.compare(a, b) <= 0 ? a : b;
+                smaller = wrapped.compare(smaller, c) <= 0 ? smaller : c;
+                return wrapped.compare(smaller, d) <= 0 ? smaller : d;
+            }
         };
     }
 
@@ -49,10 +52,23 @@ public interface QuaternaryOperator<T> extends QuadriFunction<T, T, T, T, T> {
      */
     static <T> QuaternaryOperator<T> maxBy(Comparator<? super T> comparator) {
         Objects.requireNonNull(comparator);
-        return (a, b, c, d) -> {
-            T bigger = comparator.compare(a, b) >= 0 ? a : b;
-            bigger = comparator.compare(bigger, c) >= 0 ? bigger : c;
-            return comparator.compare(bigger, d) >= 0 ? bigger : d;
+        return new Wrapper<Comparator<? super T>, T>(comparator, "max by " + comparator) {
+            @Override
+            public T apply(T a, T b, T c, T d) {
+                T bigger = wrapped.compare(a, b) >= 0 ? a : b;
+                bigger = wrapped.compare(bigger, c) >= 0 ? bigger : c;
+                return wrapped.compare(bigger, d) >= 0 ? bigger : d;
+            }
         };
+    }
+
+    abstract class Wrapper<W, T> extends org.meeuw.functional.Wrapper<W> implements QuaternaryOperator<T> {
+        /**
+         * @param wrapped An object that this wrapper is wrapping, and can be used to implement it
+         * @param reason  A description for why the wrapping happened
+         */
+        public Wrapper(W wrapped, String reason) {
+            super(wrapped, reason);
+        }
     }
 }

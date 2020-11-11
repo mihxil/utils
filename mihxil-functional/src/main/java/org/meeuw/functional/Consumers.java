@@ -78,7 +78,7 @@ public final class Consumers {
     /**
      * Morphs a given {@link BiConsumer} into a {@link Consumer}, which a certain given value for the first argument.
      *
-     * See {@link TriConsumer#withArg1(Object)}
+     * @see  TriConsumer#withArg1(Object)
      */
     public static <U, V> Consumer<V> withArg1(BiConsumer<U, V> biConsumer, U value) {
         return new MonoWrapper<BiConsumer<U, V>, V>(biConsumer, value, "with arg1 " + value) {
@@ -92,7 +92,7 @@ public final class Consumers {
     /**
      * Morphs a given {@link BiConsumer} into a {@link Consumer}, which a certain given value for the first argument.
      *
-     * See {@link TriConsumer#withArg1(Object)}
+     * @see TriConsumer#withArg1(Object)
      */
     public static <U, V> Consumer<V> withArg1Supplier(BiConsumer<U, V> biConsumer, Supplier<U> u) {
         return new MonoWrapper<BiConsumer<U, V>, V>(biConsumer, u, "with arg1 " + u) {
@@ -106,7 +106,7 @@ public final class Consumers {
     /**
      * Morphs a given {@link BiConsumer} into a {@link Consumer}, which a certain given value for the second argument.
      *
-     * See {@link TriConsumer#withArg2(Object)}
+     * @see TriConsumer#withArg2(Object)
      */
     public static <U, V> Consumer<U> withArg2(BiConsumer<U, V> biConsumer, V value) {
         return new MonoWrapper<BiConsumer<U, V>, U>(biConsumer, value, "with arg2 " + value) {
@@ -120,7 +120,7 @@ public final class Consumers {
     /**
      * Morphs a given {@link BiConsumer} into a {@link Consumer}, which a certain given value for the second argument.
      *
-     * See {@link TriConsumer#withArg2(Object)}
+     * @see TriConsumer#withArg2(Object)
      */
     public static <U, V> Consumer<U> withArg2Supplier(BiConsumer<U, V> biConsumer, Supplier<V> v) {
         return new MonoWrapper<BiConsumer<U, V>, U>(biConsumer, v, "with arg2 " + v) {

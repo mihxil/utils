@@ -1,6 +1,7 @@
 package org.meeuw.functional;
 
 import java.util.Objects;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 /**
@@ -21,14 +22,29 @@ public class Suppliers {
     }
 
     /**
+     * Morphs a {@link Supplier} into a {@link java.util.function.Function}, where it's argument ignored and the
+     * return value supplied by the supplier.
+     */
+    static <T, R> Function<T, R> ignoreArg(Supplier<R> supplier) {
+        return new Functions.MonoWrapper<Supplier<R>, T, R>(supplier, null, "ignore arg") {
+            @Override
+            public R apply(T t) {
+                return wrapped.get();
+            }
+        };
+    }
+
+    /**
      * Wrap a given supplier. The result of the suppletion is memoized after the first call. Subsequent calls will give the same value, without calling the supplier again.
      */
     static <T> Supplier<T> memoize(Supplier<T> supplier) {
         return new MemoizeSupplier<>(supplier);
     }
 
+    /**
+     * Extension of {@link Wrapper} that implements {@link Supplier}.
+     */
     protected static abstract class SupplierWrapper<T, W> extends Wrapper<W> implements Supplier<T> {
-
         public SupplierWrapper(W wrapped, String reason) {
             super(wrapped, reason);
         }
@@ -73,7 +89,6 @@ public class Suppliers {
     }
 
     protected static class Always<W> extends Wrapper<W> implements Supplier<W> {
-
         public Always(W wrapped, String why) {
             super(wrapped, why);
         }

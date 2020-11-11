@@ -131,7 +131,7 @@ public final class Predicates {
     /**
      * Morphs a given {@link BiPredicate} into a {@link Predicate}, which a certain given value for the first argument.
      *
-     * See {@link TriPredicate#withArg1(Object)}
+     * @see TriPredicate#withArg1(Object)
      */
     public static <U, V> Predicate<V> withArg1(BiPredicate<U, V> biPredicate, U u) {
         return new MonoWrapper<BiPredicate<U, V>, V>(biPredicate, u, "with arg1 " + u) {
@@ -145,7 +145,7 @@ public final class Predicates {
     /**
      * Morphs a given {@link BiPredicate} into a {@link Predicate}, which a certain given value for the first argument.
      *
-     * See {@link TriPredicate#withArg1(Object)}
+     * @see TriPredicate#withArg1(Object)
      */
     public static <U, V> Predicate<U> withArg2(BiPredicate<U, V> biPredicate, V v) {
         return new MonoWrapper<BiPredicate<U, V>, U>(biPredicate, v, "with arg2 " + v) {

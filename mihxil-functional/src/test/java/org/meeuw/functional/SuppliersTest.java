@@ -1,5 +1,6 @@
 package org.meeuw.functional;
 
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 import org.junit.jupiter.api.Test;
@@ -59,5 +60,17 @@ class SuppliersTest {
         assertThat(a1.get()).isEqualTo("a");
         Supplier<String> b = Suppliers.always("b");
         assertThat(a1).isNotEqualTo(b);
+    }
+
+    @Test
+    void ignoreArg() {
+        Supplier<String> a1 = Suppliers.always("a");
+
+        Function<Integer, String> fa1 = Suppliers.ignoreArg(a1);
+
+        assertThat(fa1).isEqualTo(fa1);
+        assertThat(fa1).isEqualTo(Suppliers.ignoreArg(a1));
+        assertThat(fa1.apply(1)).isEqualTo("a");
+        assertThat(fa1.apply(2)).isEqualTo("a");
     }
 }

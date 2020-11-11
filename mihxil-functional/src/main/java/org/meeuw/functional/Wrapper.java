@@ -20,6 +20,10 @@ abstract class Wrapper<W> {
         this.reason = reason;
     }
 
+    /**
+     * The string representation of a {@code Wrapper} is the string representation of wrapped object to which a
+     * 'reason' for the wrapping is appended.
+     */
     @Override
     public String toString() {
         return wrapped + "(" + reason + ")";

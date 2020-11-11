@@ -1,5 +1,7 @@
 package org.meeuw.functional;
 
+import java.util.Comparator;
+
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -25,6 +27,14 @@ class QuaternaryOperatorTest {
         for (String[] args : permute()) {
             assertThat(maxBy(String::compareTo).apply(args[0], args[1], args[2], args[3])).isEqualTo("d");
         }
+    }
+
+    @Test
+    void equalsHashCode() {
+        Comparator<String> stringComparator = String::compareTo;
+        QuaternaryOperator<String> stringQuaternaryOperator = minBy(stringComparator);
+        assertThat(stringQuaternaryOperator).isEqualTo(minBy(stringComparator));
+        assertThat(stringQuaternaryOperator.hashCode()).isEqualTo(minBy(stringComparator).hashCode());
     }
 
     String[][] permute() {

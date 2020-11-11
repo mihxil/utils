@@ -31,15 +31,23 @@ public interface TriConsumer<T, U, V> {
         };
     }
 
-    default BiConsumer<U, V> withArg1(T t) {
-        return new Consumers.BiWrapper<TriConsumer<T, U, V>, U, V>(this,  t, "with arg1 " + t) {
+
+
+    /**
+     * Morphs this {@link TriConsumer} into a {@link BiConsumer} where the value for the third argument will be fixed.
+     */
+    default BiConsumer<T, U> withArg3(V v) {
+        return new Consumers.BiWrapper<TriConsumer<T, U, V>, T, U>(this,  v, "with arg3 " + v) {
             @Override
-            public void accept(U u, V v) {
+            public void accept(T t, U u) {
                 wrapped.accept(t, u, v);
             }
         };
     }
 
+    /**
+     * Morphs this {@link TriConsumer} into a {@link BiConsumer} where the value for the second argument will be fixed.
+     */
     default BiConsumer<T, V> withArg2(U u) {
         return new Consumers.BiWrapper<TriConsumer<T, U, V>, T, V>(this,  u, "with arg2 " + u) {
             @Override
@@ -49,10 +57,13 @@ public interface TriConsumer<T, U, V> {
         };
     }
 
-    default BiConsumer<T, U> withArg3(V v) {
-        return new Consumers.BiWrapper<TriConsumer<T, U, V>, T, U>(this,  v, "with arg3 " + v) {
+    /**
+     * Morphs this {@link TriConsumer} into a {@link BiConsumer} where the value for the first argument will be fixed.
+     */
+    default BiConsumer<U, V> withArg1(T t) {
+        return new Consumers.BiWrapper<TriConsumer<T, U, V>, U, V>(this,  t, "with arg1 " + t) {
             @Override
-            public void accept(T t, U u) {
+            public void accept(U u, V v) {
                 wrapped.accept(t, u, v);
             }
         };

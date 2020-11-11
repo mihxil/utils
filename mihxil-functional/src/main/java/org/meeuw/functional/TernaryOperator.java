@@ -29,9 +29,12 @@ public interface TernaryOperator<T> extends TriFunction<T, T, T, T> {
      */
     static <T> TernaryOperator<T> minBy(Comparator<? super T> comparator) {
         Objects.requireNonNull(comparator);
-        return (a, b, c) -> {
-            T smaller = comparator.compare(a, b) <= 0 ? a : b;
-            return comparator.compare(smaller, c) <= 0 ? smaller : c;
+        return new  Wrapper<Comparator<? super T>, T>(comparator, "min by " + comparator) {
+            @Override
+            public T apply(T a, T b, T c) {
+                T smaller = comparator.compare(a, b) <= 0 ? a : b;
+                return comparator.compare(smaller, c) <= 0 ? smaller : c;
+            }
         };
     }
 
@@ -47,9 +50,22 @@ public interface TernaryOperator<T> extends TriFunction<T, T, T, T> {
      */
     static <T> TernaryOperator<T> maxBy(Comparator<? super T> comparator) {
         Objects.requireNonNull(comparator);
-        return (a, b, c) -> {
-            T bigger = comparator.compare(a, b) >= 0 ? a : b;
-            return comparator.compare(bigger, c) >= 0 ? bigger : c;
+        return new  Wrapper<Comparator<? super T>, T>(comparator, "max by " + comparator) {
+            @Override
+            public T apply(T a, T b, T c) {
+                T bigger = comparator.compare(a, b) >= 0 ? a : b;
+                return comparator.compare(bigger, c) >= 0 ? bigger : c;
+            }
         };
+    }
+
+     abstract class Wrapper<W, T> extends org.meeuw.functional.Wrapper<W> implements TernaryOperator<T> {
+        /**
+         * @param wrapped An object that this wrapper is wrapping, and can be used to implement it
+         * @param reason  A description for why the wrapping happened
+         */
+        public Wrapper(W wrapped, String reason) {
+            super(wrapped, reason);
+        }
     }
 }

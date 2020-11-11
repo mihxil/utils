@@ -4,11 +4,14 @@ import java.util.Objects;
 import java.util.function.*;
 
 /**
+ * A place for some 'Function' related utilities.
+ *
  * Provides functions implementation which always return the same value, no matter their arguments.
  *
  * With a nicer toString/equals then a standard lambda would do.
  *
- * Also a place for some other 'Function' related utilities.
+ * Also, this statically provides the several {@code withArgX} and {@code ignoreArgX} methods (so they are also accessible
+ * for implementions of {@link Function} and {@link BiFunction}).
  *
  * @author Michiel Meeuwissen
  * @since 0.1
@@ -19,35 +22,67 @@ public final class Functions {
     private Functions() {
     }
 
-    public static <A, R> Function<A, R> always(R v, String s) {
-        return new Always<>(v, s);
+    /**
+     * Provides an implementation of {@link Function} always returning the same value
+     * @param returnValue The desired value to always return
+     * @param description A description of the function. Defaults to "always " + {@code returnValue}
+     */
+    public static <A, R> Function<A, R> always(R returnValue, String description) {
+        return new Always<>(returnValue, description);
     }
 
-    public static <A, R> Function<A, R> always(R v) {
-        return always(v, "always " + v);
+    /**
+     * @see #always(Object, String)
+     */
+    public static <A, R> Function<A, R> always(R returnValue) {
+        return always(returnValue, "always " + returnValue);
     }
 
-    public static <A1, A2,  R> BiFunction<A1, A2, R> biAlways(R v, String s) {
-        return new BiAlways<>(v, s);
+    /**
+     * Provides an implementation of {@link BiFunction} always returning the same value
+     * @param returnValue The desired value to always return
+     * @param description A description of the function. Defaults to "always " + {@code returnValue}
+     */
+    public static <A1, A2,  R> BiFunction<A1, A2, R> biAlways(R returnValue, String description) {
+        return new BiAlways<>(returnValue, description);
     }
 
-    public static <A1, A2, R> BiFunction<A1, A2, R> biAlways(R v) {
-        return biAlways(v, "always " + v);
+    /**
+     * @see #biAlways(Object, String)
+     */
+    public static <A1, A2, R> BiFunction<A1, A2, R> biAlways(R returnValue) {
+        return biAlways(returnValue, "always " + returnValue);
     }
 
 
-    public static <A1, A2, A3,  R> TriFunction<A1, A2, A3,  R> triAlways(R v, String s) {
-        return new TriAlways<>(v, s);
+    /**
+     * Provides an implementation of {@link TriFunction} always returning the same value
+     * @param returnValue The desired value to always return
+     * @param description A description of the function. Defaults to "always " + {@code returnValue}
+     */
+    public static <A1, A2, A3,  R> TriFunction<A1, A2, A3,  R> triAlways(R returnValue, String description) {
+        return new TriAlways<>(returnValue, description);
     }
 
+    /**
+     * @see #triAlways(Object, String)
+     */
     public static <A1, A2, A3,  R> TriFunction<A1, A2, A3,  R> triAlways(R v) {
         return triAlways(v, "always " + v);
     }
 
-     public static <A1, A2, A3, A4,  R> QuadriFunction<A1, A2, A3, A4,  R> quadriAlways(R v, String s) {
-        return new QuadriAlways<>(v, s);
+    /**
+     * Provides an implementation of {@link QuadriFunction} always returning the same value
+     * @param returnValue The desired value to always return
+     * @param description A description of the function. Defaults to "always " + {@code returnValue}
+     */
+    public static <A1, A2, A3, A4,  R> QuadriFunction<A1, A2, A3, A4,  R> quadriAlways(R returnValue, String description) {
+        return new QuadriAlways<>(returnValue, description);
     }
 
+     /**
+     * @see #quadriAlways(Object, String)
+     */
     public static <A1, A2, A3, A4, R> QuadriFunction<A1, A2, A3,  A4, R> quadriAlways(R v) {
         return quadriAlways(v, "always " + v);
     }
@@ -55,7 +90,7 @@ public final class Functions {
     /**
      * Morphs a given {@link Function} into a {@link Supplier}, with a certain given value for the first argument.
      *
-     * See {@link TriFunction#withArg1(Object)}
+     * @see TriFunction#withArg1(Object)
      */
     public static <A1, R> Supplier<R> withArg1(Function<A1, R> function, A1 value) {
         return new Suppliers.SupplierWrapper<R, Function<A1, R>>(function, "with  arg1 " + value) {
@@ -67,29 +102,29 @@ public final class Functions {
     }
 
     /**
-     * Morphs a given {@link BiFunction} into a {@link Function}, with a certain given value for the first argument.
-     *
-     * See {@link TriFunction#withArg1(Object)}
-     */
-    public static <A1, A2, R> Function<A2, R> withArg1(BiFunction<A1, A2, R> function, A1 value) {
-        return new MonoWrapper<BiFunction<A1, A2, R>, A2, R>(function, value, "with arg1 " + value) {
-            @Override
-            public R apply(A2 a2) {
-                return wrapped.apply(value, a2);
-            }
-        };
-    }
-
-    /**
      * Morphs a given {@link BiFunction} into a {@link Function}, with a certain given value for the second argument.
      *
-     * See {@link TriFunction#withArg2(Object)}
+     * @see TriFunction#withArg2(Object)
      */
     public static <A1, A2, R> Function<A1, R> withArg2(BiFunction<A1, A2, R> function, A2 value) {
         return new MonoWrapper<BiFunction<A1, A2, R>, A1, R>(function, value, "with arg2 " + value) {
             @Override
             public R apply(A1 a1) {
                 return wrapped.apply(a1, value);
+            }
+        };
+    }
+
+    /**
+     * Morphs a given {@link BiFunction} into a {@link Function}, with a certain given value for the first argument.
+     *
+     * @see TriFunction#withArg1(Object)
+     */
+    public static <A1, A2, R> Function<A2, R> withArg1(BiFunction<A1, A2, R> function, A1 value) {
+        return new MonoWrapper<BiFunction<A1, A2, R>, A2, R>(function, value, "with arg1 " + value) {
+            @Override
+            public R apply(A2 a2) {
+                return wrapped.apply(value, a2);
             }
         };
     }
@@ -154,52 +189,36 @@ public final class Functions {
         };
     }
 
-     /**
+    /**
      * Creates a new {@link QuadriFunction} but implement it using a {@link TriFunction}, simply completely ignoring the fourth argument
+     * Just calls {@link TriFunction#ignoreArg4()}
      */
     public static <T, U, V, W, R> QuadriFunction<T, U, V, W,  R> ignoreArg4(TriFunction<T, U, V,  R> function) {
-        return new QuadriWrapper<TriFunction<T, U, V, R>, T, U, V, W, R>(function, null, "ignore arg4") {
-            @Override
-            public R apply(T t, U u, V v, W w) {
-                return function.apply(t, u, v);
-            }
-        };
+        return function.ignoreArg4();
     }
 
     /**
      * Creates a new {@link QuadriFunction} but implement it using a {@link TriFunction}, simply completely ignoring the third argument
+     * Just calls {@link TriFunction#ignoreArg3()}
      */
     public static <T, U, V, W, R> QuadriFunction<T, U, V, W,  R> ignoreArg3(TriFunction<T, U, W,  R> function) {
-        return new QuadriWrapper<TriFunction<T, U, W, R>, T, U, V, W, R>(function, null, "ignore arg1") {
-            @Override
-            public R apply(T t, U u, V v, W w) {
-                return function.apply(t, u, w);
-            }
-        };
+        return function.ignoreArg3();
     }
 
     /**
      * Creates a new {@link QuadriFunction} but implement it using a {@link TriFunction}, simply completely ignoring the first argument
+     * Just calls {@link TriFunction#ignoreArg2()}
      */
     public static <T, U, V, W, R> QuadriFunction<T, U, V, W,  R> ignoreArg2(TriFunction<T, V, W,  R> function) {
-        return new QuadriWrapper<TriFunction<T, V, W, R>, T, U, V, W, R>(function, null, "ignore arg1") {
-            @Override
-            public R apply(T t, U u, V v, W w) {
-                return wrapped.apply(t, v, w);
-            }
-        };
+        return function.ignoreArg2();
     }
 
     /**
      * Creates a new {@link QuadriFunction} but implement it using a {@link TriFunction}, simply completely ignoring the first argument
+     * Just calls {@link TriFunction#ignoreArg1()}
      */
     public static <T, U, V, W, R> QuadriFunction<T, U, V, W,  R> ignoreArg1(TriFunction<U, V, W,  R> function) {
-        return new QuadriWrapper<TriFunction<U, V,W, R>, T, U, V, W, R>(function, null, "ignore arg1") {
-            @Override
-            public R apply(T t, U u, V v, W w) {
-                return function.apply(u, v, w);
-            }
-        };
+        return function.ignoreArg1();
     }
 
     /**

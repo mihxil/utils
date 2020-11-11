@@ -86,12 +86,12 @@ public interface TriPredicate<T, U, V> {
     }
 
     /**
-     * Morphs this {@link TriPredicate} into a {@link BiPredicate}, by filling in the first argument
+     * Morphs this {@link TriPredicate} into a {@link BiPredicate}, by filling in the thirds argument
      */
-    default BiPredicate<U, V> withArg1(T t) {
-        return new Predicates.BiWrapper<TriPredicate<T, U, V>, U, V>(this, t, "with arg1 " + t) {
+    default BiPredicate<T, U> withArg3(V v) {
+        return new Predicates.BiWrapper<TriPredicate<T, U, V>, T, U>(this, v, "with arg3 " + v) {
             @Override
-            public boolean test(U u, V v) {
+            public boolean test(T t, U u) {
                 return wrapped.test(t, u, v);
             }
         };
@@ -109,12 +109,17 @@ public interface TriPredicate<T, U, V> {
         };
     }
 
-    default BiPredicate<T, U> withArg3(V v) {
-        return new Predicates.BiWrapper<TriPredicate<T, U, V>, T, U>(this, v, "with arg3 " + v) {
+    /**
+     * Morphs this {@link TriPredicate} into a {@link BiPredicate}, by filling in the first argument
+     */
+    default BiPredicate<U, V> withArg1(T t) {
+        return new Predicates.BiWrapper<TriPredicate<T, U, V>, U, V>(this, t, "with arg1 " + t) {
             @Override
-            public boolean test(T t, U u) {
+            public boolean test(U u, V v) {
                 return wrapped.test(t, u, v);
             }
         };
     }
+
+
 }
