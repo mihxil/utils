@@ -4,7 +4,7 @@ import java.util.function.BiPredicate;
 import java.util.function.Predicate;
 
 /**
- * A {@link BiPredicate} with tests with an object of the same type, can be considered an 'equivalance'.
+ * A {@link BiPredicate} with tests with an object of the same type, can be considered an 'equivalence'.
  *
  * It is just less then a {@link java.util.Comparator} which for different objects also way which one is 'bigger'.
  * Equivalence is only about equality in some sense.

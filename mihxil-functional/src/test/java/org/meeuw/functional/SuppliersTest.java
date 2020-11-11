@@ -27,6 +27,7 @@ class SuppliersTest {
         }
     }
 
+    @SuppressWarnings({"EqualsWithItself", "EqualsBetweenInconvertibleTypes", "ConstantConditions"})
     @Test
     void memoize() {
         Supplier<Integer> isup = new I();
@@ -34,19 +35,19 @@ class SuppliersTest {
         Supplier<Integer> memoize = Suppliers.memoize(isup);
         assertThat(memoize.get()).isEqualTo(1);
         Supplier<Integer> another = Suppliers.memoize(isup);
-        assertThat(memoize).isEqualTo(another);
+        assertThat(memoize.equals(another)).isTrue();
         assertThat(memoize.hashCode()).isEqualTo(another.hashCode());
 
         i++;
         assertThat(memoize.get()).isEqualTo(1);
 
-        assertThat(memoize).isEqualTo(memoize);
-        assertThat(memoize).isNotEqualTo("something else");
-        assertThat(memoize).isNotEqualTo(null);
+        assertThat(memoize.equals(memoize)).isTrue();
+        assertThat(memoize.equals("something else")).isFalse();
+        assertThat(memoize.equals(null)).isFalse();
         assertThat(memoize.toString()).isEqualTo("I(memoize)");
 
         Supplier<Integer> memoize2 = Suppliers.memoize(isup);
-        assertThat(memoize).isNotEqualTo(memoize2);
+        assertThat(memoize.equals(memoize2)).isFalse();
         assertThat(memoize2.get()).isEqualTo(2);
 
     }

@@ -21,4 +21,4 @@ Classes related to `java.util.Function` and extensions like `Predicate`, `Consum
 ** `TriFunction#withArg[1-3](...)` morphs a `TriFunction` to a `BiFunction`.
 
 *  Utilities for that in link:mihxil-functional/src/main/java/org/meeuw/functional/Functions.java[`Functions`], link:mihxil-functional/src/main/java/org/meeuw/functional/Consumers.java[`Consumers`], link:mihxil-functional/src/main/java/org/meeuw/functional/Predicates.java[`Predicates`]
-* Consistent `equals` and `hashCode`, for the utility functions that produce functional implementations. E.g. the the above mentioned `ignoreArg*` and `withArg*` are not simply implemented with lambda's, but also with equals and hashcode based on the source functional class implementation.
+* Consistent `equals` and `hashCode`, for the utility functions that produce functional implementations. E.g. the  above mentioned `ignoreArg*` and `withArg*` are not simply implemented with lambda's, but also with equals and hashcode based on the source functional class implementation.
