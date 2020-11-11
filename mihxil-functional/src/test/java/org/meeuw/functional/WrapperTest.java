@@ -3,22 +3,20 @@ package org.meeuw.functional;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author Michiel Meeuwissen
- * @since 0.3
+ * @since 1.0
  */
-@SuppressWarnings({"ConstantConditions", "EqualsWithItself", "EqualsBetweenInconvertibleTypes"})
-class ValueWrapperTest {
+class WrapperTest {
 
-    public static class W extends ValueWrapper<String> {
+    public static class W extends Wrapper<String> {
 
         public W(String wrapped) {
-            super(wrapped, "value", "why");
+            super(wrapped, "why");
         }
-        public W(String wrapped, String value) {
-            super(wrapped, value, "why");
-        }
+
     }
 
     @Test
@@ -26,11 +24,9 @@ class ValueWrapperTest {
 
         W w = new W(null);
         assertThat(w.equals(new W(null))).isTrue();
-        assertThat(w.equals(new W(null, "abc"))).isFalse();
-        assertThat(w.equals(new W(null, null))).isFalse();
 
         assertThat(w.hashCode()).isEqualTo(new W(null).hashCode());
-        assertThat(w.hashCode()).isNotEqualTo(new W(null, "abc").hashCode());
+        assertThat(w.hashCode()).isNotEqualTo(new W("abc").hashCode());
 
         assertThat(w.equals(w)).isTrue();
         assertThat(w.equals(null)).isFalse();
@@ -45,12 +41,9 @@ class ValueWrapperTest {
         W w = new W("foobar");
         assertThat(w.equals(new W("foobar"))).isTrue();
         assertThat(w.equals(new W(null))).isFalse();
-        assertThat(w.equals(new W("foobar", "xyz"))).isFalse();
-        assertThat(w.equals(new W("foobar", null))).isFalse();
 
         assertThat(w.hashCode()).isEqualTo(new W("foobar").hashCode());
-        assertThat(w.hashCode()).isNotEqualTo(new W("foobar", "xyz").hashCode());
-        assertThat(w.hashCode()).isNotEqualTo(new W("foobar", null).hashCode());
+        assertThat(w.hashCode()).isNotEqualTo(new W("xxyy").hashCode());
 
         assertThat(w.equals(w)).isTrue();
         assertThat(w.equals(null)).isFalse();
