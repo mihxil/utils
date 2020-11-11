@@ -83,8 +83,8 @@ public class PredicatesTest {
     public void monoIgnoreArg1() {
         assertThat(ignoreArg1(mono).test(new Object(), "1234")).isFalse();
 
-        assertThat(ignoreArg1(mono)).isEqualTo(ignoreArg1(mono));
-        assertThat(ignoreArg1(mono)).isNotEqualTo(ignoreArg1((Predicate<String>) (s) -> s.length() < 5));
+        assertThat(ignoreArg1(mono).equals(ignoreArg1(mono))).isTrue();
+        assertThat(ignoreArg1(mono).equals(ignoreArg1((Predicate<String>) (s) -> s.length() < 5))).isFalse();
     }
 
     @Test
@@ -93,12 +93,13 @@ public class PredicatesTest {
     }
 
 
+    @SuppressWarnings("EqualsBetweenInconvertibleTypes")
     @Test
     public void biIgnoreArg1() {
         assertThat(ignoreArg1(bi).test(new Object(), "1234", 4)).isTrue();
 
-        assertThat(ignoreArg1(bi)).isEqualTo(ignoreArg1(bi));
-        assertThat(ignoreArg1(bi)).isNotEqualTo(ignoreArg1((BiPredicate<String, String>) (s, t) -> s.length() < 5));
+        assertThat(ignoreArg1(bi).equals(ignoreArg1(bi))).isTrue();
+        assertThat(ignoreArg1(bi).equals(ignoreArg1((BiPredicate<String, String>) (s, t) -> s.length() < 5))).isFalse();
     }
 
     @Test
@@ -115,8 +116,8 @@ public class PredicatesTest {
     public void biWithArg2() {
         assertThat(withArg2(bi, 1).test("x")).isTrue();
 
-        assertThat(withArg2(bi, 1)).isEqualTo(withArg2(bi, 1));
-        assertThat(withArg2(bi, 1)).isNotEqualTo(withArg2(bi, 2));
+        assertThat(withArg2(bi, 1).equals(withArg2(bi, 1))).isTrue();
+        assertThat(withArg2(bi, 1).equals(withArg2(bi, 2))).isFalse();
     }
 
     @Test
@@ -124,8 +125,8 @@ public class PredicatesTest {
         assertThat(withArg1(bi, "x").test(1)).isTrue();
         assertThat(withArg1(bi, "xx").test(1)).isFalse();
 
-        assertThat(withArg1(bi, "x")).isEqualTo(withArg1(bi, "x"));
-        assertThat(withArg1(bi, "x")).isNotEqualTo(withArg1(bi, "xx"));
+        assertThat(withArg1(bi, "x").equals(withArg1(bi, "x"))).isTrue();
+        assertThat(withArg1(bi, "x").equals(withArg1(bi, "xx"))).isFalse();
 
     }
 }
