@@ -15,6 +15,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class EquivalenceTest {
 
 
+    @SuppressWarnings({"EqualsWithItself", "EqualsBetweenInconvertibleTypes", "ConstantConditions"})
     @Test
     public void equivalence() {
         String a1 = "a";
@@ -24,7 +25,7 @@ class EquivalenceTest {
         Predicate<String> predicate = equivalence.predicate(a1);
         assertThat(predicate.test(a2)).isTrue();
 
-        assertThat(predicate).isEqualTo(predicate);
+        assertThat(predicate.equals(predicate)).isTrue();
         assertThat(predicate).isEqualTo(equivalence.predicate("a"));
         assertThat(predicate).isNotEqualTo(equivalence.predicate("b"));
         assertThat(predicate.equals("a")).isFalse();
