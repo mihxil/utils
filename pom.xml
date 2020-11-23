@@ -64,7 +64,6 @@
     <connection>scm:git:git://github.com/mihxil/util.git</connection>
     <developerConnection>scm:git:ssh://git@github.com/mihxil/util.git</developerConnection>
     <url>https://github.com/mihxil/util</url>
-    <tag>mihxil-util-parent-0.3</tag>
   </scm>
 
   <distributionManagement>
