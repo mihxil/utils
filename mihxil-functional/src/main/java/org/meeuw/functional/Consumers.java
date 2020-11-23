@@ -17,6 +17,11 @@ public final class Consumers {
 
     /**
      * Creates a new {@link TriConsumer} but implement it using a {@link BiConsumer}, simply completely ignoring the third argument
+     * @param <T> First argument of the resulting {@code TriConsumer} and of the {@code BiConsumer} argument
+     * @param <U> Second argument of the resulting {@code TriConsumer} and of the {@code BiConsumer} argument
+     * @param <V> Thirds argument of the resulting {@code TriConsumer} (which will be ignored)
+     * @param biConsumer The {@code BiConsumer} to adapt
+     * @return A new {@code TriConsumer} that passes its first and second argument to the given {@link BiConsumer}
      */
     public static <T, U, V> TriConsumer<T, U, V> ignoreArg3(BiConsumer<T, U> biConsumer) {
         return new TriWrapper<BiConsumer<T, U>, T, U, V>(biConsumer, null, "ignore arg3") {
@@ -29,6 +34,11 @@ public final class Consumers {
 
     /**
      * Creates a new {@link TriConsumer} but implement it using a {@link BiConsumer}, simply completely ignoring the second argument
+     * @param <T> First argument of the resulting {@code TriConsumer} and of the {@code BiConsumer} argument
+     * @param <U> Second argument of the resulting {@code TriConsumer} (which will be ignored)
+     * @param <V> Thirds argument of the resulting {@code TriConsumer} and the second one of the {@code BiConsumer} argument
+     * @param biConsumer The {@code BiConsumer} to adapt
+     * @return A new {@code TriConsumer} that passes its first and third argument to the given {@link BiConsumer}
      */
     public static <T, U, V> TriConsumer<T, U, V> ignoreArg2(BiConsumer<T, V> biConsumer) {
         return new TriWrapper<BiConsumer<T, V>, T, U, V>(biConsumer, null, "ignore arg2") {
@@ -41,6 +51,11 @@ public final class Consumers {
 
     /**
      * Creates a new {@link TriConsumer} but implement it using a {@link BiConsumer}, simply completely ignoring the first argument
+     * @param <T> First argument of the resulting {@code TriConsumer} which will be ignored
+     * @param <U> Second argument of the resulting {@code TriConsumer} and the first one of the {@code BiConsumer} argument
+     * @param <V> Thirds argument of the resulting {@code TriConsumer} and the second one of the {@code BiConsumer} argument
+     * @param biConsumer The {@code BiConsumer} to adapt
+     * @return A new {@code TriConsumer} that passes its second and third argument to the given {@link BiConsumer}
      */
     public static <T, U, V> TriConsumer<T, U, V> ignoreArg1(BiConsumer<U, V> biConsumer) {
         return new TriWrapper<BiConsumer<U, V>, T, U, V>(biConsumer, null, "ignore arg1") {
@@ -53,6 +68,10 @@ public final class Consumers {
 
     /**
      * Creates a new {@link BiConsumer} but implement it using a {@link Consumer}, simply completely ignoring the second argument
+     * @param <T> First argument of the resulting {@code BiConsumer} and of the {@code Consumer} argument
+     * @param <U> Second argument of the resulting {@code BiConsumer} (which will be ignored)
+     * @param consumer The {@code Consumer} to adapt
+     * @return A new {@code BiConsumer} that passes first argument to the given {@link Consumer}
      */
     public static <T, U> BiConsumer<T, U> ignoreArg2(Consumer<T> consumer) {
         return new BiWrapper<Consumer<T>, T, U>(consumer, null, "ignore arg2") {
@@ -65,6 +84,10 @@ public final class Consumers {
 
     /**
      * Creates a new {@link BiPredicate} but implement it using a {@link Predicate}, simply completely ignoring the first argument
+     * @param <T> First argument of the resulting {@code BiConsumer} (which will be ignored)
+     * @param <U> Second argument of the resulting {@code BiConsumer} and the argument of the {@code Consumer} argument
+     * @param consumer The {@code Consumer} to adapt
+     * @return A new {@code BiConsumer} that passes second argument to the given {@link Consumer}
      */
     public static <T, U> BiConsumer<T, U> ignoreArg1(Consumer<U> consumer) {
         return new BiWrapper<Consumer<U>, T, U>(consumer, null, "ignore arg1") {
@@ -78,6 +101,11 @@ public final class Consumers {
     /**
      * Morphs a given {@link BiConsumer} into a {@link Consumer}, which a certain given value for the first argument.
      *
+     * @param <U> First argument of the given {@code BiConsumer}, which value if fixed.
+     * @param <V> First argument of the resulting {@code Consumer}, and the second argument of the given {@code BiConsumer}
+     * @param biConsumer The {@code BiConsumer} that will be used to implement a new {@code Consumer}
+     * @param value The fixed value for the first argument of the given {@code BiConsumer}
+     * @return A new {@code Consumer} that is calling the given {@code BiConsumer}, and uses its own argument for the second paramter, and a fixed value for the first parameter
      * @see  TriConsumer#withArg1(Object)
      */
     public static <U, V> Consumer<V> withArg1(BiConsumer<U, V> biConsumer, U value) {

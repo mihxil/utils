@@ -239,6 +239,7 @@
             </executions>
             <configuration>
               <failOnError>false</failOnError>
+              <show>public</show>
             </configuration>
           </plugin>
         </plugins>
