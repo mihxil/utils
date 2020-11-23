@@ -1,16 +1,21 @@
 package org.meeuw.functional;
 
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.parallel.Execution;
+import org.junit.jupiter.api.parallel.ExecutionMode;
 
+import static java.lang.Thread.sleep;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Michiel Meeuwissen
  * @since 0.1
  */
+@Execution(ExecutionMode.SAME_THREAD)
 class SuppliersTest {
 
     static int i = 0;
@@ -24,6 +29,18 @@ class SuppliersTest {
         @Override
         public String toString() {
             return "I";
+        }
+    }
+
+    static class SlowI extends  I {
+        @Override
+        public Integer get() {
+            try {
+                sleep(100);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            return i;
         }
     }
 
@@ -49,6 +66,41 @@ class SuppliersTest {
         Supplier<Integer> memoize2 = Suppliers.memoize(isup);
         assertThat(memoize.equals(memoize2)).isFalse();
         assertThat(memoize2.get()).isEqualTo(2);
+    }
+
+    @Test
+    void memoizeSlow() throws InterruptedException {
+        Supplier<Integer> isup = new SlowI();
+        i = 1;
+        AtomicInteger result1= new AtomicInteger();
+        AtomicInteger result2= new AtomicInteger();
+
+        Supplier<Integer> memoize = Suppliers.memoize(isup);
+        new Thread(() -> {
+            result1.set(memoize.get());
+            synchronized (SuppliersTest.this) {
+                SuppliersTest.this.notifyAll();
+            }
+            i++;
+        }).start();
+        new Thread(() -> {
+            result2.set(memoize.get());
+            synchronized (SuppliersTest.this) {
+                SuppliersTest.this.notifyAll();
+            }
+            i++;
+        }).start();
+
+        while (result1.get() == 0 || result2.get() == 0) {
+            synchronized (this) {
+                wait();
+            }
+        }
+        assertThat(result1).hasValue(1);
+        assertThat(result2).hasValue(1);
+
+
+
 
     }
 

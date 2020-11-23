@@ -52,9 +52,9 @@ public class Suppliers {
 
     protected static class MemoizeSupplier<T> extends SupplierWrapper<T, Supplier<T>> {
 
-        T value;
+        transient T value;
 
-        boolean evaluated = false;
+        transient volatile boolean evaluated = false;
 
         public MemoizeSupplier(Supplier<T> supplier) {
             super(supplier, "memoize");
