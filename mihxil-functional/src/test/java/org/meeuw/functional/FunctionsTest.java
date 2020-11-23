@@ -11,7 +11,6 @@ import static org.meeuw.functional.Functions.*;
 
 /**
  * @author Michiel Meeuwissen
- * @since ...
  */
 class FunctionsTest {
 
