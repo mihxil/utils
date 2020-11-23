@@ -21,6 +21,7 @@ class FunctionsTest {
 
         assertThat(x.equals(Functions.always("x"))).isTrue();
         assertThat(x.equals(x)).isTrue();
+        assertThat(x.equals(null)).isFalse();
         assertThat(x.equals(Functions.always("y"))).isFalse();
         assertThat(x.equals(new Object())).isFalse();
 
@@ -42,6 +43,7 @@ class FunctionsTest {
         assertThat(Functions.biAlways("x").equals(Functions.biAlways("x"))).isTrue();
         assertThat(Functions.biAlways("x").equals(Functions.biAlways("y"))).isFalse();
         assertThat(Functions.biAlways("x").equals(Functions.always("y"))).isFalse();
+        assertThat(Functions.biAlways("x").equals(null)).isFalse();
         assertThat(Functions.biAlways("x").toString()).isEqualTo("always x");
         assertThat(Functions.biAlways("x", "X").toString()).isEqualTo("X");
     }
