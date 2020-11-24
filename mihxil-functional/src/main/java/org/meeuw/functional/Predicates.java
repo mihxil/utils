@@ -67,6 +67,11 @@ public final class Predicates {
 
     /**
      * Creates a new {@link TriPredicate} but implement it using a {@link BiPredicate}, simply completely ignoring the third argument
+     * @param <T> the type of the first argument to the predicate
+     * @param <U> the type of the second argument to the predicate
+     * @param <V> the type of the third argument to the predicate (ignored)
+     * @param biPredicate the {@code BiPredicate} used to implement the new {@code TriPredicate}
+     * @return a new {@code TriPredicate} with the desired behaviour
      */
     public static <T, U, V> TriPredicate<T, U, V> ignoreArg3(BiPredicate<T, U> biPredicate) {
         return new TriWrapper<BiPredicate<T, U>, T, U, V>(biPredicate, null, "ignore arg3") {

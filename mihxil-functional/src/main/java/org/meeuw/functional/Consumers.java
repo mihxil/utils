@@ -19,7 +19,7 @@ public final class Consumers {
      * Creates a new {@link TriConsumer} but implement it using a {@link BiConsumer}, simply completely ignoring the third argument.
      * The resulting object implements {@link #equals(Object)} and {@link #hashCode()} based on the parameter.
      *
-     * @param <T> the type of the first argument of the resulting {@code TriConsumer} and of the {@code BiConsumer} argument
+     * @param <T> the type of the first argument to the resulting {@code TriConsumer} and of the {@code BiConsumer} argument
      * @param <U> the type of the second argument of the resulting {@code TriConsumer} and of the {@code BiConsumer} argument
      * @param <V> the type of the third argument of the resulting {@code TriConsumer} (which will be ignored)
      * @param biConsumer the {@code BiConsumer} to adapt

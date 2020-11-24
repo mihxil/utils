@@ -8,6 +8,9 @@ import java.util.function.BiPredicate;
  *
  * A predicate with three arguments
  *
+ * @param <T> the type of the first argument to the predicate
+ * @param <U> the type of the second argument to the predicate
+ * @param <V> the type of the third argument to the predicate
  * @author Michiel Meeuwissen
  * @since 0.1
  */

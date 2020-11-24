@@ -24,14 +24,22 @@ public final class Functions {
 
     /**
      * Provides an implementation of {@link Function} always returning the same value
-     * @param returnValue The desired value to always return
-     * @param description A description of the function. Defaults to "always " + {@code returnValue}
+     *
+     * @param <A> the type of the argument to the function (which will be ignored)
+     * @param <R> the type of the return value of the function
+     * @param returnValue the desired value to always return
+     * @param description a description of the function. Defaults to "always " + {@code returnValue}
+     * @return a new function with the described behaviour
      */
     public static <A, R> Function<A, R> always(R returnValue, String description) {
         return new Always<>(returnValue, description);
     }
 
     /**
+     * @param <A> the type of the argument to the function (which will be ignored)
+     * @param <R> the type of the return value of the function
+     * @param returnValue the desired value to always return
+     * @return a new {@code BiFunction} with the described behaviour
      * @see #always(Object, String)
      */
     public static <A, R> Function<A, R> always(R returnValue) {
@@ -40,14 +48,24 @@ public final class Functions {
 
     /**
      * Provides an implementation of {@link BiFunction} always returning the same value
-     * @param returnValue The desired value to always return
-     * @param description A description of the function. Defaults to "always " + {@code returnValue}
+     *
+     * @param <A1> the type of the first argument to the function (which will be ignored)
+     * @param <A2> the type of the second argument to the function (which will be ignored)
+     * @param <R>  the type of the return value
+     * @param returnValue the desired value to always return
+     * @param description a description of the function. Defaults to "always " + {@code returnValue}
+     * @return a new {@code BiFunction} with the described behaviour
      */
     public static <A1, A2,  R> BiFunction<A1, A2, R> biAlways(R returnValue, String description) {
         return new BiAlways<>(returnValue, description);
     }
 
     /**
+     * @param <A1> the type of the first argument to the function (which will be ignored)
+     * @param <A2> the type of the second argument to the function (which will be ignored)
+     * @param <R>  the type of the return value
+     * @param returnValue the desired value to always return
+     * @return a new {@code BiFunction} with the described behaviour
      * @see #biAlways(Object, String)
      */
     public static <A1, A2, R> BiFunction<A1, A2, R> biAlways(R returnValue) {
@@ -57,39 +75,70 @@ public final class Functions {
 
     /**
      * Provides an implementation of {@link TriFunction} always returning the same value
-     * @param returnValue The desired value to always return
-     * @param description A description of the function. Defaults to "always " + {@code returnValue}
+     *
+     * @param <A1> the type of the first argument to the function (which will be ignored)
+     * @param <A2> the type of the second argument to the function (which will be ignored)
+     * @param <A3> the type of the third argument to the function (which will be ignored)
+     * @param <R>  the type of the return value
+     * @param returnValue the desired value to always return
+     * @param description a description of the function. Defaults to "always " + {@code returnValue}
+     * @return a new {@code TriFunction} with the described behaviour
      */
     public static <A1, A2, A3,  R> TriFunction<A1, A2, A3,  R> triAlways(R returnValue, String description) {
         return new TriAlways<>(returnValue, description);
     }
 
     /**
+     *
+     * @param <A1> the type of the first argument to the function (which will be ignored)
+     * @param <A2> the type of the second argument to the function (which will be ignored)
+     * @param <A3> the type of the third argument to the function (which will be ignored)
+     * @param <R>  the type of the return value
+     * @param returnValue the desired value to always return
+     * @return a new {@code TriFunction} with the described behaviour
      * @see #triAlways(Object, String)
      */
-    public static <A1, A2, A3,  R> TriFunction<A1, A2, A3,  R> triAlways(R v) {
-        return triAlways(v, "always " + v);
+    public static <A1, A2, A3,  R> TriFunction<A1, A2, A3,  R> triAlways(R returnValue) {
+        return triAlways(returnValue, "always " + returnValue);
     }
 
     /**
      * Provides an implementation of {@link QuadriFunction} always returning the same value
-     * @param returnValue The desired value to always return
-     * @param description A description of the function. Defaults to "always " + {@code returnValue}
+     * @param <A1> the type of the first argument to the function (which will be ignored)
+     * @param <A2> the type of the second argument to the function (which will be ignored)
+     * @param <A3> the type of the third argument to the function (which will be ignored)
+     * @param <A4> the type of the fourth argument to the function (which will be ignored)
+     * @param <R>  the type of the return value
+     * @param returnValue the desired value to always return
+     * @param description a description of the function. Defaults to "always " + {@code returnValue}
+     * @return a new {@code QuadriFunction} with the described behaviour
      */
     public static <A1, A2, A3, A4,  R> QuadriFunction<A1, A2, A3, A4,  R> quadriAlways(R returnValue, String description) {
         return new QuadriAlways<>(returnValue, description);
     }
 
-     /**
+    /**
+     * @param <A1> the type of the first argument to the function (which will be ignored)
+     * @param <A2> the type of the second argument to the function (which will be ignored)
+     * @param <A3> the type of the third argument to the function (which will be ignored)
+     * @param <A4> the type of the fourth argument to the function (which will be ignored)
+     * @param <R>  the type of the return value
+     * @param returnValue the desired value to always return
+     * @return a new {@code QuadriFunction} with the described behaviour
      * @see #quadriAlways(Object, String)
      */
-    public static <A1, A2, A3, A4, R> QuadriFunction<A1, A2, A3,  A4, R> quadriAlways(R v) {
-        return quadriAlways(v, "always " + v);
+    public static <A1, A2, A3, A4, R> QuadriFunction<A1, A2, A3,  A4, R> quadriAlways(R returnValue) {
+        return quadriAlways(returnValue, "always " + returnValue);
     }
 
     /**
      * Morphs a given {@link Function} into a {@link Supplier}, with a certain given value for the first argument.
      *
+     * @param <A1> the type of the argument to the function (which will be provided)
+     * @param <R> the return value of the function, and of the resulting {@link Supplier}
+     * @param function the function on which to base the new {@code Supplier} on
+     * @param value the argument to always supply to the function
+     * @return a new supplier, which will use the given function and argument for its implementation
      * @see TriFunction#withArg1(Object)
      */
     public static <A1, R> Supplier<R> withArg1(Function<A1, R> function, A1 value) {
@@ -103,6 +152,12 @@ public final class Functions {
 
     /**
      * Morphs a given {@link BiFunction} into a {@link Function}, with a certain given value for the second argument.
+     * @param <A1> the type of the first argument to the function which will be the type of the only argument of the resulting {@code Function}
+     * @param <A2> the type of the second argument to the function (which will be provided)
+     * @param <R> the return value of the function, and of the resulting {@link Function}
+     * @param function the function on which to base the new {@code Supplier} on
+     * @param value the value to always supply to the {@code BiFunction}'s second argument
+     * @return a new {@code Function}, which will use the given {@code BiFunction} and argument for its implementation
      *
      * @see TriFunction#withArg2(Object)
      */
@@ -117,6 +172,13 @@ public final class Functions {
 
     /**
      * Morphs a given {@link BiFunction} into a {@link Function}, with a certain given value for the first argument.
+     *
+     * @param <A1> the type of the first argument to the function (which will be provided)
+     * @param <A2> the type of the second argument to the function  which will be the type of the only argument of the resulting {@code Function}
+     * @param <R> the return value of the function, and of the resulting {@link Function}
+     * @param function the function on which to base the new {@code Supplier} on
+     * @param value the value to always supply to the {@code BiFunction}'s first argument
+     * @return a new {@code Function}, which will use the given {@code BiFunction} and argument for its implementation
      *
      * @see TriFunction#withArg1(Object)
      */
