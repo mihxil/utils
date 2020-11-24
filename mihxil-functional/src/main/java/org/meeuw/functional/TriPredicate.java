@@ -17,6 +17,15 @@ import java.util.function.BiPredicate;
 @FunctionalInterface
 public interface TriPredicate<T, U, V> {
 
+    /**
+     * Evaluates this predicate on the given arguments.
+     *
+     * @param t the first input argument
+     * @param u the second input argument
+     * @param v the third input argument
+     * @return {@code true} if the input arguments match the predicate,
+     * otherwise {@code false}
+     */
     boolean test(T t, U u, V v);
 
 
@@ -89,37 +98,43 @@ public interface TriPredicate<T, U, V> {
     }
 
     /**
-     * Morphs this {@link TriPredicate} into a {@link BiPredicate}, by filling in the thirds argument
+     * Morphs this {@link TriPredicate} into a {@link BiPredicate}, by filling in the third argument
+     * @param value the value needed as the third argument of this {@code TriPredicate}
+     * @return a new {@code BiPredicate} with the desired behaviour
      */
-    default BiPredicate<T, U> withArg3(V v) {
-        return new Predicates.BiWrapper<TriPredicate<T, U, V>, T, U>(this, v, "with arg3 " + v) {
+    default BiPredicate<T, U> withArg3(V value) {
+        return new Predicates.BiWrapper<TriPredicate<T, U, V>, T, U>(this, value, "with arg3 " + value) {
             @Override
             public boolean test(T t, U u) {
-                return wrapped.test(t, u, v);
+                return wrapped.test(t, u, value);
             }
         };
     }
 
     /**
      * Morphs this {@link TriPredicate} into a {@link BiPredicate}, by filling in the second argument
+     * @param value the value needed as the second argument of this {@code TriPredicate}
+     * @return a new {@code BiPredicate} with the desired behaviour
      */
-    default BiPredicate<T, V> withArg2(U u) {
-        return new Predicates.BiWrapper<TriPredicate<T, U, V>, T, V>(this, u, "with arg2 " + u) {
+    default BiPredicate<T, V> withArg2(U value) {
+        return new Predicates.BiWrapper<TriPredicate<T, U, V>, T, V>(this, value, "with arg2 " + value) {
             @Override
             public boolean test(T t, V v) {
-                return wrapped.test(t, u, v);
+                return wrapped.test(t, value, v);
             }
         };
     }
 
     /**
      * Morphs this {@link TriPredicate} into a {@link BiPredicate}, by filling in the first argument
+     * @param value the value needed as the first argument of this {@code TriPredicate}
+     * @return a new {@code BiPredicate} with the desired behaviour
      */
-    default BiPredicate<U, V> withArg1(T t) {
-        return new Predicates.BiWrapper<TriPredicate<T, U, V>, U, V>(this, t, "with arg1 " + t) {
+    default BiPredicate<U, V> withArg1(T value) {
+        return new Predicates.BiWrapper<TriPredicate<T, U, V>, U, V>(this, value, "with arg1 " + value) {
             @Override
             public boolean test(U u, V v) {
-                return wrapped.test(t, u, v);
+                return wrapped.test(value, u, v);
             }
         };
     }

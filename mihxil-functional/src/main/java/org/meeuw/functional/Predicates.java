@@ -84,6 +84,11 @@ public final class Predicates {
     }
     /**
      * Creates a new {@link TriPredicate} but implement it using a {@link BiPredicate}, simply completely ignoring the second argument
+     * @param <T> the type of the first argument to the predicate
+     * @param <U> the type of the second argument to the predicate (ignored)
+     * @param <V> the type of the third argument to the predicate
+     * @param biPredicate the {@code BiPredicate} used to implement the new {@code TriPredicate}
+     * @return a new {@code TriPredicate} with the desired behaviour
      */
     public static <T, U, V> TriPredicate<T, U, V> ignoreArg2(BiPredicate<T, V> biPredicate) {
         return new TriWrapper<BiPredicate<T, V>, T, U, V>(biPredicate, null, "ignore arg2") {
@@ -96,6 +101,11 @@ public final class Predicates {
     }
     /**
      * Creates a new {@link TriPredicate} but implement it using a {@link BiPredicate}, simply completely ignoring the first argument
+     * @param <T> the type of the first argument to the predicate (ignored)
+     * @param <U> the type of the second argument to the predicate
+     * @param <V> the type of the third argument to the predicate
+     * @param biPredicate the {@code BiPredicate} used to implement the new {@code TriPredicate}
+     * @return a new {@code TriPredicate} with the desired behaviour
      */
     public static <T, U, V> TriPredicate<T, U, V> ignoreArg1(BiPredicate<U, V> biPredicate) {
         return new TriWrapper<BiPredicate<U, V>, T, U, V>(biPredicate, null, "ignore arg1") {
@@ -109,6 +119,10 @@ public final class Predicates {
 
     /**
      * Creates a new {@link BiPredicate} but implement it using a {@link Predicate}, simply completely ignoring the second argument
+     * @param <T> the type of the first argument to the predicate
+     * @param <U> the type of the second argument to the predicate (ignored)
+     * @param predicate  the {@code Predicate} used to implement the new {@code BiPredicate}
+     * @return a new {@code BiPredicate} with the desired behaviour
      */
     public static <T, U> BiPredicate<T, U> ignoreArg2(Predicate<T> predicate) {
         return new BiWrapper<Predicate<T> , T, U>(predicate, null, "ignore arg2") {
@@ -121,6 +135,10 @@ public final class Predicates {
     }
     /**
      * Creates a new {@link BiPredicate} but implement it using a {@link Predicate}, simply completely ignoring the first argument
+     * @param <T> the type of the first argument to the predicate (ignored)
+     * @param <U> the type of the second argument to the predicate
+     * @param predicate the {@code Predicate} used to implement the new {@code BiPredicate}
+     * @return a new {@code BiPredicate} with the desired behaviour
      */
     public static <T, U> BiPredicate<T, U> ignoreArg1(Predicate<U> predicate) {
         return new BiWrapper<Predicate<U> , T, U>(predicate, null, "ignore arg1") {
@@ -135,28 +153,38 @@ public final class Predicates {
 
     /**
      * Morphs a given {@link BiPredicate} into a {@link Predicate}, which a certain given value for the first argument.
+     * @param <U> the type of the first argument to the predicate (value specified)
+     * @param <V> the type of the second argument to the predicate
+     * @param biPredicate the {@code BiPredicate} used to implement the new {@code Predicate}
+     * @param value the value needed as the first argument of the given {@code BiPredicate}
+     * @return a new {@code BiPredicate} with the desired behaviour
      *
      * @see TriPredicate#withArg1(Object)
      */
-    public static <U, V> Predicate<V> withArg1(BiPredicate<U, V> biPredicate, U u) {
-        return new MonoWrapper<BiPredicate<U, V>, V>(biPredicate, u, "with arg1 " + u) {
+    public static <U, V> Predicate<V> withArg1(BiPredicate<U, V> biPredicate, U value) {
+        return new MonoWrapper<BiPredicate<U, V>, V>(biPredicate, value, "with arg1 " + value) {
             @Override
             public boolean test(V v) {
-                return wrapped.test(u, v);
+                return wrapped.test(value, v);
             }
         };
     }
 
     /**
      * Morphs a given {@link BiPredicate} into a {@link Predicate}, which a certain given value for the first argument.
+     * @param <U> the type of the first argument to the predicate
+     * @param <V> the type of the second argument to the predicate (value specified)
+     * @param biPredicate the {@code BiPredicate} used to implement the new {@code Predicate}
+     * @param value the value needed as the second argument of the given {@code BiPredicate}
+     * @return a new {@code BiPredicate} with the desired behaviour
      *
      * @see TriPredicate#withArg1(Object)
      */
-    public static <U, V> Predicate<U> withArg2(BiPredicate<U, V> biPredicate, V v) {
-        return new MonoWrapper<BiPredicate<U, V>, U>(biPredicate, v, "with arg2 " + v) {
+    public static <U, V> Predicate<U> withArg2(BiPredicate<U, V> biPredicate, V value) {
+        return new MonoWrapper<BiPredicate<U, V>, U>(biPredicate, value, "with arg2 " + value) {
             @Override
             public boolean test(U u) {
-                return  wrapped.test(u, v);
+                return  wrapped.test(u, value);
             }
         };
     }

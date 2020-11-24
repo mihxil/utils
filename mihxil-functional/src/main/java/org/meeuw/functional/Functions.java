@@ -193,6 +193,11 @@ public final class Functions {
 
     /**
      * Creates a new {@link BiFunction} but implement it using a {@link Function}, simply completely ignoring the second argument
+     * @param <T> type of first argument to the resulting {@link BiFunction}
+     * @param <U> type of second argument to the resulting {@link BiFunction} (ignored)
+     * @param <R> type of result value
+     * @param function The function used to implement the new {@code BiFunction}
+     * @return a new {@code BiFunction}, which will use the given {@code Function} for its implementation
      */
     public static <T, U, R> BiFunction<T, U, R> ignoreArg2(Function<T, R> function) {
         return new BiWrapper<Function<T, R>, T, U, R>(function, null, "ignore arg2") {
@@ -205,6 +210,11 @@ public final class Functions {
 
     /**
      * Creates a new {@link BiFunction} but implement it using a {@link Function}, simply completely ignoring the first argument
+     * @param <T> type of first argument to the resulting {@link BiFunction} (ignored)
+     * @param <U> type of second argument to the resulting {@link BiFunction}
+     * @param <R> type of result value
+     * @param function The function used to implement the new {@code BiFunction}
+     * @return a new {@code BiFunction}, which will use the given {@code Function} for its implementation
      */
     public static <T, U, R> BiFunction<T, U, R> ignoreArg1(Function<U, R> function) {
         return new BiWrapper<Function<U, R>, T, U, R>(function, null, "ignore arg1") {
@@ -216,7 +226,13 @@ public final class Functions {
     }
 
     /**
-     * Creates a new {@link .TriFunction} but implement it using a {@link BiFunction}, simply completely ignoring the second argument
+     * Creates a new {@link TriFunction} but implement it using a {@link BiFunction}, simply completely ignoring the second argument
+     * @param <T> type of first argument to the resulting {@link TriFunction}
+     * @param <U> type of second argument to the resulting {@link TriFunction}
+     * @param <V> type of third argument to the resulting {@link TriFunction}(ignored)
+     * @param <R> type of result value
+     * @param function The function used to implement the new {@code TriFunction}
+     * @return a new {@code TriFunction}, which will use the given {@code BiFunction} for its implementation
      */
     public static <T, U, V, R> TriFunction<T, U, V, R> ignoreArg3(BiFunction<T, U, R> function) {
         return new TriWrapper<BiFunction<T, U, R>,  T, U, V, R>(function, null, "ignore arg3") {
@@ -229,6 +245,12 @@ public final class Functions {
 
     /**
      * Creates a new {@link TriFunction} but implement it using a {@link BiFunction}, simply completely ignoring the second argument
+     * @param <T> type of first argument to the resulting {@link TriFunction}
+     * @param <U> type of second argument to the resulting {@link TriFunction} (ignored)
+     * @param <V> type of third argument to the resulting {@link TriFunction}
+     * @param <R> type of result value
+     * @param function The function used to implement the new {@code TriFunction}
+     * @return a new {@code TriFunction}, which will use the given {@code BiFunction} for its implementation
      */
     public static <T, U, V, R> TriFunction<T, U, V, R> ignoreArg2(BiFunction<T, V, R> function) {
         return new TriWrapper<BiFunction<T, V, R>, T, U, V, R>(function, null, "ignore arg2") {
@@ -241,6 +263,12 @@ public final class Functions {
 
     /**
      * Creates a new {@link TriFunction} but implement it using a {@link BiFunction}, simply completely ignoring the first argument
+     * @param <T> type of first argument to the resulting {@link TriFunction} (ignored)
+     * @param <U> type of second argument to the resulting {@link TriFunction}
+     * @param <V> type of third argument to the resulting {@link TriFunction}
+     * @param <R> type of result value
+     * @param function The function used to implement the new {@code TriFunction}
+     * @return a new {@code TriFunction}, which will use the given {@code BiFunction} for its implementation
      */
     public static <T, U, V, R> TriFunction<T, U, V, R> ignoreArg1(BiFunction<U, V, R> function) {
         return new TriWrapper<BiFunction<U, V, R>, T, U, V, R>(function, null, "ignore arg1") {
@@ -254,6 +282,14 @@ public final class Functions {
     /**
      * Creates a new {@link QuadriFunction} but implement it using a {@link TriFunction}, simply completely ignoring the fourth argument
      * Just calls {@link TriFunction#ignoreArg4()}
+     * @param <T> type of first argument to the resulting {@link QuadriFunction}
+     * @param <U> type of second argument to the resulting {@link QuadriFunction}
+     * @param <V> type of third argument to the resulting {@link QuadriFunction}
+     * @param <W> type of fourth argument to the resulting {@link QuadriFunction} (ignored)
+     * @param <R> type of result value
+     * @param function the {@code TriFunction} to adapt
+     * @return the new {@code QuadriFunction}
+     * @see TriFunction#ignoreArg4()
      */
     public static <T, U, V, W, R> QuadriFunction<T, U, V, W,  R> ignoreArg4(TriFunction<T, U, V,  R> function) {
         return function.ignoreArg4();
@@ -262,6 +298,14 @@ public final class Functions {
     /**
      * Creates a new {@link QuadriFunction} but implement it using a {@link TriFunction}, simply completely ignoring the third argument
      * Just calls {@link TriFunction#ignoreArg3()}
+     * @param <T> type of first argument to the resulting {@link QuadriFunction}
+     * @param <U> type of second argument to the resulting {@link QuadriFunction}
+     * @param <V> type of third argument to the resulting {@link QuadriFunction} (ignored)
+     * @param <W> type of fourth argument to the resulting {@link QuadriFunction}
+     * @param <R> type of result value
+     * @param function the {@code TriFunction} to adapt
+     * @return the new {@code QuadriFunction}
+     * @see TriFunction#ignoreArg3()
      */
     public static <T, U, V, W, R> QuadriFunction<T, U, V, W,  R> ignoreArg3(TriFunction<T, U, W,  R> function) {
         return function.ignoreArg3();
@@ -270,6 +314,14 @@ public final class Functions {
     /**
      * Creates a new {@link QuadriFunction} but implement it using a {@link TriFunction}, simply completely ignoring the first argument
      * Just calls {@link TriFunction#ignoreArg2()}
+     * @param <T> type of first argument to the resulting {@link QuadriFunction}
+     * @param <U> type of second argument to the resulting {@link QuadriFunction} (ignored)
+     * @param <V> type of third argument to the resulting {@link QuadriFunction}
+     * @param <W> type of fourth argument to the resulting {@link QuadriFunction}
+     * @param <R> type of result value
+     * @param function the {@code TriFunction} to adapt
+     * @return the new {@code QuadriFunction}
+     * @see TriFunction#ignoreArg2()
      */
     public static <T, U, V, W, R> QuadriFunction<T, U, V, W,  R> ignoreArg2(TriFunction<T, V, W,  R> function) {
         return function.ignoreArg2();
@@ -278,6 +330,14 @@ public final class Functions {
     /**
      * Creates a new {@link QuadriFunction} but implement it using a {@link TriFunction}, simply completely ignoring the first argument
      * Just calls {@link TriFunction#ignoreArg1()}
+     * @param <T> type of first argument to the resulting {@link QuadriFunction} (ignored)
+     * @param <U> type of second argument to the resulting {@link QuadriFunction}
+     * @param <V> type of third argument to the resulting {@link QuadriFunction}
+     * @param <W> type of fourth argument to the resulting {@link QuadriFunction}
+     * @param <R> type of result value
+     * @param function the {@code TriFunction} to adapt
+     * @return the new {@code QuadriFunction}
+     * @see TriFunction#ignoreArg1()
      */
     public static <T, U, V, W, R> QuadriFunction<T, U, V, W,  R> ignoreArg1(TriFunction<U, V, W,  R> function) {
         return function.ignoreArg1();

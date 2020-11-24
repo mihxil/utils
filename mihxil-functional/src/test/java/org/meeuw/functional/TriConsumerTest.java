@@ -1,12 +1,12 @@
 package org.meeuw.functional;
 
-import org.junit.jupiter.api.Test;
-import org.meeuw.functional.TriConsumer;
-
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.jupiter.api.Test;
+
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Michiel Meeuwissen
@@ -48,6 +48,8 @@ class TriConsumerTest {
         tri1.andThen(tri2).accept("a", 1, 2.0f);
         assertThat(tri1.consumers).containsExactly("a:1:2.0");
         assertThat(tri2.consumers).containsExactly("a:1:2.0");
+
+        assertThatThrownBy(() -> tri1.andThen(null)).isInstanceOf(NullPointerException.class);
     }
 
     @Test

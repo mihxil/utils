@@ -32,6 +32,11 @@ public interface TriFunction <T,U,V,R> {
 
     /**
      * @param <S> – the type of output of the after function, and of the composed function
+     * @param after the function to apply after this function is applied
+     * @return a composed function that first applies this function and then
+     * applies the {@code after} function
+     * @throws NullPointerException if after is null
+     *
      * @see Function#andThen(Function)
      */
     default <S> TriFunction<T, U, V, S> andThen(Function<? super R, ? extends S> after) {
@@ -48,6 +53,8 @@ public interface TriFunction <T,U,V,R> {
 
     /**
      * Morphs this {@link TriFunction} into a {@link BiFunction}, with a certain given value for the first argument.
+     * @param value the given value
+     * @return the new {@link TriFunction}
      *
      * @see Functions#withArg1(BiFunction, Object)
      */
@@ -62,7 +69,8 @@ public interface TriFunction <T,U,V,R> {
 
     /**
      * Morphs this {@link TriFunction} into a {@link BiFunction}, with a certain given value for the second argument.
-     *
+     * @param value the given value
+     * @return the new {@link TriFunction}
      * @see Functions#withArg2(BiFunction, Object)
      */
     default BiFunction<T, V, R> withArg2(U value) {
@@ -76,6 +84,8 @@ public interface TriFunction <T,U,V,R> {
 
     /**
      * Morphs this {@link TriFunction} into a {@link BiFunction}, with a certain given value for the third argument.
+     * @param value the given value
+     * @return the new {@link TriFunction}
      */
     default BiFunction<T, U, R> withArg3(V value) {
         return new Functions.BiWrapper<TriFunction<T, U, V, R>, T, U, R>(this, value, "with arg 3 " + value) {
@@ -86,8 +96,10 @@ public interface TriFunction <T,U,V,R> {
         };
     }
 
-     /**
+    /**
      * Creates a new {@link QuadriFunction} but implement it using a {@link TriFunction}, simply completely ignoring the fourth argument
+     * @param <X> the type of the (ignored) fourth argument of the resulting {@code QuadriFunction}
+     * @return the new {@code QuadriFunction}
      */
     default <X> QuadriFunction<T, U, V, X,  R> ignoreArg4() {
         return new Functions.QuadriWrapper<TriFunction<T, U, V, R>, T, U, V, X, R>(this, null, "ignore arg4") {
@@ -100,6 +112,8 @@ public interface TriFunction <T,U,V,R> {
 
     /**
      * Creates a new {@link QuadriFunction} but implement it using a {@link TriFunction}, simply completely ignoring the third argument
+     * @param <X> the type of the (ignored) third argument of the resulting {@code QuadriFunction}
+     * @return the new {@code QuadriFunction}
      */
     default <X> QuadriFunction<T, U, X, V,  R> ignoreArg3() {
         return new Functions.QuadriWrapper<TriFunction<T, U, V, R>, T, U, X, V, R>(this, null, "ignore arg3") {
@@ -112,8 +126,10 @@ public interface TriFunction <T,U,V,R> {
 
     /**
      * Creates a new {@link QuadriFunction} but implement it using a {@link TriFunction}, simply completely ignoring the second argument
+     * @param <X> the type of the (ignored) second argument of the resulting {@code QuadriFunction}
+     * @return the new {@code QuadriFunction}
      */
-    default <X> QuadriFunction<T, X, U, V,  R> ignoreArg2() {
+    default <X> QuadriFunction<T, X, U, V, R> ignoreArg2() {
         return new Functions.QuadriWrapper<TriFunction<T, U, V, R>, T, X, U, V, R>(this, null, "ignore arg2") {
             @Override
             public R apply(T t, X x, U u, V v) {
@@ -124,8 +140,10 @@ public interface TriFunction <T,U,V,R> {
 
     /**
      * Creates a new {@link QuadriFunction} but implement it using a {@link TriFunction}, simply completely ignoring the first argument
+     * @param <X> the type of the (ignored) first argument of the resulting {@code QuadriFunction}
+     * @return the new {@code QuadriFunction}
      */
-    default <X>  QuadriFunction<X, T, U, V,  R> ignoreArg1() {
+    default <X>  QuadriFunction<X, T, U, V, R> ignoreArg1() {
         return new Functions.QuadriWrapper<TriFunction<T, U, V, R>, X, T, U, V, R>(this, null, "ignore arg1") {
             @Override
             public R apply(X x, T t, U u, V v) {
