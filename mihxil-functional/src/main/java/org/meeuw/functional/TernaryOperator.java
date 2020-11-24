@@ -5,10 +5,12 @@ import java.util.Objects;
 import java.util.function.BinaryOperator;
 
 /**
- *  Represents an operation upon three operands of the same type, producing a result
- *  of the same type as the operands.  This is a specialization of
- *  {@link TriFunction} for the case where the operands and the result are all of
- *  the same type.
+ * Represents an operation upon three operands of the same type, producing a result
+ * of the same type as the operands.  This is a specialization of
+ * {@link TriFunction} for the case where the operands and the result are all of
+ * the same type.
+ *
+ * @param <T> the type of the operands and result of the operator
  *
  * @see BinaryOperator
  * @author Michiel Meeuwissen
@@ -29,7 +31,7 @@ public interface TernaryOperator<T> extends TriFunction<T, T, T, T> {
      */
     static <T> TernaryOperator<T> minBy(Comparator<? super T> comparator) {
         Objects.requireNonNull(comparator);
-        return new  Wrapper<Comparator<? super T>, T>(comparator, "min by " + comparator) {
+        return new  TernaryOperatorWrapper<Comparator<? super T>, T>(comparator, "min by " + comparator) {
             @Override
             public T apply(T a, T b, T c) {
                 T smaller = comparator.compare(a, b) <= 0 ? a : b;
@@ -50,7 +52,7 @@ public interface TernaryOperator<T> extends TriFunction<T, T, T, T> {
      */
     static <T> TernaryOperator<T> maxBy(Comparator<? super T> comparator) {
         Objects.requireNonNull(comparator);
-        return new  Wrapper<Comparator<? super T>, T>(comparator, "max by " + comparator) {
+        return new  TernaryOperatorWrapper<Comparator<? super T>, T>(comparator, "max by " + comparator) {
             @Override
             public T apply(T a, T b, T c) {
                 T bigger = comparator.compare(a, b) >= 0 ? a : b;
@@ -59,13 +61,4 @@ public interface TernaryOperator<T> extends TriFunction<T, T, T, T> {
         };
     }
 
-     abstract class Wrapper<W, T> extends org.meeuw.functional.Wrapper<W> implements TernaryOperator<T> {
-        /**
-         * @param wrapped An object that this wrapper is wrapping, and can be used to implement it
-         * @param reason  A description for why the wrapping happened
-         */
-        public Wrapper(W wrapped, String reason) {
-            super(wrapped, reason);
-        }
-    }
 }

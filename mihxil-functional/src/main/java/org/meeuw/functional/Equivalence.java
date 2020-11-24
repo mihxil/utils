@@ -9,6 +9,7 @@ import java.util.function.Predicate;
  * It is just less then a {@link java.util.Comparator} which for different objects also way which one is 'bigger'.
  * Equivalence is only about equality in some sense.
  *
+ * @param <E> the type of the arguments to the equivalence
  * @author Michiel Meeuwissen
  * @since 1.0
  */
@@ -20,7 +21,8 @@ public interface Equivalence<E> extends BiPredicate<E, E>  {
 
     /**
      * Converts this equivalence to {@link Predicate} which checks if objects are equivalent to one certain value.
-     * @param value The test object to compare to
+     * @param value the test object to compare to
+     * @return a new {@code Predicate<E>} that just compares other objects to the given test object
      */
     default Predicate<E> predicate(E value) {
         return new Predicates.MonoWrapper<Equivalence<E>, E>(this, value, "equivalent to " + value) {

@@ -5,10 +5,12 @@ import java.util.Objects;
 import java.util.function.BinaryOperator;
 
 /**
- *  Represents an operation upon four operands of the same type, producing a result
- *  of the same type as the operands.  This is a specialization of
- *  {@link QuadriFunction} for the case where the operands and the result are all of
- *  the same type.
+ * Represents an operation upon four operands of the same type, producing a result
+ * of the same type as the operands.  This is a specialization of
+ * {@link QuadriFunction} for the case where the operands and the result are all of
+ * the same type.
+ *
+ * @param <T> the type of the operands and result of the operator
  *
  * @see BinaryOperator
  * @see TernaryOperator
@@ -30,7 +32,7 @@ public interface QuaternaryOperator<T> extends QuadriFunction<T, T, T, T, T> {
      */
     static <T> QuaternaryOperator<T> minBy(Comparator<? super T> comparator) {
         Objects.requireNonNull(comparator);
-        return new Wrapper<Comparator<? super T>, T>(comparator, "min by " + comparator) {
+        return new QuaternaryOperatorWrapper<Comparator<? super T>, T>(comparator, "min by " + comparator) {
             @Override
             public T apply(T a, T b, T c, T d) {
                 T smaller = wrapped.compare(a, b) <= 0 ? a : b;
@@ -52,7 +54,7 @@ public interface QuaternaryOperator<T> extends QuadriFunction<T, T, T, T, T> {
      */
     static <T> QuaternaryOperator<T> maxBy(Comparator<? super T> comparator) {
         Objects.requireNonNull(comparator);
-        return new Wrapper<Comparator<? super T>, T>(comparator, "max by " + comparator) {
+        return new QuaternaryOperatorWrapper<Comparator<? super T>, T>(comparator, "max by " + comparator) {
             @Override
             public T apply(T a, T b, T c, T d) {
                 T bigger = wrapped.compare(a, b) >= 0 ? a : b;
@@ -62,13 +64,4 @@ public interface QuaternaryOperator<T> extends QuadriFunction<T, T, T, T, T> {
         };
     }
 
-    abstract class Wrapper<W, T> extends org.meeuw.functional.Wrapper<W> implements QuaternaryOperator<T> {
-        /**
-         * @param wrapped An object that this wrapper is wrapping, and can be used to implement it
-         * @param reason  A description for why the wrapping happened
-         */
-        public Wrapper(W wrapped, String reason) {
-            super(wrapped, reason);
-        }
-    }
 }

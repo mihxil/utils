@@ -9,15 +9,29 @@ import java.util.function.Function;
  *
  * A function with three arguments
  *
+ * @param <T> the type of the first argument to the function
+ * @param <U> the type of the second argument to the function
+ * @param <V> the type of the third argument to the function
+ * @param <R> the type of the result of the function
+ *
  * @author Michiel Meeuwissen
  * @since 0.1
  */
 @FunctionalInterface
 public interface TriFunction <T,U,V,R> {
 
+    /**
+     * Applies this function to the given arguments.
+     *
+     * @param t the first function argument
+     * @param u the second function argument
+     * @param v the third function argument
+     * @return the function result
+     */
     R apply(T t, U u, V v);
 
     /**
+     * @param <S> – the type of output of the after function, and of the composed function
      * @see Function#andThen(Function)
      */
     default <S> TriFunction<T, U, V, S> andThen(Function<? super R, ? extends S> after) {

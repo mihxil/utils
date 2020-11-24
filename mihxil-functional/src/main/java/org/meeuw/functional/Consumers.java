@@ -3,10 +3,10 @@ package org.meeuw.functional;
 import java.util.function.*;
 
 /**
- * Provides several utility related to {@link Consumer}, {@link BiConsumer} and {@link TriConsumer} l
- * implementing {@link #hashCode()} and {@link #equals(Object)}.
+ * Provides several utilities related to {@link Consumer}, {@link BiConsumer} and {@link TriConsumer}.
  *
- * The point is that these kind of things won't happen if you use lambdas.
+ * Resulting new object consistently implement {@link #hashCode()} and {@link #equals(Object)}. The point is that these kind of things won't happen if you use lambdas.
+ *
  * @author Michiel Meeuwissen
  * @since 0.1
  */
