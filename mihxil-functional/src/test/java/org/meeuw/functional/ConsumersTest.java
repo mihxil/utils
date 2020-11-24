@@ -6,11 +6,9 @@ import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 import org.junit.jupiter.api.Test;
-import org.meeuw.functional.Consumers;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.meeuw.functional.Consumers.ignoreArg1;
-import static org.meeuw.functional.Consumers.ignoreArg2;
+import static org.meeuw.functional.Consumers.*;
 
 /**
  * @author Michiel Meeuwissen
@@ -25,7 +23,6 @@ class ConsumersTest {
         public String toString() {
             return getClass().getSimpleName();
         }
-
     }
 
     static class Mono extends Abstract implements Consumer<String> {
@@ -38,6 +35,13 @@ class ConsumersTest {
     static class Bi extends Abstract  implements  BiConsumer<String, Integer> {
         @Override
         public void accept(String s, Integer integer) {
+            consumed.add(s + ":" + integer);
+        }
+    }
+
+    static class BiInteger extends Abstract implements BiConsumer<Integer, Integer> {
+        @Override
+        public void accept(Integer s, Integer integer) {
             consumed.add(s + ":" + integer);
         }
     }
@@ -63,8 +67,8 @@ class ConsumersTest {
         assertThat(bi.consumed).containsExactly("string:3");
 
         assertThat(bi).isEqualTo(bi);
-        assertThat(ignoreArg1(bi)).isEqualTo(ignoreArg1(bi));
-        assertThat(ignoreArg1(bi)).isNotEqualTo(ignoreArg2(bi));
+        assertThat(ignoreArg1(bi).equals(ignoreArg1(bi))).isTrue();
+        assertThat(ignoreArg1(bi).equals(ignoreArg2(bi))).isFalse();
     }
 
     @Test
@@ -85,14 +89,20 @@ class ConsumersTest {
     @Test
     void biWithArg2() {
         Bi bi = new Bi();
-        Consumers.withArg2(bi, 1).accept("a");
-        Consumers.withArg2(bi, 2).accept("b");
+        withArg2(bi, 1).accept("a");
+        withArg2(bi, 2).accept("b");
         assertThat(bi.consumed).containsExactly("a:1", "b:2");
 
-        assertThat(Consumers.withArg2(bi, 1).toString()).isEqualTo("Bi(with arg2 1)");
-        assertThat(Consumers.withArg2(bi, 1)).isEqualTo(Consumers.withArg2(bi, 1));
-        assertThat(Consumers.withArg2(bi, 1)).isNotEqualTo(Consumers.withArg2(bi, 2));
+        assertThat(withArg2(bi, 1).toString()).isEqualTo("Bi(with arg2 1)");
+        assertThat(withArg2(bi, 1).equals(withArg2(bi, 1))).isTrue();
+        assertThat(withArg2(bi, 1).equals(withArg2(bi, 2))).isFalse();
+    }
 
+    @Test
+    void biiEquals12() {
+        BiInteger bii = new BiInteger();
+        assertThat(withArg2(bii, 1).equals(withArg1(bii, 1))).isFalse();
+        assertThat(withArg1(bii, 1).equals(withArg1(bii, 1))).isTrue();
     }
 
     @Test

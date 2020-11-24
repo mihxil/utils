@@ -16,12 +16,14 @@ public final class Consumers {
     }
 
     /**
-     * Creates a new {@link TriConsumer} but implement it using a {@link BiConsumer}, simply completely ignoring the third argument
-     * @param <T> First argument of the resulting {@code TriConsumer} and of the {@code BiConsumer} argument
-     * @param <U> Second argument of the resulting {@code TriConsumer} and of the {@code BiConsumer} argument
-     * @param <V> Thirds argument of the resulting {@code TriConsumer} (which will be ignored)
-     * @param biConsumer The {@code BiConsumer} to adapt
-     * @return A new {@code TriConsumer} that passes its first and second argument to the given {@link BiConsumer}
+     * Creates a new {@link TriConsumer} but implement it using a {@link BiConsumer}, simply completely ignoring the third argument.
+     * The resulting object implements {@link #equals(Object)} and {@link #hashCode()} based on the parameter.
+     *
+     * @param <T> the type of the first argument of the resulting {@code TriConsumer} and of the {@code BiConsumer} argument
+     * @param <U> the type of the second argument of the resulting {@code TriConsumer} and of the {@code BiConsumer} argument
+     * @param <V> the type of the third argument of the resulting {@code TriConsumer} (which will be ignored)
+     * @param biConsumer the {@code BiConsumer} to adapt
+     * @return a new {@code TriConsumer} that passes its first and second argument to the given {@link BiConsumer}
      */
     public static <T, U, V> TriConsumer<T, U, V> ignoreArg3(BiConsumer<T, U> biConsumer) {
         return new TriWrapper<BiConsumer<T, U>, T, U, V>(biConsumer, null, "ignore arg3") {
@@ -34,11 +36,13 @@ public final class Consumers {
 
     /**
      * Creates a new {@link TriConsumer} but implement it using a {@link BiConsumer}, simply completely ignoring the second argument
-     * @param <T> First argument of the resulting {@code TriConsumer} and of the {@code BiConsumer} argument
-     * @param <U> Second argument of the resulting {@code TriConsumer} (which will be ignored)
-     * @param <V> Thirds argument of the resulting {@code TriConsumer} and the second one of the {@code BiConsumer} argument
-     * @param biConsumer The {@code BiConsumer} to adapt
-     * @return A new {@code TriConsumer} that passes its first and third argument to the given {@link BiConsumer}
+     * The resulting object implements {@link #equals(Object)} and {@link #hashCode()} based on the parameter.
+     *
+     * @param <T> the type of the first argument of the resulting {@code TriConsumer} and of the {@code BiConsumer} argument
+     * @param <U> the type of the second argument of the resulting {@code TriConsumer} (which will be ignored)
+     * @param <V> the type of the thirds argument of the resulting {@code TriConsumer} and the second one of the {@code BiConsumer} argument
+     * @param biConsumer the {@code BiConsumer} to adapt
+     * @return a new {@code TriConsumer} that passes its first and third argument to the given {@link BiConsumer}
      */
     public static <T, U, V> TriConsumer<T, U, V> ignoreArg2(BiConsumer<T, V> biConsumer) {
         return new TriWrapper<BiConsumer<T, V>, T, U, V>(biConsumer, null, "ignore arg2") {
@@ -50,10 +54,12 @@ public final class Consumers {
     }
 
     /**
-     * Creates a new {@link TriConsumer} but implement it using a {@link BiConsumer}, simply completely ignoring the first argument
-     * @param <T> First argument of the resulting {@code TriConsumer} which will be ignored
-     * @param <U> Second argument of the resulting {@code TriConsumer} and the first one of the {@code BiConsumer} argument
-     * @param <V> Thirds argument of the resulting {@code TriConsumer} and the second one of the {@code BiConsumer} argument
+     * Creates a new {@link TriConsumer} but implement it using a {@link BiConsumer}, simply completely ignoring the first argument.
+     * The resulting object implements {@link #equals(Object)} and {@link #hashCode()} based on the parameter.
+     *
+     * @param <T> the type of the first argument of the resulting {@code TriConsumer} which will be ignored
+     * @param <U> the type of the second argument of the resulting {@code TriConsumer} and the first one of the {@code BiConsumer} argument
+     * @param <V> the type of the thirdd argument of the resulting {@code TriConsumer} and the second one of the {@code BiConsumer} argument
      * @param biConsumer The {@code BiConsumer} to adapt
      * @return A new {@code TriConsumer} that passes its second and third argument to the given {@link BiConsumer}
      */
@@ -67,9 +73,11 @@ public final class Consumers {
     }
 
     /**
-     * Creates a new {@link BiConsumer} but implement it using a {@link Consumer}, simply completely ignoring the second argument
-     * @param <T> First argument of the resulting {@code BiConsumer} and of the {@code Consumer} argument
-     * @param <U> Second argument of the resulting {@code BiConsumer} (which will be ignored)
+     * Creates a new {@link BiConsumer} but implement it using a {@link Consumer}, simply completely ignoring the second argument.
+     * The resulting object implements {@link #equals(Object)} and {@link #hashCode()} based on the parameter.
+     *
+     * @param <T> type type of the first argument of the resulting {@code BiConsumer} and of the {@code Consumer} argument
+     * @param <U> type type of the second argument of the resulting {@code BiConsumer} (which will be ignored)
      * @param consumer The {@code Consumer} to adapt
      * @return A new {@code BiConsumer} that passes first argument to the given {@link Consumer}
      */
@@ -84,10 +92,11 @@ public final class Consumers {
 
     /**
      * Creates a new {@link BiPredicate} but implement it using a {@link Predicate}, simply completely ignoring the first argument
-     * @param <T> First argument of the resulting {@code BiConsumer} (which will be ignored)
-     * @param <U> Second argument of the resulting {@code BiConsumer} and the argument of the {@code Consumer} argument
-     * @param consumer The {@code Consumer} to adapt
-     * @return A new {@code BiConsumer} that passes second argument to the given {@link Consumer}
+     * The resulting object implements {@link #equals(Object)} and {@link #hashCode()} based on the parameter.
+     * @param <T> the type of the first argument of the resulting {@code BiConsumer} (which will be ignored)
+     * @param <U> the type of the second argument of the resulting {@code BiConsumer} and the type of the input of the {@code Consumer} argument
+     * @param consumer the {@code Consumer} to adapt
+     * @return a new {@code BiConsumer} that passes second argument to the given {@link Consumer}
      */
     public static <T, U> BiConsumer<T, U> ignoreArg1(Consumer<U> consumer) {
         return new BiWrapper<Consumer<U>, T, U>(consumer, null, "ignore arg1") {
@@ -100,12 +109,13 @@ public final class Consumers {
 
     /**
      * Morphs a given {@link BiConsumer} into a {@link Consumer}, which a certain given value for the first argument.
+     * The resulting object implements {@link #equals(Object)} and {@link #hashCode()} based on the two parameters.
      *
-     * @param <U> First argument of the given {@code BiConsumer}, which value if fixed.
-     * @param <V> First argument of the resulting {@code Consumer}, and the second argument of the given {@code BiConsumer}
+     * @param <U> the type of the first argument of the given {@code BiConsumer}, which value is fixed
+     * @param <V> the type of first argument of the resulting {@code Consumer}, and of the second argument of the given {@code BiConsumer}
      * @param biConsumer The {@code BiConsumer} that will be used to implement a new {@code Consumer}
      * @param value The fixed value for the first argument of the given {@code BiConsumer}
-     * @return A new {@code Consumer} that is calling the given {@code BiConsumer}, and uses its own argument for the second paramter, and a fixed value for the first parameter
+     * @return a new {@code Consumer} that is calling the given {@code BiConsumer}, and uses its own argument for the second parameter, and a fixed value for the first parameter
      * @see  TriConsumer#withArg1(Object)
      */
     public static <U, V> Consumer<V> withArg1(BiConsumer<U, V> biConsumer, U value) {
@@ -119,20 +129,34 @@ public final class Consumers {
 
     /**
      * Morphs a given {@link BiConsumer} into a {@link Consumer}, which a certain given value for the first argument.
+     * The resulting object implements {@link #equals(Object)} and {@link #hashCode()} based on the two parameters.
+     *
+     * @param <U> the type of the first argument of the given {@code BiConsumer}, which value is determined by the given {@code Supplier<U>}
+     * @param <V> the type of the argument of the resulting {@code Consumer}, and of the second argument of the given {@code BiConsumer}
+     * @param biConsumer the {@code BiConsumer} that will be used to implement a new {@code Consumer}
+     * @param valueSupplier a supplier for the value for the first argument of the given {@code BiConsumer}, which will be called on every call to the resulting {@code Consumer}
+     * @return a new {@code Consumer} that is calling the given {@code BiConsumer}, and uses its own argument for the second parameter, and a fixed value for the first parameter
      *
      * @see TriConsumer#withArg1(Object)
      */
-    public static <U, V> Consumer<V> withArg1Supplier(BiConsumer<U, V> biConsumer, Supplier<U> u) {
-        return new MonoWrapper<BiConsumer<U, V>, V>(biConsumer, u, "with arg1 " + u) {
+    public static <U, V> Consumer<V> withArg1Supplier(BiConsumer<U, V> biConsumer, Supplier<U> valueSupplier) {
+        return new MonoWrapper<BiConsumer<U, V>, V>(biConsumer, valueSupplier, "with arg1 " + valueSupplier) {
             @Override
             public void accept(V v) {
-                wrapped.accept(u.get(), v);
+                wrapped.accept(valueSupplier.get(), v);
             }
         };
     }
 
     /**
      * Morphs a given {@link BiConsumer} into a {@link Consumer}, which a certain given value for the second argument.
+     * The resulting object implements {@link #equals(Object)} and {@link #hashCode()} based on the two parameters.
+     *
+     * @param <U> the type of the first argument of the given {@code BiConsumer}, which will be argument of the resulting {@code Consumer}
+     * @param <V> the type of the second argument of the given {@code BiConsumer}, of which the value will be fixed to {@code value}
+     * @param biConsumer The {@code BiConsumer} that will be used to implement a new {@code Consumer}
+     * @param value The fixed value for the first argument of the given {@code BiConsumer}
+     * @return a new {@code Consumer} that is calling the given {@code BiConsumer}, and uses its own argument for the second parameter, and a fixed value for the first parameter
      *
      * @see TriConsumer#withArg2(Object)
      */
@@ -146,15 +170,21 @@ public final class Consumers {
     }
 
     /**
-     * Morphs a given {@link BiConsumer} into a {@link Consumer}, which a certain given value for the second argument.
+     * Morphs a given {@link BiConsumer} into a {@link Consumer}, which a certain supplied value for the second argument.
+     * The resulting object implements {@link #equals(Object)} and {@link #hashCode()} based on the two parameters.
      *
+     * @param <U> the type of the first argument of the given {@code BiConsumer}, which will be the argument of the resulting {@code Consumer}
+     * @param <V> the type of the second argument of the given {@code BiConsumer}, which value is determined by the given {@code Supplier<U>}
+     * @param biConsumer the {@code BiConsumer} that will be used to implement a new {@code Consumer}
+     * @param valueSupplier a supplier for the value for the econd argument of the given {@code BiConsumer}, which will be called on every call to the resulting {@code Consumer}
+     * @return a new {@code Consumer} that is calling the given {@code BiConsumer}, and uses its own argument for the second parameter, and a fixed value for the first parameter
      * @see TriConsumer#withArg2(Object)
      */
-    public static <U, V> Consumer<U> withArg2Supplier(BiConsumer<U, V> biConsumer, Supplier<V> v) {
-        return new MonoWrapper<BiConsumer<U, V>, U>(biConsumer, v, "with arg2 " + v) {
+    public static <U, V> Consumer<U> withArg2Supplier(BiConsumer<U, V> biConsumer, Supplier<V> valueSupplier) {
+        return new MonoWrapper<BiConsumer<U, V>, U>(biConsumer, valueSupplier, "with arg2 " + valueSupplier) {
             @Override
             public void accept(U u) {
-                wrapped.accept(u, v.get());
+                wrapped.accept(u, valueSupplier.get());
             }
         };
     }
