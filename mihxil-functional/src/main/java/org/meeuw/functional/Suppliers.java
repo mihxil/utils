@@ -17,6 +17,8 @@ public class Suppliers {
     /**
      * Aways supply the same value
      * @param value the value to supply
+     * @param <T> the type of the value to supply
+     * @return a new supplier always supplying the given value
      */
     public static <T> Supplier<T> always(T value) {
         return new Always<>(value, "always");
@@ -27,6 +29,8 @@ public class Suppliers {
      * return value supplied by the supplier.
      * @param <T> the type of the argument to the resulting function (ignored)
      * @param <R> the type of the return value of the function and of the supplier
+     * @param supplier the supplier to implement the function
+     * @return a new function that ignores its argument but just returns the value of the given supplier
      */
     public static <T, R> Function<T, R> ignoreArg(Supplier<R> supplier) {
         return new Functions.MonoWrapper<Supplier<R>, T, R>(supplier, null, "ignore arg") {
@@ -41,6 +45,7 @@ public class Suppliers {
      * Wrap a given supplier. The result of the suppletion is memoized after the first call. Subsequent calls will give the same value, without calling the supplier again.
      *
      * @param supplier the supplier to memoize
+     * @return a new supplier that uses the argument supplier only once
      */
     public static <T> Supplier<T> memoize(Supplier<T> supplier) {
         return new MemoizeSupplier<>(supplier);
