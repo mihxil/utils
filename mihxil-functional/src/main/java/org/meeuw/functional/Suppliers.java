@@ -16,16 +16,19 @@ public class Suppliers {
 
     /**
      * Aways supply the same value
+     * @param value the value to supply
      */
-    static <T> Supplier<T> always(T value) {
+    public static <T> Supplier<T> always(T value) {
         return new Always<>(value, "always");
     }
 
     /**
      * Morphs a {@link Supplier} into a {@link java.util.function.Function}, where it's argument ignored and the
      * return value supplied by the supplier.
+     * @param <T> the type of the argument to the resulting function (ignored)
+     * @param <R> the type of the return value of the function and of the supplier
      */
-    static <T, R> Function<T, R> ignoreArg(Supplier<R> supplier) {
+    public static <T, R> Function<T, R> ignoreArg(Supplier<R> supplier) {
         return new Functions.MonoWrapper<Supplier<R>, T, R>(supplier, null, "ignore arg") {
             @Override
             public R apply(T t) {
@@ -36,8 +39,10 @@ public class Suppliers {
 
     /**
      * Wrap a given supplier. The result of the suppletion is memoized after the first call. Subsequent calls will give the same value, without calling the supplier again.
+     *
+     * @param supplier the supplier to memoize
      */
-    static <T> Supplier<T> memoize(Supplier<T> supplier) {
+    public static <T> Supplier<T> memoize(Supplier<T> supplier) {
         return new MemoizeSupplier<>(supplier);
     }
 
