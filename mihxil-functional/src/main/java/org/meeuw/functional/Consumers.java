@@ -59,7 +59,7 @@ public final class Consumers {
      *
      * @param <T> the type of the first argument of the resulting {@code TriConsumer} which will be ignored
      * @param <U> the type of the second argument of the resulting {@code TriConsumer} and the first one of the {@code BiConsumer} argument
-     * @param <V> the type of the thirdd argument of the resulting {@code TriConsumer} and the second one of the {@code BiConsumer} argument
+     * @param <V> the type of the third argument of the resulting {@code TriConsumer} and the second one of the {@code BiConsumer} argument
      * @param biConsumer The {@code BiConsumer} to adapt
      * @return A new {@code TriConsumer} that passes its second and third argument to the given {@link BiConsumer}
      */
@@ -176,7 +176,7 @@ public final class Consumers {
      * @param <U> the type of the first argument of the given {@code BiConsumer}, which will be the argument of the resulting {@code Consumer}
      * @param <V> the type of the second argument of the given {@code BiConsumer}, which value is determined by the given {@code Supplier<U>}
      * @param biConsumer the {@code BiConsumer} that will be used to implement a new {@code Consumer}
-     * @param valueSupplier a supplier for the value for the econd argument of the given {@code BiConsumer}, which will be called on every call to the resulting {@code Consumer}
+     * @param valueSupplier a supplier for the value for the second argument of the given {@code BiConsumer}, which will be called on every call to the resulting {@code Consumer}
      * @return a new {@code Consumer} that is calling the given {@code BiConsumer}, and uses its own argument for the second parameter, and a fixed value for the first parameter
      * @see TriConsumer#withArg2(Object)
      */

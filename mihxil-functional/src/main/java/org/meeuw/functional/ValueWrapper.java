@@ -8,6 +8,7 @@ import java.util.Objects;
  * @author Michiel Meeuwissen
  */
 abstract class ValueWrapper<W> extends Wrapper<W> {
+
     private final Object value;
 
     /**

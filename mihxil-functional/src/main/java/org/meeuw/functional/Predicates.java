@@ -40,6 +40,7 @@ public final class Predicates {
     public static <T> Predicate<T> alwaysFalse() {
         return always(false, FALSE);
     }
+
     public static <T> Predicate<T> alwaysTrue() {
         return always(true, TRUE);
     }
@@ -51,6 +52,7 @@ public final class Predicates {
     public static <T, U> BiPredicate<T, U> biAlwaysFalse() {
         return biAlways(false, FALSE);
     }
+
     public static <T, U> BiPredicate<T, U> biAlwaysTrue() {
         return biAlways(true, TRUE);
     }
@@ -58,9 +60,11 @@ public final class Predicates {
     public static <T, U, V> TriPredicate<T, U, V> triAlways(boolean val, String s) {
         return new TriAlways<>(val, s);
     }
+
     public static <T, U, V> TriPredicate<T, U, V> triAlwaysFalse() {
         return triAlways(false, FALSE);
     }
+
     public static <T, U, V> TriPredicate<T, U, V> triAlwaysTrue() {
         return triAlways(true, TRUE);
     }
@@ -82,6 +86,7 @@ public final class Predicates {
             }
         };
     }
+
     /**
      * Creates a new {@link TriPredicate} but implement it using a {@link BiPredicate}, simply completely ignoring the second argument
      * @param <T> the type of the first argument to the predicate
@@ -99,6 +104,7 @@ public final class Predicates {
             }
         };
     }
+
     /**
      * Creates a new {@link TriPredicate} but implement it using a {@link BiPredicate}, simply completely ignoring the first argument
      * @param <T> the type of the first argument to the predicate (ignored)
@@ -133,6 +139,7 @@ public final class Predicates {
             }
         };
     }
+
     /**
      * Creates a new {@link BiPredicate} but implement it using a {@link Predicate}, simply completely ignoring the first argument
      * @param <T> the type of the first argument to the predicate (ignored)
@@ -149,7 +156,6 @@ public final class Predicates {
             }
         };
     }
-
 
     /**
      * Morphs a given {@link BiPredicate} into a {@link Predicate}, which a certain given value for the first argument.
@@ -188,7 +194,6 @@ public final class Predicates {
             }
         };
     }
-
 
     /**
      * The abstract base class for several fixed valued (tri|bi|)-predicates.

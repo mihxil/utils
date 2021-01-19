@@ -72,7 +72,6 @@ public final class Functions {
         return biAlways(returnValue, "always " + returnValue);
     }
 
-
     /**
      * Provides an implementation of {@link TriFunction} always returning the same value
      *
@@ -389,7 +388,6 @@ public final class Functions {
             return val;
         }
     }
-
 
     /**
      * Represent a fixed value as a  {@link BiFunction}. So this function effectively ignores its parameters.

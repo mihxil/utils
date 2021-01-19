@@ -7,9 +7,9 @@ import java.util.Objects;
  * @author Michiel Meeuwissen
  */
 abstract class Wrapper<W> {
+
     protected final W wrapped;
     protected final String reason;
-
 
     /**
      * @param wrapped An object that this wrapper is wrapping, and can be used to implement it
