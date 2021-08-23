@@ -1,6 +1,6 @@
 = java.util extensions
 
-image:https://github.com/mihxil/utils/workflows/maven/badge.svg?[Build Status,link=https://github.com/mihxil/utils/actions/workflows/maven.yml]
+image:https://github.com/mihxil/utils/actions/workflows/maven.yml/badge.svg?[Build Status,link=https://github.com/mihxil/utils/actions/workflows/maven.yml]
 image:https://img.shields.io/maven-central/v/org.meeuw.util/mihxil-functional.svg?label=Maven%20Central[Maven Central,link=https://search.maven.org/search?q=g:%22org.meeuw.util%22]
 image:https://codecov.io/gh/mihxil/utils/branch/main/graph/badge.svg[codecov,link=https://codecov.io/gh/mihxil/utils]
 image:https://www.javadoc.io/badge/org.meeuw.util/mihxil-functional.svg?color=blue[javadoc,link=https://www.javadoc.io/doc/org.meeuw.util/mihxil-functional]
