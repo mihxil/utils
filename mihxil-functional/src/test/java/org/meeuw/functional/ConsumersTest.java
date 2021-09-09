@@ -129,6 +129,13 @@ class ConsumersTest {
         assertThat(bi.consumed).containsExactly("pref:1", "pref:2");
     }
 
-
+    @Test
+    void nop() {
+        Consumer<String> nop1 = Consumers.nop(String.class);
+        Consumer<String> nop2 = Consumers.nop(String.class);
+        Consumer<Integer> nop3 = Consumers.nop(Integer.class);
+        assertThat(nop1).isEqualTo(nop2);
+        assertThat(nop1).isNotEqualTo(nop3);
+    }
 
 }

@@ -189,6 +189,41 @@ public final class Consumers {
         };
     }
 
+    public static  <U> Consumer<U> nop(Class<U> clazz) {
+        return new NOPConsumer<>(clazz);
+    }
+
+    public static  <U> Consumer<U> nop() {
+        return new NOPConsumer<>((Class<U>) Object.class);
+    }
+
+    protected static class NOPConsumer<U> implements Consumer<U> {
+        final Class<U> clazz;
+
+        public NOPConsumer(Class<U> clazz) {
+            this.clazz = clazz;
+        }
+
+        @Override
+        public void accept(U u) {
+        }
+
+        @Override
+        public int hashCode() {
+            return clazz.hashCode();
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            return o instanceof NOPConsumer && ((NOPConsumer<?>) o).clazz.equals(clazz);
+        }
+
+        @Override
+        public String toString() {
+            return "NOP";
+        }
+    }
+
     /**
      * Abstract base class for implementing {@link TriConsumer}s based on wrapping something else.
      */
