@@ -1,15 +1,16 @@
+---
 name: build
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   build:
     runs-on: ubuntu-latest
     env:
-       MAVEN_OPTS: -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn
+      MAVEN_OPTS: -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn
     steps:
       - uses: actions/checkout@v2
       - name: Set up JDK
@@ -17,7 +18,7 @@ jobs:
         with:
           java-version: 8
           distribution: 'temurin'
-    - name: Build with Maven
-      run: mvn -B package --file pom.xml
-    - name: codecov
-      run: bash <(curl -s https://codecov.io/bash)
+      - name: Build with Maven
+        run: mvn -B package --file pom.xml
+      - name: codecov
+        run: bash <(curl -s https://codecov.io/bash)
