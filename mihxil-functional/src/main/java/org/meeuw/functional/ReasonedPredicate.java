@@ -9,7 +9,7 @@ import java.util.function.Predicate;
  * the test result boolean also can give a reason for <em>why</em> the predicate evaluated as it did.
  *
  * This is useful e.g. when the predicate itself is combined from multiple other ones with all kind of (boolean) logic, and sometimes
- * user may find it hard to understand _why_ the predicated evaluates as it does.
+ * a user may find it hard to understand _why_ the predicate evaluates as it does.
  */
 public interface ReasonedPredicate<T> extends Predicate<T> {
 
