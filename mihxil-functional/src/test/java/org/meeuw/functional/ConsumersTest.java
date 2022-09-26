@@ -135,7 +135,12 @@ class ConsumersTest {
         Consumer<String> nop2 = Consumers.nop(String.class);
         Consumer<Integer> nop3 = Consumers.nop(Integer.class);
         assertThat(nop1).isEqualTo(nop2);
+        assertThat(nop1.hashCode()).isEqualTo(nop2.hashCode());
         assertThat(nop1).isNotEqualTo(nop3);
+
+        assertThat(nop1.toString()).isEqualTo("NOP");
+
+        nop1.accept("fla");
     }
 
 }
