@@ -5,7 +5,7 @@ import java.util.function.BiPredicate;
 
 /**
  * The next in succession of {@link java.util.function.Predicate} and {@link BiPredicate}.
- *
+ * <p>
  * A predicate with three arguments
  *
  * @param <T> the type of the first argument to the predicate

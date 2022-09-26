@@ -4,8 +4,8 @@ import java.util.function.*;
 
 /**
  * Provides several utilities related to {@link Consumer}, {@link BiConsumer} and {@link TriConsumer}.
- *
- * Resulting new object consistently implement {@link #hashCode()} and {@link #equals(Object)}. The point is that these kind of things won't happen if you use lambdas.
+ * <p>
+ * The resulting new object consistently implement {@link #hashCode()} and {@link #equals(Object)}. The point is that these kind of things won't happen if you use lambdas.
  *
  * @author Michiel Meeuwissen
  * @since 0.1
@@ -17,6 +17,7 @@ public final class Consumers {
 
     /**
      * Creates a new {@link TriConsumer} but implement it using a {@link BiConsumer}, simply completely ignoring the third argument.
+     * <p>
      * The resulting object implements {@link #equals(Object)} and {@link #hashCode()} based on the parameter.
      *
      * @param <T> the type of the first argument to the resulting {@code TriConsumer} and of the {@code BiConsumer} argument
@@ -35,7 +36,8 @@ public final class Consumers {
     }
 
     /**
-     * Creates a new {@link TriConsumer} but implement it using a {@link BiConsumer}, simply completely ignoring the second argument
+     * Creates a new {@link TriConsumer} but implement it using a {@link BiConsumer}, simply completely ignoring the second argument.
+     * <p>
      * The resulting object implements {@link #equals(Object)} and {@link #hashCode()} based on the parameter.
      *
      * @param <T> the type of the first argument of the resulting {@code TriConsumer} and of the {@code BiConsumer} argument
@@ -55,6 +57,7 @@ public final class Consumers {
 
     /**
      * Creates a new {@link TriConsumer} but implement it using a {@link BiConsumer}, simply completely ignoring the first argument.
+     * <p>
      * The resulting object implements {@link #equals(Object)} and {@link #hashCode()} based on the parameter.
      *
      * @param <T> the type of the first argument of the resulting {@code TriConsumer} which will be ignored
@@ -74,10 +77,11 @@ public final class Consumers {
 
     /**
      * Creates a new {@link BiConsumer} but implement it using a {@link Consumer}, simply completely ignoring the second argument.
+     * <p>
      * The resulting object implements {@link #equals(Object)} and {@link #hashCode()} based on the parameter.
      *
-     * @param <T> type type of the first argument of the resulting {@code BiConsumer} and of the {@code Consumer} argument
-     * @param <U> type type of the second argument of the resulting {@code BiConsumer} (which will be ignored)
+     * @param <T> the type of the first argument of the resulting {@code BiConsumer} and of the {@code Consumer} argument
+     * @param <U> the type of the second argument of the resulting {@code BiConsumer} (which will be ignored)
      * @param consumer The {@code Consumer} to adapt
      * @return A new {@code BiConsumer} that passes first argument to the given {@link Consumer}
      */
@@ -91,7 +95,8 @@ public final class Consumers {
     }
 
     /**
-     * Creates a new {@link BiPredicate} but implement it using a {@link Predicate}, simply completely ignoring the first argument
+     * Creates a new {@link BiPredicate} but implement it using a {@link Predicate}, simply completely ignoring the first argument.
+     * <p>
      * The resulting object implements {@link #equals(Object)} and {@link #hashCode()} based on the parameter.
      * @param <T> the type of the first argument of the resulting {@code BiConsumer} (which will be ignored)
      * @param <U> the type of the second argument of the resulting {@code BiConsumer} and the type of the input of the {@code Consumer} argument
@@ -109,6 +114,7 @@ public final class Consumers {
 
     /**
      * Morphs a given {@link BiConsumer} into a {@link Consumer}, which a certain given value for the first argument.
+     * <p>
      * The resulting object implements {@link #equals(Object)} and {@link #hashCode()} based on the two parameters.
      *
      * @param <U> the type of the first argument of the given {@code BiConsumer}, which value is fixed
@@ -129,6 +135,7 @@ public final class Consumers {
 
     /**
      * Morphs a given {@link BiConsumer} into a {@link Consumer}, which a certain given value for the first argument.
+     * <p>
      * The resulting object implements {@link #equals(Object)} and {@link #hashCode()} based on the two parameters.
      *
      * @param <U> the type of the first argument of the given {@code BiConsumer}, which value is determined by the given {@code Supplier<U>}
@@ -150,6 +157,7 @@ public final class Consumers {
 
     /**
      * Morphs a given {@link BiConsumer} into a {@link Consumer}, which a certain given value for the second argument.
+     * <p>
      * The resulting object implements {@link #equals(Object)} and {@link #hashCode()} based on the two parameters.
      *
      * @param <U> the type of the first argument of the given {@code BiConsumer}, which will be argument of the resulting {@code Consumer}
@@ -189,10 +197,19 @@ public final class Consumers {
         };
     }
 
+    /**
+     * Produces consumer that complete ignores what it consumes.
+     * <p>
+     * All such 'nop' are equal, if at least they consume objects of the same class.
+     */
     public static  <U> Consumer<U> nop(Class<U> clazz) {
         return new NOPConsumer<>(clazz);
     }
 
+    /**
+     * Produces consumer that complete ignores what it consumes.
+     */
+    @SuppressWarnings("unchecked")
     public static  <U> Consumer<U> nop() {
         return new NOPConsumer<>((Class<U>) Object.class);
     }

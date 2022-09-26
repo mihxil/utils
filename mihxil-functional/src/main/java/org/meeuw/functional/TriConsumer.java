@@ -6,8 +6,8 @@ import java.util.function.Consumer;
 
 /**
  * The next in succession of {@link Consumer} and {@link BiConsumer}.
- *
- * A function with three arguments
+ * <p>
+ * A void function with three arguments. Expected to have side effects.
  *
  * @param <T> the type of the first argument to the operation
  * @param <U> the type of the second argument to the operation

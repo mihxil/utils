@@ -6,7 +6,7 @@ import java.util.function.Function;
 
 /**
  * The next in succession of {@link Function} and {@link BiFunction}.
- *
+ * <p>
  * A function with three arguments
  *
  * @param <T> the type of the first argument to the function
