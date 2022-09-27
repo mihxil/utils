@@ -91,7 +91,6 @@ class ReasonedPredicateTest {
         assertThat(testString2.testWithReason("noreason").toString
             ()).isEqualTo("tests true");
         assertThat(testString2.testWithReason("noreason2").toString()).isEqualTo("noreason2");
-
     }
 
 }
