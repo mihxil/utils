@@ -25,6 +25,7 @@ class ThrowingConsumerTest {
     public void withoutThrows() {
 
         ThrowingConsumer<String, IOException> withoutThrows = System.out::println;
+
         assertThatNoException().isThrownBy(() -> {
             withoutThrows.accept("bla");
         });
