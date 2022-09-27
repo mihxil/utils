@@ -206,12 +206,14 @@ public final class Consumers {
         return new NOPConsumer<>(clazz);
     }
 
+
+    private static final Consumer<Object> NOP = new NOPConsumer<>(Object.class);
     /**
      * Produces consumer that complete ignores what it consumes.
      */
     @SuppressWarnings("unchecked")
     public static  <U> Consumer<U> nop() {
-        return new NOPConsumer<>((Class<U>) Object.class);
+        return (Consumer<U>) NOP;
     }
 
     protected static class NOPConsumer<U> implements Consumer<U> {
