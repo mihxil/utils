@@ -137,6 +137,7 @@ class ConsumersTest {
         assertThat(nop1).isEqualTo(nop2);
         assertThat(nop1.hashCode()).isEqualTo(nop2.hashCode());
         assertThat(nop1).isNotEqualTo(nop3);
+        assertThat(nop1).isNotEqualTo("foobar");
 
         assertThat(nop1.toString()).isEqualTo("NOP");
 
