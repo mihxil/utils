@@ -29,6 +29,9 @@ class ReasonedPredicateTest {
             } else if ("noreason".equals(input)) {
                 applies = true;
                 reason = null;
+            } else if ("noreason2".equals(input)) {
+                applies = true;
+                reason = "noreason2";
             } else if (input.length() < testString.length()) {
                 reason = "input is too short";
             } else if (input.length() > testString.length()) {
@@ -85,7 +88,10 @@ class ReasonedPredicateTest {
         assertThat(testString2.testWithReason("b").getReason()).isEqualTo("input is not equal a");
         assertThat(testString2.testWithReason("b").toString()).isEqualTo("input is not equal a");
         assertThat(testString2.testWithReason("a").getReason()).isEqualTo("input is equal a");
-        assertThat(testString2.testWithReason("noreason").toString()).isEqualTo("tests true");
+        assertThat(testString2.testWithReason("noreason").toString
+            ()).isEqualTo("tests true");
+        assertThat(testString2.testWithReason("noreason2").toString()).isEqualTo("noreason2");
+
     }
 
 }
