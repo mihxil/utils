@@ -17,9 +17,8 @@ public interface ThrowingSupplier<T, E extends Exception> extends Supplier<T> {
     default T get() {
         try {
             return getThrows();
-        } catch (final Exception e) {
-            sneakyThrow(e);
-            return null;
+        } catch (final Throwable e) {
+            sneakyThrow(e); return null;
         }
     }
     /**
@@ -27,9 +26,5 @@ public interface ThrowingSupplier<T, E extends Exception> extends Supplier<T> {
      *
      */
     T getThrows() throws E;
-
-    interface Any<T> extends ThrowingSupplier<T, Exception> {
-
-    }
 
 }

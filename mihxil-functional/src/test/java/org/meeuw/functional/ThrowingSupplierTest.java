@@ -27,7 +27,7 @@ class ThrowingSupplierTest {
 
         ThrowingSupplier<String, IOException> withoutThrows = () -> "foobar";
 
-        ThrowingSupplier.Any<String> withoutThrowsany = () -> "foobarany";
+        ThrowAnySupplier<String> withoutThrowsany = () -> "foobarany";
 
         // See that it works nice.
         someMethod(withoutThrows);
