@@ -9,7 +9,7 @@ import java.util.function.Supplier;
 @FunctionalInterface
 public interface ThrowingSupplier<T, E extends Exception> extends Supplier<T> {
 
-    static <T extends Throwable> T sneakyThrow(Throwable e) throws T {
+    static <T extends Throwable> void sneakyThrow(Throwable e) throws T {
         throw (T) e;
     }
 
@@ -18,7 +18,8 @@ public interface ThrowingSupplier<T, E extends Exception> extends Supplier<T> {
         try {
             return getThrows();
         } catch (final Exception e) {
-            throw sneakyThrow(e);
+            sneakyThrow(e);
+            return null;
         }
     }
     /**
@@ -26,5 +27,9 @@ public interface ThrowingSupplier<T, E extends Exception> extends Supplier<T> {
      *
      */
     T getThrows() throws E;
+
+    interface Any<T> extends ThrowingSupplier<T, Exception> {
+
+    }
 
 }

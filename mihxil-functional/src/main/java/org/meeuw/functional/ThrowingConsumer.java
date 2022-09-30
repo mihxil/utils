@@ -17,7 +17,7 @@ public interface ThrowingConsumer<T, E extends Exception> extends Consumer<T> {
         try {
             acceptThrows(t);
         } catch (final Exception e) {
-            throw sneakyThrow(e);
+            sneakyThrow(e);
         }
     }
     /**
