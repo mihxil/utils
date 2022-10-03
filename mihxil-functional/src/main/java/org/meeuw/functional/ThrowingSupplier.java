@@ -21,6 +21,7 @@ public interface ThrowingSupplier<T, E extends Exception> extends Supplier<T> {
             sneakyThrow(e); return null;
         }
     }
+
     /**
      * Performs this operation on the given argument, while allowing for an exception.
      *

@@ -11,7 +11,6 @@ import static org.meeuw.functional.ThrowingSupplier.sneakyThrow;
 @FunctionalInterface
 public interface ThrowingConsumer<T, E extends Exception> extends Consumer<T> {
 
-
     @Override
     default void accept(final T t) {
         try {
@@ -20,6 +19,7 @@ public interface ThrowingConsumer<T, E extends Exception> extends Consumer<T> {
             sneakyThrow(e);
         }
     }
+
     /**
      * Performs this operation on the given argument, while allowing for an exception.
      * @param t  the input argument
