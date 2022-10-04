@@ -10,11 +10,15 @@ import java.util.function.Predicate;
  * <p>
  * This is useful e.g. when the predicate itself is combined from multiple other ones with all kind of (boolean) logic, and sometimes
  * a user may find it hard to understand <em>why</em> the predicate evaluates as it does.
+ *
+ * @param <T> the type of the input to the predicate
  */
 public interface ReasonedPredicate<T> extends Predicate<T> {
 
     /**
      * Returns a reason and result for the predicate evaluation.
+     * @param input The object to test with this predicate
+     * @return A {@link TestResult}, describing whether and why the test succeeded
      */
     default TestResult testWithReason(T input) {
         boolean applies = test(input);
@@ -51,7 +55,7 @@ public interface ReasonedPredicate<T> extends Predicate<T> {
     }
 
     /**
-     * Basicly wraps e boolean with a reason
+     * Basically wraps e boolean with a reason
      */
     interface TestResult extends BooleanSupplier {
 

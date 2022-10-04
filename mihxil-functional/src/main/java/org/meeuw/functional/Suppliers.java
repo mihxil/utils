@@ -45,6 +45,7 @@ public class Suppliers {
      * Wrap a given supplier. The result of the suppletion is memoized after the first call. Subsequent calls will give the same value, without calling the supplier again.
      *
      * @param supplier the supplier to memoize
+     * @param <T> The type of the objects to supply
      * @return a new supplier that uses the argument supplier only once
      */
     public static <T> Supplier<T> memoize(Supplier<T> supplier) {

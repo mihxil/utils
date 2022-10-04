@@ -201,6 +201,10 @@ public final class Consumers {
      * Produces consumer that complete ignores what it consumes.
      * <p>
      * All such 'nop' are equal, if at least they consume objects of the same class.
+     *
+     * @param <U> The type of the objects this NOP Consumer 'consumes'
+     * @param clazz The class of this type
+     * @return A new {@link NOPConsumer}
      */
     public static  <U> Consumer<U> nop(Class<U> clazz) {
         return new NOPConsumer<>(clazz);
@@ -210,6 +214,9 @@ public final class Consumers {
     private static final Consumer<Object> NOP = new NOPConsumer<>(Object.class);
     /**
      * Produces consumer that complete ignores what it consumes.
+     *
+     * @param <U> The type of objects to consume
+     * @return Always the same instance, a consumer accepting and ignoring everything
      */
     @SuppressWarnings("unchecked")
     public static  <U> Consumer<U> nop() {

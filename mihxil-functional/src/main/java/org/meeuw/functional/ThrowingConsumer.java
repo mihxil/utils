@@ -23,6 +23,7 @@ public interface ThrowingConsumer<T, E extends Exception> extends Consumer<T> {
     /**
      * Performs this operation on the given argument, while allowing for an exception.
      * @param t  the input argument
+     * @throws E if the operation somehow fails, it throws exceptions of this type
      */
     void acceptThrows(T t) throws E;
 
