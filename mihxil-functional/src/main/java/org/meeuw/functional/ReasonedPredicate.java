@@ -55,7 +55,7 @@ public interface ReasonedPredicate<T> extends Predicate<T> {
     }
 
     /**
-     * Basically wraps e boolean with a reason
+     * Basically wraps a boolean with a reason
      */
     interface TestResult extends BooleanSupplier {
 

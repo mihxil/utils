@@ -144,7 +144,44 @@ class ConsumersTest {
 
         nop1.accept("fla");
 
-        Consumers.nop().accept("bla");;
+        Consumers.nop().accept("bla");
+    }
+
+    @Test
+    void biNop() {
+        BiConsumer<String, Integer> nop1 = Consumers.biNop(String.class, Integer.class);
+        BiConsumer<String, Integer> nop2 = Consumers.biNop(String.class, Integer.class);
+        BiConsumer<Integer, String> nop3 = Consumers.biNop(Integer.class, String.class);
+        assertThat(nop1).isEqualTo(nop2);
+        assertThat(nop1.hashCode()).isEqualTo(nop2.hashCode());
+        assertThat(nop1).isNotEqualTo(nop3);
+        assertThat(nop1).isNotEqualTo("foobar");
+        assertThat(nop1).isNotEqualTo(Consumers.nop());
+
+        assertThat(nop1.toString()).isEqualTo("NOP");
+
+        nop1.accept("fla", 1);
+
+        Consumers.biNop().accept("bla", 1);
+    }
+
+
+    @Test
+    void triNop() {
+        TriConsumer<String, Integer, Float> nop1 = Consumers.triNop(String.class, Integer.class, Float.class);
+        TriConsumer<String, Integer, Float> nop2 = Consumers.triNop(String.class, Integer.class, Float.class);
+        TriConsumer<Integer, String, Float> nop3 = Consumers.triNop(Integer.class, String.class, Float.class);
+        assertThat(nop1).isEqualTo(nop2);
+        assertThat(nop1.hashCode()).isEqualTo(nop2.hashCode());
+        assertThat(nop1).isNotEqualTo(nop3);
+        assertThat(nop1).isNotEqualTo("foobar");
+        assertThat(nop1).isNotEqualTo(Consumers.nop());
+
+        assertThat(nop1.toString()).isEqualTo("NOP");
+
+        nop1.accept("fla", 1, 0f);
+
+        Consumers.triNop().accept("bla", 1, 0f);
     }
 
 }

@@ -210,8 +210,43 @@ public final class Consumers {
         return new NOPConsumer<>(clazz);
     }
 
+    /**
+     * Produces {@link BiConsumer} that complete ignores what it consumes.
+     * <p>
+     * All such 'nop' are equal, if at least they consume objects of the same class.
+     *
+     * @param <U> The type of the objects this NOP Consumer 'consumes'
+     * @param clazz1 The class of this type
+     * @param clazz2 The class of this type
+     * @return A new {@link NOPBiConsumer}
+     */
+    public static  <U, V> BiConsumer<U, V> biNop(Class<U> clazz1, Class<V> clazz2) {
+        return new NOPBiConsumer<>(clazz1, clazz2);
+    }
 
-    private static final Consumer<Object> NOP = new NOPConsumer<>(Object.class);
+    /**
+     * Produces {@link TriConsumer} that complete ignores what it consumes.
+     * <p>
+     * All such 'nop' are equal, if at least they consume objects of the same class.
+     *
+     * @param <U> The type of the objects this NOP Consumer 'consumes'
+     * @param clazz1 The class of this type
+     * @param clazz2 The class of this type
+     * @param clazz3 The class of this type
+     * @return A new {@link NOPTriConsumer}
+     */
+    public static  <U, V, W> TriConsumer<U, V, W> triNop(Class<U> clazz1, Class<V> clazz2, Class<W> clazz3) {
+        return new NOPTriConsumer<>(clazz1, clazz2, clazz3);
+    }
+
+
+
+
+    private static final Consumer<Object> NOP = nop(Object.class);
+
+    private static  final BiConsumer<Object, Object> BINOP = biNop(Object.class, Object.class);
+    private static  final TriConsumer<Object, Object, Object> TRINOP = triNop(Object.class, Object.class, Object.class);
+
     /**
      * Produces consumer that complete ignores what it consumes.
      *
@@ -221,6 +256,16 @@ public final class Consumers {
     @SuppressWarnings("unchecked")
     public static  <U> Consumer<U> nop() {
         return (Consumer<U>) NOP;
+    }
+
+    @SuppressWarnings("unchecked")
+    public static  <U, V> BiConsumer<U, V> biNop() {
+        return (BiConsumer<U, V>) BINOP;
+    }
+
+    @SuppressWarnings("unchecked")
+    public static  <U, V, W> TriConsumer<U, V, W> triNop() {
+        return (TriConsumer<U, V, W>) TRINOP;
     }
 
     protected static class NOPConsumer<U> implements Consumer<U> {
@@ -242,6 +287,71 @@ public final class Consumers {
         @Override
         public boolean equals(Object o) {
             return o instanceof NOPConsumer && ((NOPConsumer<?>) o).clazz.equals(clazz);
+        }
+
+        @Override
+        public String toString() {
+            return "NOP";
+        }
+    }
+
+      protected static class NOPBiConsumer<U, V> implements BiConsumer<U, V> {
+        final Class<U> clazz1;
+        final Class<V> clazz2;
+
+        public NOPBiConsumer(Class<U> clazz1, Class<V> clazz2) {
+            this.clazz1 = clazz1;
+            this.clazz2 = clazz2;
+        }
+
+        @Override
+        public void accept(U u, V v) {
+        }
+
+        @Override
+        public int hashCode() {
+            return clazz1.hashCode() + 13 * clazz2.hashCode();
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            return o instanceof NOPBiConsumer && ((NOPBiConsumer<?, ?>) o).clazz1.equals(clazz1) && ((NOPBiConsumer<?, ?>) o).clazz2.equals(clazz2);
+        }
+
+        @Override
+        public String toString() {
+            return "NOP";
+        }
+    }
+
+    protected static class NOPTriConsumer<U, V, W> implements TriConsumer<U, V, W> {
+        final Class<U> clazz1;
+        final Class<V> clazz2;
+        final Class<W> clazz3;
+
+
+        public NOPTriConsumer(Class<U> clazz1, Class<V> clazz2, Class<W> clazz3) {
+            this.clazz1 = clazz1;
+            this.clazz2 = clazz2;
+            this.clazz3 = clazz3;
+        }
+
+        @Override
+        public void accept(U u, V v, W w) {
+        }
+
+        @Override
+        public int hashCode() {
+            return clazz1.hashCode() + 13 * clazz2.hashCode() + 21 * clazz3.hashCode();
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            return o instanceof NOPTriConsumer &&
+                ((NOPTriConsumer<?, ?, ?>) o).clazz1.equals(clazz1) &&
+                ((NOPTriConsumer<?, ?, ?>) o).clazz2.equals(clazz2) &&
+                ((NOPTriConsumer<?, ?, ?>) o).clazz3.equals(clazz3)
+                ;
         }
 
         @Override
