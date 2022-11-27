@@ -59,10 +59,17 @@ public interface ReasonedPredicate<T> extends Predicate<T> {
      */
     interface TestResult extends BooleanSupplier {
 
+        /**
+         * The reason of why a {code boolean} test result is what it is.
+         */
         default String getReason() {
             return toString();
         }
 
+        /**
+         * Creates a {@link TestResult}, wrapping {@code false}, with given {@link #getReason()}.
+         * @param reason Specified the reason why the test result is {@code false}
+         */
         static TestResult testsFalse(String reason) {
             return new TestResult() {
                 @Override
@@ -76,6 +83,10 @@ public interface ReasonedPredicate<T> extends Predicate<T> {
             };
         }
 
+        /**
+         * Creates a {@link TestResult}, wrapping {@code true}, with given {@link #getReason()}.
+         * @param reason Specified the reason why the test result is {@code true}
+         */
         static TestResult testsTrue(String reason) {
             return new TestResult() {
                 @Override
@@ -93,6 +104,11 @@ public interface ReasonedPredicate<T> extends Predicate<T> {
             };
         }
 
+        /**
+         * Creates a {@link TestResult}, wrapping given {@code boolean}, with given {@link #getReason()}.
+         * @param applies The boolean wrapped by the resulting {@code TestResult}
+         * @param reason Specified the reason why the test result is {@code applies}
+         */
         static TestResult of(boolean applies, String reason) {
             return applies ? testsTrue(reason) : testsFalse(reason);
         }

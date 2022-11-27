@@ -215,9 +215,10 @@ public final class Consumers {
      * <p>
      * All such 'nop' are equal, if at least they consume objects of the same class.
      *
-     * @param <U> The type of the objects this NOP Consumer 'consumes'
-     * @param clazz1 The class of this type
-     * @param clazz2 The class of this type
+     * @param <U> The first type of the objects this BiConsumer 'consumes'
+     * @param <V> The second type of the objects this BiConsumer 'consumes'
+     * @param clazz1 The class of this first type
+     * @param clazz2 The class of this second type
      * @return A new {@link NOPBiConsumer}
      */
     public static  <U, V> BiConsumer<U, V> biNop(Class<U> clazz1, Class<V> clazz2) {
@@ -229,10 +230,12 @@ public final class Consumers {
      * <p>
      * All such 'nop' are equal, if at least they consume objects of the same class.
      *
-     * @param <U> The type of the objects this NOP Consumer 'consumes'
-     * @param clazz1 The class of this type
-     * @param clazz2 The class of this type
-     * @param clazz3 The class of this type
+     * @param <U> The first type of the objects this NOP Consumer 'consumes'
+     * @param <V> The second type of the objects this NOP Consumer 'consumes'
+     * @param <W> The third type of the objects this NOP Consumer 'consumes'
+     * @param clazz1 The class of this first type
+     * @param clazz2 The class of this second type
+     * @param clazz3 The class of this third type
      * @return A new {@link NOPTriConsumer}
      */
     public static  <U, V, W> TriConsumer<U, V, W> triNop(Class<U> clazz1, Class<V> clazz2, Class<W> clazz3) {

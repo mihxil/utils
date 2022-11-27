@@ -33,38 +33,107 @@ public final class Predicates {
     private Predicates() {
     }
 
-    public static <T> Predicate<T> always(boolean v, String s) {
-        return new Always<>(v, s);
+    /**
+     * Returns a {@link Predicate} that always results in the same {@code boolean} value
+     * @param value The boolean value to always return
+     * @param toString The description for that, used in {@link #toString()}
+     * @param <T> The type of the (ignored) argument of the predicate
+     * @see #alwaysFalse()
+     * @see #alwaysTrue()
+     */
+    public static <T> Predicate<T> always(boolean value, String toString) {
+        return new Always<>(value, toString);
     }
 
+    /**
+     * Returns a {@link Predicate} that always results {@code false}, regardless of the argument. The toString value
+     * is {@link #FALSE}
+     * @param <T> The type of the (ignored) argument of the predicate
+     * @see #alwaysTrue()
+     */
     public static <T> Predicate<T> alwaysFalse() {
         return always(false, FALSE);
     }
 
+    /**
+     * Returns a {@link Predicate} that always results {@code true}, regardless of the argument. The toString value
+     * is {@link #TRUE}
+     * @param <T> The type of the (ignored) argument of the predicate
+     * @see #alwaysFalse()
+     */
     public static <T> Predicate<T> alwaysTrue() {
         return always(true, TRUE);
     }
 
-    public static <T, U> BiPredicate<T, U> biAlways(boolean v, String s) {
-        return new BiAlways<>(v, s);
+    /**
+     * Returns a {@link BiPredicate} that always results in the same {@code boolean} value
+     * @param value The boolean value to always return
+     * @param toString The description for that, used in {@link #toString()}
+     * @param <T> The type of the (ignored) first argument of the predicate
+     * @param <U> The type of the (ignored) second argument of the predicate
+     * @see #biAlwaysFalse()
+     * @see #biAlwaysTrue()
+     */
+    public static <T, U> BiPredicate<T, U> biAlways(boolean value, String toString) {
+        return new BiAlways<>(value, toString);
     }
 
+    /**
+     * Returns a {@link BiPredicate} that always results {@code false}, regardless of the argument. The toString value
+     * is {@link #FALSE}
+     * @param <T> The type of the (ignored) first argument of the predicate
+     * @param <U> The type of the (ignored) second argument of the predicate
+     * @see #biAlwaysTrue() ()
+     */
     public static <T, U> BiPredicate<T, U> biAlwaysFalse() {
         return biAlways(false, FALSE);
     }
 
+     /**
+     * Returns a {@link BiPredicate} that always results {@code true}, regardless of the argument. The toString value
+     * is {@link #TRUE}
+     * @param <T> The type of the (ignored) first argument of the predicate
+     * @param <U> The type of the (ignored) second argument of the predicate
+     * @see #biAlwaysFalse() ()
+     */
     public static <T, U> BiPredicate<T, U> biAlwaysTrue() {
         return biAlways(true, TRUE);
     }
 
-    public static <T, U, V> TriPredicate<T, U, V> triAlways(boolean val, String s) {
-        return new TriAlways<>(val, s);
+    /**
+     * Returns a {@link TriPredicate} that always results in the same {@code boolean} value
+     * @param value The boolean value to always return
+     * @param toString The description for that, used in {@link #toString()}
+     * @param <T> The type of the (ignored) first argument of the predicate
+     * @param <U> The type of the (ignored) second argument of the predicate
+     * @param <V> The type of the (ignored) third argument of the predicate
+     * @see #triAlwaysFalse()
+     * @see #triAlwaysTrue()
+     */
+    public static <T, U, V> TriPredicate<T, U, V> triAlways(boolean value, String toString) {
+        return new TriAlways<>(value, toString);
     }
 
+    /**
+     * Returns a {@link TriPredicate} that always results {@code false}, regardless of the argument. The toString value
+     * is {@link #FALSE}
+     * @param <T> The type of the (ignored) first argument of the predicate
+     * @param <U> The type of the (ignored) second argument of the predicate
+     * @param <V> The type of the (ignored) third argument of the predicate
+     * @see #triAlwaysTrue()
+     */
     public static <T, U, V> TriPredicate<T, U, V> triAlwaysFalse() {
         return triAlways(false, FALSE);
     }
 
+    /**
+     * Returns a {@link TriPredicate} that always results {@code true}, regardless of the argument. The toString value
+     * is {@link #TRUE}
+     * @param <T> The type of the (ignored) first argument of the predicate
+     * @param <U> The type of the (ignored) second argument of the predicate
+     * @param <V> The type of the (ignored) third argument of the predicate
+     * @see #triAlwaysFalse() ()
+     */
     public static <T, U, V> TriPredicate<T, U, V> triAlwaysTrue() {
         return triAlways(true, TRUE);
     }
