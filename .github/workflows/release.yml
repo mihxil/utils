@@ -12,7 +12,7 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: 8
-          server-id: ossrh-release
+          server-id: ossrh
           server-username: OSSRH_USERNAME
           server-password: OSSRH_PASSWORD
           gpg-private-key: ${{ secrets.GPG_SECRET_KEY }}
