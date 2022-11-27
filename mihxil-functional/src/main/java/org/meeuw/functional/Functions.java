@@ -5,13 +5,11 @@ import java.util.function.*;
 
 /**
  * A place for some 'Function' related utilities.
- *
- * Provides functions implementation which always return the same value, no matter their arguments.
- *
- * With a nicer toString/equals then a standard lambda would do.
- *
+ * <p>
+ * Provides e.g. function implementations which always return the same value, no matter their arguments (like, {@link #always(Object)}, {@link #biAlways(Object)}, {@link #triAlways(Object)}, {@link #quadriAlways(Object)}), with a nicer toString/equals then a standard lambda would do.
+ * <p>
  * Also, this statically provides the several {@code withArgX} and {@code ignoreArgX} methods (so they are also accessible
- * for implementions of {@link Function} and {@link BiFunction}).
+ * for implementations of {@link Function} and {@link BiFunction}).
  *
  * @author Michiel Meeuwissen
  * @since 0.1

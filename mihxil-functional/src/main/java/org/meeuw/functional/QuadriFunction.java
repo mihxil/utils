@@ -5,7 +5,7 @@ import java.util.function.*;
 
 /**
  * The next in succession of {@link Function}, {@link BiFunction} and {@link TriFunction}
- *
+ *<p>
  * A function with four arguments
  *
  * @param <T> the type of the first argument to the function
