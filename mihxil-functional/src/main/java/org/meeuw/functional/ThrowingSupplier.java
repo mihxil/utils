@@ -10,6 +10,7 @@ import java.util.function.Supplier;
 @FunctionalInterface
 public interface ThrowingSupplier<T, E extends Exception> extends Supplier<T> {
 
+    @SuppressWarnings("unchecked")
     static <T extends Throwable> void sneakyThrow(Throwable e) throws T {
         throw (T) e;
     }

@@ -27,18 +27,16 @@ class ThrowingSupplierTest {
 
         ThrowingSupplier<String, IOException> withoutThrows = () -> "foobar";
 
-        ThrowAnySupplier<String> withoutThrowsany = () -> "foobarany";
+        ThrowAnySupplier<String> withoutThrowsAny = () -> "foobarany";
 
         // See that it works nice.
         someMethod(withoutThrows);
-        someOtherMethod(withoutThrows);
+        someOtherMethod(withoutThrowsAny);
 
-        someMethod(() -> {
-            if (true) {
-                return "BarFoo";
-            }
-            throw new IllegalArgumentException();
-        });
+        assertThatThrownBy(() -> {
+            someMethod(() -> {
+                throw new IllegalArgumentException();
+            });}).isInstanceOf(IllegalArgumentException.class);
 
         someOtherMethod(withoutThrows);
 
