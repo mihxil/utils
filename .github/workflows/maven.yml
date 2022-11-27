@@ -29,8 +29,8 @@ jobs:
       - name: Build with Maven
         run: mvn -B  deploy
         env:
-          SONATYPE_USERNAME: mihxil
-          SONATYPE_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
+          OSSRH_USERNAME: mihxil
+          OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
           GPG_SECRET_KEY_PASSPHRASE: ${{ secrets.GPG_SECRET_KEY_PASSPHRASE }}
       - uses: codecov/codecov-action@v3
       - name: Publish Unit Test Results
