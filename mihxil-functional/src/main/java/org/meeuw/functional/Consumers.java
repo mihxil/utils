@@ -315,7 +315,9 @@ public final class Consumers {
 
         @Override
         public boolean equals(Object o) {
-            return o instanceof NOPBiConsumer && ((NOPBiConsumer<?, ?>) o).clazz1.equals(clazz1) && ((NOPBiConsumer<?, ?>) o).clazz2.equals(clazz2);
+            return o instanceof NOPBiConsumer &&
+                ((NOPBiConsumer<?, ?>) o).clazz1.equals(clazz1) &&
+                ((NOPBiConsumer<?, ?>) o).clazz2.equals(clazz2);
         }
 
         @Override

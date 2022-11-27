@@ -152,9 +152,11 @@ class ConsumersTest {
         BiConsumer<String, Integer> nop1 = Consumers.biNop(String.class, Integer.class);
         BiConsumer<String, Integer> nop2 = Consumers.biNop(String.class, Integer.class);
         BiConsumer<Integer, String> nop3 = Consumers.biNop(Integer.class, String.class);
+        BiConsumer<String, String> nop4 = Consumers.biNop(String.class, String.class);
         assertThat(nop1).isEqualTo(nop2);
         assertThat(nop1.hashCode()).isEqualTo(nop2.hashCode());
         assertThat(nop1).isNotEqualTo(nop3);
+        assertThat(nop1).isNotEqualTo(nop4);
         assertThat(nop1).isNotEqualTo("foobar");
         assertThat(nop1).isNotEqualTo(Consumers.biNop());
 
@@ -171,9 +173,13 @@ class ConsumersTest {
         TriConsumer<String, Integer, Float> nop1 = Consumers.triNop(String.class, Integer.class, Float.class);
         TriConsumer<String, Integer, Float> nop2 = Consumers.triNop(String.class, Integer.class, Float.class);
         TriConsumer<Integer, String, Float> nop3 = Consumers.triNop(Integer.class, String.class, Float.class);
+        TriConsumer<String, String, Float> nop4 = Consumers.triNop(String.class, String.class, Float.class);
+        TriConsumer<String, Integer, Double> nop5 = Consumers.triNop(String.class, Integer.class, Double.class);
         assertThat(nop1).isEqualTo(nop2);
         assertThat(nop1.hashCode()).isEqualTo(nop2.hashCode());
         assertThat(nop1).isNotEqualTo(nop3);
+        assertThat(nop1).isNotEqualTo(nop4);
+        assertThat(nop1).isNotEqualTo(nop5);
         assertThat(nop1).isNotEqualTo("foobar");
         assertThat(nop1).isNotEqualTo(Consumers.triNop());
 
