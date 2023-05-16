@@ -27,4 +27,21 @@ class ThrowingAutoCloseableTest {
         assertThatNoException().isThrownBy(withoutThrows::close);
     }
 
+    @Test
+    public void withAnyThrows() {
+
+        ThrowAnyAutoCloseable withThrows = () -> {
+            throw new IOException();
+        };
+        assertThatThrownBy(withThrows::close
+        ).isInstanceOf(IOException.class);
+    }
+
+    @Test
+    public void withoutAnyThrows() {
+        ThrowAnyAutoCloseable withoutThrows = () -> {};
+
+        assertThatNoException().isThrownBy(withoutThrows::close);
+    }
+
 }
