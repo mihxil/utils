@@ -7,12 +7,12 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThatNoException;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-class ThrowingAutocloseableTest {
+class ThrowingAutoCloseableTest {
 
     @Test
     public void withThrows() {
 
-        ThrowingAutocloseable<IOException> withThrows = () -> {
+        ThrowingAutoCloseable<IOException> withThrows = () -> {
             throw new IOException();
         };
         assertThatThrownBy(withThrows::close
@@ -22,7 +22,7 @@ class ThrowingAutocloseableTest {
     @Test
     public void withoutThrows() {
 
-        ThrowingAutocloseable<IOException> withoutThrows = () -> {};
+        ThrowingAutoCloseable<IOException> withoutThrows = () -> {};
 
         assertThatNoException().isThrownBy(withoutThrows::close);
     }

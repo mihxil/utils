@@ -7,7 +7,7 @@ import static org.meeuw.functional.ThrowingSupplier.sneakyThrow;
  * @since 1.8
  */
 @FunctionalInterface
-public interface ThrowingAutocloseable<E extends Exception> extends AutoCloseable {
+public interface ThrowingAutoCloseable<E extends Exception> extends AutoCloseable {
 
     @Override
     default void close() {
