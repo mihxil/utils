@@ -40,6 +40,7 @@ public final class Predicates {
      * @param <T> The type of the (ignored) argument of the predicate
      * @see #alwaysFalse()
      * @see #alwaysTrue()
+     * @return A new Predicate, with described properties. It {@code equals} all such predicates wrapping the same {@code value}
      */
     public static <T> Predicate<T> always(boolean value, String toString) {
         return new Always<>(value, toString);
@@ -132,6 +133,7 @@ public final class Predicates {
      * @param <T> The type of the (ignored) first argument of the predicate
      * @param <U> The type of the (ignored) second argument of the predicate
      * @param <V> The type of the (ignored) third argument of the predicate
+     * @return A new {@link TriPredicate} which is {@link #equals(Object)} other such {@code TriPredicated} which also always are {@code true}
      * @see #triAlwaysFalse() ()
      */
     public static <T, U, V> TriPredicate<T, U, V> triAlwaysTrue() {
