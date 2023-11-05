@@ -17,7 +17,7 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <java.target.version>8</java.target.version>
-    <jacoco.version>0.8.10</jacoco.version>
+    <jacoco.version>0.8.11</jacoco.version>
   </properties>
 
   <licenses>
@@ -102,7 +102,7 @@
       </plugin>
       <plugin>
         <artifactId>maven-enforcer-plugin</artifactId>
-        <version>3.3.0</version>
+        <version>3.4.1</version>
         <executions>
           <execution>
             <id>enforce-maven</id>
@@ -145,7 +145,7 @@
       </plugin>
       <plugin>
         <artifactId>maven-release-plugin</artifactId>
-        <version>3.3.0</version>
+        <version>3.0.1</version>
         <configuration>
           <branchName>${project.version}</branchName>
           <tagNameFormat>@{project.version}</tagNameFormat>
@@ -156,7 +156,7 @@
       <plugins>
         <plugin>
           <artifactId>maven-surefire-plugin</artifactId>
-          <version>3.1.2</version>
+          <version>3.2.1</version>
           <configuration>
             <testFailureIgnore>true</testFailureIgnore>
             <systemPropertyVariables>
@@ -195,7 +195,7 @@
           </plugin>
           <plugin>
             <artifactId>maven-gpg-plugin</artifactId>
-            <version>3.0.1</version>
+            <version>3.1.0</version>
             <executions>
               <execution>
                 <id>sign-artifacts</id>
@@ -220,7 +220,7 @@
           </plugin>
           <plugin>
             <artifactId>maven-javadoc-plugin</artifactId>
-            <version>3.5.0</version>
+            <version>3.6.0</version>
             <executions>
               <execution>
                 <id>attach-javadocs</id>
