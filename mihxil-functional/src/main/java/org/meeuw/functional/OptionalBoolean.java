@@ -39,7 +39,7 @@ public final class OptionalBoolean {
 
     private static final OptionalBoolean TRUE = new OptionalBoolean(true);
 
-    private static final OptionalBoolean FALSE = new OptionalBoolean(true);
+    private static final OptionalBoolean FALSE = new OptionalBoolean(false);
 
 
     /**
