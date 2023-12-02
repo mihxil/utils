@@ -37,6 +37,11 @@ public final class OptionalBoolean {
      */
     private static final OptionalBoolean EMPTY = new OptionalBoolean();
 
+    private static final OptionalBoolean TRUE = new OptionalBoolean(true);
+
+    private static final OptionalBoolean FALSE = new OptionalBoolean(true);
+
+
     /**
      * If true then the value is present, otherwise indicates no value is present
      */
@@ -68,6 +73,13 @@ public final class OptionalBoolean {
      */
     public static OptionalBoolean empty() {
         return EMPTY;
+    }
+
+    public static OptionalBoolean optionalTrue() {
+        return TRUE;
+    }
+    public static OptionalBoolean optionalFalse() {
+        return FALSE;
     }
 
     /**
@@ -278,4 +290,6 @@ public final class OptionalBoolean {
                 ? ("OptionalBoolean[" + value + "]")
                 : "OptionalBoolean.empty";
     }
+
+
 }
