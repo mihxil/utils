@@ -17,7 +17,12 @@ public interface ThrowingSupplier<T, E extends Exception> extends Supplier<T> {
      */
     @SuppressWarnings("unchecked")
     static <T extends Throwable> void sneakyThrow(Throwable e) throws T {
-        throw (T) e;
+        throw (T) sneaky(e);
+    }
+
+    @SuppressWarnings("unchecked")
+    static <T extends Throwable> T sneaky(Throwable e) {
+        return (T) e;
     }
 
     @Override
@@ -25,7 +30,8 @@ public interface ThrowingSupplier<T, E extends Exception> extends Supplier<T> {
         try {
             return getThrows();
         } catch (final Throwable e) {
-            sneakyThrow(e); return null;
+            sneakyThrow(e);
+            return null;
         }
     }
 
