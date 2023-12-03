@@ -2,7 +2,8 @@ package org.meeuw.functional;
 
 import java.util.function.Consumer;
 
-import static org.meeuw.functional.ThrowingSupplier.sneakyThrow;
+import static org.meeuw.functional.Sneaky.sneakyThrow;
+
 
 /**
  * An extension of {@link Consumer} that can throw exceptions too.

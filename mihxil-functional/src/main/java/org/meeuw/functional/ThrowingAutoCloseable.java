@@ -1,6 +1,6 @@
 package org.meeuw.functional;
 
-import static org.meeuw.functional.ThrowingSupplier.sneakyThrow;
+import static org.meeuw.functional.Sneaky.sneakyThrow;
 
 /**
  * An extension of {@link AutoCloseable} that can throw exceptions too.

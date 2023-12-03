@@ -24,7 +24,6 @@ class ThrowingSupplierTest {
 
     @Test
     public void withoutThrows() {
-
         ThrowingSupplier<String, IOException> withoutThrows = () -> "foobar";
 
         ThrowAnySupplier<String> withoutThrowsAny = () -> "foobarany";

@@ -10,28 +10,12 @@ import java.util.function.Supplier;
 @FunctionalInterface
 public interface ThrowingSupplier<T, E extends Exception> extends Supplier<T> {
 
-    /**
-     * Just throws its argument. This is actually just a trick to fool the compiler.
-     * This way we can throw checked exceptions from a method without a throw clause, without having to wrap them in
-     * {@link RuntimeException}. Similar to <a href="https://projectlombok.org/features/SneakyThrows">lombok's {@code @SneakyThrows}</a> does, but without the need for the dependency.
-     */
-    @SuppressWarnings("unchecked")
-    static <T extends Throwable> void sneakyThrow(Throwable e) throws T {
-        throw (T) sneaky(e);
-    }
-
-    @SuppressWarnings("unchecked")
-    static <T extends Throwable> T sneaky(Throwable e) {
-        return (T) e;
-    }
-
     @Override
     default T get() {
         try {
             return getThrows();
         } catch (final Throwable e) {
-            sneakyThrow(e);
-            return null;
+            return Sneaky.sneakyThrow(e);
         }
     }
 
