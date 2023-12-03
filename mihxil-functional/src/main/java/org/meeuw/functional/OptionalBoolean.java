@@ -5,7 +5,7 @@ import java.util.function.BooleanSupplier;
 import java.util.function.Supplier;
 
 /**
- * A container object which may or may not contain a {@code long} value.
+ * A container object which may or may not contain a {@code boolean} value.
  * If a value is present, {@code isPresent()} returns {@code true}. If no
  * value is present, the object is considered <i>empty</i> and
  * {@code isPresent()} returns {@code false}.
@@ -31,15 +31,16 @@ import java.util.function.Supplier;
  * @since 1.10
  */
 
-public final class OptionalBoolean {
+public enum OptionalBoolean {
+
     /**
      * Common instance for {@code empty()}.
      */
-    private static final OptionalBoolean EMPTY = new OptionalBoolean();
+    EMPTY,
 
-    private static final OptionalBoolean TRUE = new OptionalBoolean(true);
+    TRUE(true),
 
-    private static final OptionalBoolean FALSE = new OptionalBoolean(false);
+    FALSE(false);
 
 
     /**
@@ -54,7 +55,7 @@ public final class OptionalBoolean {
      * @implNote generally only one empty instance, {@link OptionalBoolean#EMPTY},
      * should exist per VM.
      */
-    private OptionalBoolean() {
+    OptionalBoolean() {
         this.isPresent = false;
         this.value = false;
     }
@@ -63,13 +64,7 @@ public final class OptionalBoolean {
      * Returns an empty {@code OptionalBoolean} instance.  No value is present for
      * this {@code OptionalBoolean}.
      *
-     * @apiNote
-     * Though it may be tempting to do so, avoid testing if an object is empty
-     * by comparing with {@code ==} or {@code !=} against instances returned by
-     * {@code OptionalBoolean.empty()}.  There is no guarantee that it is a singleton.
-     * Instead, use {@link #isEmpty()} or {@link #isPresent()}.
-     *
-     * @return an empty {@code OptionalBoolean}.
+     * @returns the  empty {@code OptionalBoolean}.
      */
     public static OptionalBoolean empty() {
         return EMPTY;
@@ -85,9 +80,9 @@ public final class OptionalBoolean {
     /**
      * Construct an instance with the described value.
      *
-     * @param value the long value to describe
+     * @param value the boolean value to describe
      */
-    private OptionalBoolean(boolean value) {
+    OptionalBoolean(boolean value) {
         this.isPresent = true;
         this.value = value;
     }
@@ -231,46 +226,7 @@ public final class OptionalBoolean {
         }
     }
 
-    /**
-     * Indicates whether some other object is "equal to" this
-     * {@code OptionalBoolean}.  The other object is considered equal if:
-     * <ul>
-     * <li>it is also an {@code OptionalBoolean} and;
-     * <li>both instances have no value present or;
-     * <li>the present values are "equal to" each other via {@code ==}.
-     * </ul>
-     *
-     * @param obj an object to be tested for equality
-     * @return {@code true} if the other object is "equal to" this object
-     *         otherwise {@code false}
-     */
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
 
-        if (obj instanceof OptionalBoolean) {
-            OptionalBoolean other = (OptionalBoolean) obj;
-                return  (isPresent && other.isPresent
-                ? value == other.value
-                : isPresent == other.isPresent);
-        } else {
-            return false;
-        }
-    }
-
-    /**
-     * Returns the hash code of the value, if present, otherwise {@code 0}
-     * (zero) if no value is present.
-     *
-     * @return hash code value of the present value or {@code 0} if no value is
-     *         present
-     */
-    @Override
-    public int hashCode() {
-        return isPresent ? Boolean.hashCode(value) : 0;
-    }
 
     /**
      * Returns a non-empty string representation of this {@code OptionalBoolean}

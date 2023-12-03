@@ -55,9 +55,9 @@ class OptionalBooleanTest {
         });
         assertThat(result).containsExactly("if present true", "if present or else true");
 
-        assertThatNoException().isThrownBy(t::orElseThrow);
+        assertThat(t.orElseThrow()).isTrue();
 
-        assertThatNoException().isThrownBy(() -> t.orElseThrow(IllegalArgumentException::new));
+        assertThat(t.orElseThrow(IllegalArgumentException::new)).isTrue();
     }
 
 
@@ -86,9 +86,9 @@ class OptionalBooleanTest {
         });
         assertThat(result).containsExactly("if present false", "if present or else false");
 
-        assertThatNoException().isThrownBy(f::orElseThrow);
+        assertThat(f.orElseThrow()).isFalse();
 
-        assertThatNoException().isThrownBy(() -> f.orElseThrow(IllegalArgumentException::new));
+        assertThat(f.orElseThrow(IllegalArgumentException::new)).isFalse();
     }
 
     @Test
