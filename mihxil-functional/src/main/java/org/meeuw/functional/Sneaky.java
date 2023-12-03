@@ -10,14 +10,12 @@ class Sneaky {
      * This way we can throw checked exceptions from a method without a throw clause, without having to wrap them in
      * {@link RuntimeException}. Similar to <a href="https://projectlombok.org/features/SneakyThrows">lombok's {@code @SneakyThrows}</a> does, but without the need for the dependency.
      * @return Never returns anything, always throws the exception
+     * @param <R> The formal return type of the method
+     * @param <T> The type of the exception to throw
+     *
      */
     @SuppressWarnings("unchecked")
-    public static <T extends Throwable, R> R  sneakyThrow(Throwable e) throws T {
-        throw (T) sneaky(e);
-    }
-
-    @SuppressWarnings("unchecked")
-    public static <T extends Throwable> T sneaky(Throwable e) {
-        return (T) e;
+    public static <T extends Throwable, R> R  sneakyThrow(Object e) throws T {
+        throw (T)e;
     }
 }
