@@ -5,6 +5,7 @@ class Sneaky {
     private Sneaky() {
         // no instances
     }
+
     /**
      * Just throws its argument. This is actually just a trick to fool the compiler.
      * This way we can throw checked exceptions from a method without a throw clause, without having to wrap them in
