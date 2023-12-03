@@ -4,12 +4,12 @@
   <parent>
     <groupId>org.meeuw.util</groupId>
     <artifactId>mihxil-util-parent</artifactId>
-    <version>1.10</version>
+    <version>1.11-SNAPSHOT</version>
   </parent>
   <artifactId>mihxil-functional</artifactId>
   <name>Mihxil's Functional Utils</name>
   <packaging>jar</packaging>
-  <version>1.10</version>
+  <version>1.11-SNAPSHOT</version>
   <description>Utilities related and like java.util.Function</description>
 
   <build>
