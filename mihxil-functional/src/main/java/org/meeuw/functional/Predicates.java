@@ -46,6 +46,20 @@ public final class Predicates {
         return new Always<>(value, toString);
     }
 
+
+    /**
+     * Returns a {@link Predicate} that always results in the same {@code boolean} value
+     * @param value The boolean value to always return*
+     * @param <T> The type of the (ignored) argument of the predicate
+     * @see #alwaysFalse()
+     * @see #alwaysTrue()
+     * @return A new Predicate, with described properties. It {@code equals} all such predicates wrapping the same {@code value}
+     */
+    public static <T> Predicate<T> always(boolean value) {
+        return value ? alwaysTrue() : alwaysFalse();
+    }
+
+
     /**
      * Returns a {@link Predicate} that always results {@code false}, regardless of the argument. The toString value
      * is {@link #FALSE}
