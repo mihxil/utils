@@ -54,6 +54,7 @@ public final class Predicates {
      * @see #alwaysFalse()
      * @see #alwaysTrue()
      * @return A new Predicate, with described properties. It {@code equals} all such predicates wrapping the same {@code value}
+     * @since 1.11
      */
     public static <T> Predicate<T> always(boolean value) {
         return value ? alwaysTrue() : alwaysFalse();
