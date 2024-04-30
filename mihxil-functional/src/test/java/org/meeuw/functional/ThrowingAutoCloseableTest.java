@@ -11,7 +11,6 @@ class ThrowingAutoCloseableTest {
 
     @Test
     public void withThrows() {
-
         ThrowingAutoCloseable<IOException> withThrows = () -> {
             throw new IOException();
         };

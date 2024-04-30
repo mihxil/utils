@@ -340,6 +340,36 @@ public final class Functions {
         return function.ignoreArg1();
     }
 
+
+    /**
+     * Returns a function that always returns its input argument.
+     * @since 1.11
+     */
+    public static <T> UnaryOperator<T> identity() {
+        return new UnaryOperator<T>() {
+            @Override
+            public T apply(T t) {
+                return t;
+            }
+            @Override
+            public String toString() {
+                return "identity";
+            }
+
+            @Override
+            public boolean equals(Object o) {
+                if (this == o) return true;
+                if (o == null || getClass() != o.getClass()) return false;
+                return true;
+            }
+
+            @Override
+            public int hashCode() {
+                return 0;
+            }
+        };
+    }
+
     /**
      * Abstract implementation of function returning always the same value, regardless of their arguments.
      */

@@ -2,6 +2,7 @@ package org.meeuw.functional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
@@ -69,6 +70,24 @@ class ConsumersTest {
         assertThat(bi).isEqualTo(bi);
         assertThat(ignoreArg1(bi).equals(ignoreArg1(bi))).isTrue();
         assertThat(ignoreArg1(bi).equals(ignoreArg2(bi))).isFalse();
+    }
+
+    @Test
+    void monoWithArg1() {
+        Mono mono = new Mono();
+        Runnable run = withArg1(mono, "foobar");
+        run.run();
+        assertThat(mono.consumed).containsExactly("foobar");
+    }
+
+    @Test
+    void monoWithArg1Supplier() {
+        Mono mono = new Mono();
+        AtomicInteger i = new AtomicInteger(0);
+        Runnable run = withArg1Supplier(mono, () -> "foobar" + i.incrementAndGet());
+        run.run();
+        run.run();
+        assertThat(mono.consumed).containsExactly("foobar1", "foobar2");
     }
 
     @Test

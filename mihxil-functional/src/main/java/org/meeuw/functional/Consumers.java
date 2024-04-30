@@ -16,6 +16,39 @@ public final class Consumers {
     }
 
     /**
+     * Creates a new Runnable implemented using a {@link Consumer}, simply always consuming that same value.
+     * @since 1.11
+     * @param <U> the type {@link Consumer} argument
+     * @param consumer The consummer to adapt
+     * @param value the value to consume
+     */
+    public static <U> Runnable withArg1(Consumer<U> consumer, U value) {
+        return new RunnableWrapper<Consumer<U>>(consumer, value, "with arg1 " + value) {
+            @Override
+            public void run() {
+                wrapped.accept(value);
+            }
+        };
+    }
+
+      /**
+     * Creates a new Runnable implemented using a {@link Consumer}, simply always consuming that same value.
+     * @since 1.11
+     * @param <U> the type {@link Consumer} argument
+     * @param consumer The consummer to adapt
+     * @param valueSupplier supplier for the value to consume
+     */
+    public static <U> Runnable withArg1Supplier(Consumer<U> consumer, Supplier<U> valueSupplier) {
+        return new RunnableWrapper<Consumer<U>>(consumer, valueSupplier, "with arg1 " + valueSupplier) {
+            @Override
+            public void run() {
+                wrapped.accept(valueSupplier.get());
+            }
+        };
+    }
+
+
+    /**
      * Creates a new {@link TriConsumer} but implement it using a {@link BiConsumer}, simply completely ignoring the third argument.
      * <p>
      * The resulting object implements {@link #equals(Object)} and {@link #hashCode()} based on the parameter.
@@ -390,6 +423,16 @@ public final class Consumers {
     protected static abstract class MonoWrapper<W, X> extends ValueWrapper<W> implements Consumer<X> {
 
         public MonoWrapper(W wrapped, Object value,  String reason) {
+            super(wrapped, value, reason);
+        }
+    }
+
+     /**
+     * Abstract base class for implementing {@link Consumer}s based on wrapping something else.
+     */
+    protected static abstract class RunnableWrapper<W> extends ValueWrapper<W> implements Runnable {
+
+        public RunnableWrapper(W wrapped, Object value,  String reason) {
             super(wrapped, value, reason);
         }
     }
