@@ -32,9 +32,9 @@ jobs:
           OSSRH_USERNAME: mihxil
           OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
           GPG_SECRET_KEY_PASSPHRASE: ${{ secrets.GPG_SECRET_KEY_PASSPHRASE }}
-      - uses: codecov/codecov-action@v3
+      - uses: codecov/codecov-action@v4
       - name: Publish Unit Test Results
-        uses: EnricoMi/publish-unit-test-result-action@v2.11.0
+        uses: EnricoMi/publish-unit-test-result-action@v2.16.1
         if: always()
         with:
           junit_files: "**/target/surefire-reports/*.xml"
