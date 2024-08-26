@@ -29,6 +29,6 @@ jobs:
       - name: Release
         run: mvn -Pdeploy --batch-mode  -Darguments=-DskipTests  release:prepare release:perform
         env:
-          OSSRH_USERNAME: mihxil
+          OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
           GPG_SECRET_KEY_PASSPHRASE: ${{ secrets.GPG_SECRET_KEY_PASSPHRASE }}
