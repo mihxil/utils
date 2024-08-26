@@ -4,10 +4,10 @@ import java.util.Objects;
 import java.util.function.Consumer;
 
 /**
- * Represents an operation that accepts a single {@code long}-valued argument and
+ * Represents an operation that accepts a single {@code boolean}-valued argument and
  * returns no result.  This is the primitive type specialization of
  * {@link Consumer} for {@code Boolean}.  Unlike most other functional interfaces,
- * {@code BooleanConsumer} is expected to operate via side-effects.
+ * {@code BooleanConsumer} is expected to operate via side effects.
  *
  * <p>This is a <a href="package-summary.html">functional interface</a>
  * whose functional method is {@link #accept(boolean)}.
