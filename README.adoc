@@ -8,7 +8,6 @@ image:https://img.shields.io/nexus/s/https/oss.sonatype.org/org.meeuw.util/mihxi
 
 
 
-
 == Functional extensions
 
 Classes related to `java.util.Function` and extensions like `Predicate`, `Consumer` and `Supplier`.
