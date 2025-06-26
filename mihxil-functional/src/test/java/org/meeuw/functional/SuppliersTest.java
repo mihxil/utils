@@ -67,7 +67,7 @@ class SuppliersTest {
             assertThat(memoize.equals("something else")).isFalse();
             assertThat(memoize.equals(null)).isFalse();
             assertThat(memoize.unwrap().toString()).isEqualTo("I(memoize)");
-            assertThat(memoize.toString()).isEqualTo("I(memoize");
+            assertThat(memoize.toString()).isEqualTo("I(memoize)");
 
             Supplier<Integer> memoize2 = Suppliers.memoize(isup);
             assertThat(memoize.equals(memoize2)).isFalse();
