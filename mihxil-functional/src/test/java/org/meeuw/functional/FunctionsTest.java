@@ -174,4 +174,13 @@ class FunctionsTest {
         assertThat(ignoreArg1(tri).apply(new Object(), "a", 1.0, 2.0f)).isEqualTo("a+1.0+2.0");
     }
 
+    @Test
+    void identity() {
+        assertThat(Functions.<String>identity().apply("test")).isEqualTo("test");
+        assertThat(Functions.identity().equals(Functions.identity())).isTrue();
+        assertThat(Functions.identity().equals("bla")).isFalse();
+        assertThat(Functions.identity().hashCode()).isEqualTo(0);
+        assertThat(Functions.identity().toString()).isEqualTo("identity");
+
+    }
 }
