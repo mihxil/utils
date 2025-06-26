@@ -1,7 +1,7 @@
 package org.meeuw.functional;
 
 /**
- * @since 0.12
+ * @since 1.12
  * @param <T> Type of supplier
  * @param <W> Type of wrapped object
  */

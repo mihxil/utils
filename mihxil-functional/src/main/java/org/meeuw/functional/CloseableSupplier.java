@@ -3,7 +3,7 @@ package org.meeuw.functional;
 import java.util.function.Supplier;
 
 /**
- * @since 0.12
+ * @since 1.12
  * @param <T>
  */
 @FunctionalInterface
