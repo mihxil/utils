@@ -95,6 +95,14 @@ public final class Predicates {
     }
 
     /**
+     * @since 0.13
+     */
+    public static <T, U> BiPredicate<T, U> biAlways(boolean value) {
+        return value ? biAlwaysTrue() : biAlwaysFalse();
+    }
+
+
+    /**
      * Returns a {@link BiPredicate} that always results {@code false}, regardless of the argument. The toString value
      * is {@link #FALSE}
      * @param <T> The type of the (ignored) first argument of the predicate
