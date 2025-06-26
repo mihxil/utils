@@ -33,7 +33,7 @@ jobs:
           OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
           GPG_SECRET_KEY_PASSPHRASE: ${{ secrets.GPG_SECRET_KEY_PASSPHRASE }}
       - uses: codecov/codecov-action@v4
-        if: ${{ github.event_name == 'push'  && ! cancelled()
+        if: ${{ github.event_name == 'push'  && ! cancelled() }}
         with:
           token: ${{ secrets.CODECOV_TOKEN }} # required
       - uses: codecov/codecov-action@v4
