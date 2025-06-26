@@ -6,7 +6,7 @@ import java.util.Objects;
  * Wraps some object with a reason.
  * @author Michiel Meeuwissen
  */
-abstract class Wrapper<W> {
+abstract class Wrapper<W> implements AutoCloseable{
 
     protected final W wrapped;
     protected final String reason;
@@ -44,5 +44,12 @@ abstract class Wrapper<W> {
         int result = Objects.hashCode(wrapped);
         result = 31 * result;
         return result;
+    }
+
+    @Override
+    public void close() throws Exception {
+        if (wrapped instanceof AutoCloseable) {
+            ((AutoCloseable) wrapped).close();
+        }
     }
 }

@@ -52,10 +52,12 @@ public class Suppliers {
         return new MemoizeSupplier<>(supplier);
     }
 
+
+
     /**
      * Extension of {@link Wrapper} that implements {@link Supplier}.
      */
-    protected static abstract class SupplierWrapper<T, W> extends Wrapper<W> implements Supplier<T> {
+    protected static abstract class SupplierWrapper<T, W> extends Wrapper<W> implements CloseableSupplier<T> {
         public SupplierWrapper(W wrapped, String reason) {
             super(wrapped, reason);
         }
