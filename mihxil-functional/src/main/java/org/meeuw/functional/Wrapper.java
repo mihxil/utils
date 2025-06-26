@@ -6,7 +6,7 @@ import java.util.Objects;
  * Wraps some object with a reason.
  * @author Michiel Meeuwissen
  */
-abstract class Wrapper<W> implements AutoCloseable{
+abstract class Wrapper<W> implements Unwrappable<W> {
 
     protected final W wrapped;
     protected final String reason;
@@ -20,13 +20,18 @@ abstract class Wrapper<W> implements AutoCloseable{
         this.reason = reason;
     }
 
+    @Override
+    public W unwrap() {
+        return wrapped;
+    }
+
     /**
      * The string representation of a {@code Wrapper} is the string representation of wrapped object to which a
      * 'reason' for the wrapping is appended.
      */
     @Override
     public String toString() {
-        return wrapped + "(" + reason + ")";
+        return wrapped + (reason == null ? "" : "(" + reason + ")");
     }
 
     @Override
@@ -46,10 +51,4 @@ abstract class Wrapper<W> implements AutoCloseable{
         return result;
     }
 
-    @Override
-    public void close() throws Exception {
-        if (wrapped instanceof AutoCloseable) {
-            ((AutoCloseable) wrapped).close();
-        }
-    }
 }

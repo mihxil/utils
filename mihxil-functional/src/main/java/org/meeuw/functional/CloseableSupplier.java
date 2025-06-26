@@ -2,6 +2,10 @@ package org.meeuw.functional;
 
 import java.util.function.Supplier;
 
+/**
+ * @since 0.12
+ * @param <T>
+ */
 @FunctionalInterface
 public interface CloseableSupplier<T> extends Supplier<T>, AutoCloseable {
 
@@ -13,5 +17,6 @@ public interface CloseableSupplier<T> extends Supplier<T>, AutoCloseable {
     default void close() throws Exception {
 
     }
+
 
 }

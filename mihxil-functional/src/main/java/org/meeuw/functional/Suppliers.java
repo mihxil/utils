@@ -12,6 +12,7 @@ import java.util.function.Supplier;
 public class Suppliers {
 
     private Suppliers() {
+        // no instances
     }
 
     /**
@@ -48,18 +49,55 @@ public class Suppliers {
      * @param <T> The type of the objects to supply
      * @return a new supplier that uses the argument supplier only once
      */
-    public static <T> Supplier<T> memoize(Supplier<T> supplier) {
-        return new MemoizeSupplier<>(supplier);
+    public static <T> UnwrappableSupplier<T, Supplier<T>> memoize(Supplier<T> supplier) {
+        return new MemoizeSupplier<T>(supplier);
     }
 
+    public static <T, S extends CloseableSupplier<T>> UnwrappableCloseableSupplier<T, Supplier<T>> memoize(S supplier) {
+        return  new CloseableSupplierWrapper<>(memoize((Supplier<T>) supplier), s -> supplier.close(), null);
+    }
+
+    /**
+     * Wraps a {@link Supplier} in a {@link UnwrappableCloseableSupplier}, which can be closed to release resources.
+     * @param supplier
+     * @param closer how the resource must be closed.
+     * @return
+     * @param <T>
+     */
+    public static <T> UnwrappableCloseableSupplier<T, Supplier<T>> closeable(Supplier<T> supplier, ThrowAnyConsumer<Supplier<T>> closer) {
+        return  new CloseableSupplierWrapper<>(supplier, closer, "closeable");
+    }
+
+    public static <T, S extends Supplier<T> & AutoCloseable> UnwrappableCloseableSupplier<T, Supplier<T>> closeable(S supplier) {
+        return  new CloseableSupplierWrapper<>(supplier,  s -> supplier.close(), "closeable");
+    }
 
 
     /**
      * Extension of {@link Wrapper} that implements {@link Supplier}.
      */
-    protected static abstract class SupplierWrapper<T, W> extends Wrapper<W> implements CloseableSupplier<T> {
+    protected static abstract class SupplierWrapper<T, W> extends Wrapper<W> implements UnwrappableSupplier<T, W> {
         public SupplierWrapper(W wrapped, String reason) {
             super(wrapped, reason);
+        }
+    }
+
+
+    protected static class CloseableSupplierWrapper<T> extends SupplierWrapper<T, Supplier<T>> implements UnwrappableCloseableSupplier<T, Supplier<T>>  {
+
+        ThrowAnyConsumer<Supplier<T>> closer;
+
+        CloseableSupplierWrapper(Supplier<T> wrapped, ThrowAnyConsumer<Supplier<T>> closer, String reason) {
+            super(wrapped, reason);
+            this.closer = closer;
+        }
+        @Override
+        public T get() {
+            return wrapped.get();
+        }
+        @Override
+        public void close() throws Exception {
+            closer.acceptThrows(wrapped);
         }
     }
 
@@ -69,9 +107,10 @@ public class Suppliers {
 
         transient volatile boolean evaluated = false;
 
-        public MemoizeSupplier(Supplier<T> supplier) {
+        MemoizeSupplier(Supplier<T> supplier) {
             super(supplier, "memoize");
         }
+
 
         @Override
         public T get() {
