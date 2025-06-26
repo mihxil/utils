@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.meeuw.util</groupId>
   <artifactId>mihxil-util-parent</artifactId>
-  <version>1.12-SNAPSHOT</version>
+  <version>1.13-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>Mihxil's Util Parent</name>
   <description>Low level java utilities</description>
