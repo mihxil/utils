@@ -1,7 +1,6 @@
 package org.meeuw.functional;
 
-import java.util.function.BiFunction;
-import java.util.function.Function;
+import java.util.function.*;
 
 import org.junit.jupiter.api.Test;
 
@@ -177,7 +176,11 @@ class FunctionsTest {
     @Test
     void identity() {
         assertThat(Functions.<String>identity().apply("test")).isEqualTo("test");
-        assertThat(Functions.identity().equals(Functions.identity())).isTrue();
+        assertThat(Functions.<Integer>identity().apply(1)).isEqualTo(1);
+
+        UnaryOperator<String> identity = Functions.identity();
+        assertThat(Functions.identity().equals(identity)).isTrue();
+        assertThat(Functions.identity()).isSameAs(identity);
         assertThat(Functions.identity().equals("bla")).isFalse();
         assertThat(Functions.identity().hashCode()).isEqualTo(0);
         assertThat(Functions.identity().toString()).isEqualTo("identity");
