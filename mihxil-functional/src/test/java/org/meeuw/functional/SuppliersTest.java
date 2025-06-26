@@ -107,9 +107,25 @@ class SuppliersTest {
         assertThat(result1).hasValue(1);
         assertThat(result2).hasValue(1);
 
+    }
 
+    @Test
+    void closeable() throws Exception {
+        I isup = new I();
 
+        try (CloseableSupplier<Integer> closeable = Suppliers.closeable(isup)) {
+           assertThat(closeable.get()).isEqualTo(i);
+        }
+        assertThat(isup.closed).isTrue();
+    }
+    @Test
+    void closeableWithCloser() throws Exception {
+        I isup = new I();
 
+        try (CloseableSupplier<Integer> closeable = Suppliers.closeable(isup, s -> isup.close())) {
+            assertThat(closeable.get()).isEqualTo(i);
+        }
+        assertThat(isup.closed).isTrue();
     }
 
     @Test
