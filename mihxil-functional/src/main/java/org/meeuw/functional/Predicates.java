@@ -4,10 +4,10 @@ import java.util.function.BiPredicate;
 import java.util.function.Predicate;
 
 /**
- * Provides several utility related to {@link Predicate}, {@link BiPredicate} and {@link TriPredicate} like versions of {@link #alwaysFalse} and {@link #alwaysTrue}, with nicer {@link #toString()}, and also
+ * Provides several utilities related to {@link Predicate}, {@link BiPredicate} and {@link TriPredicate} like versions of {@link #alwaysFalse} and {@link #alwaysTrue}, with nicer {@link #toString()}, and also
  * implementing {@link #hashCode()} and {@link #equals(Object)}.
  * <p>
- * The point is that these kind of things won't happen if you use lambdas.
+ * The point is that these kinds of things won't happen if you use lambdas.
  * <p>
  * So if they are important than you could use
  * <pre>

@@ -41,19 +41,19 @@ public class PredicatesTest {
 
     @Test
     public void biAlwaysFalse() {
-        assertThat(Predicates.biAlwaysFalse().test("a", "b")).isFalse();
+        assertThat(Predicates.biAlways(false).test("a", "b")).isFalse();
         assertThat(Predicates.biAlwaysFalse().toString()).isEqualTo("FALSE");
     }
 
     @Test
     public void biAlwaysTrue() {
-        assertThat(Predicates.<String, Integer>biAlwaysTrue().test("a", 2)).isTrue();
+        assertThat(Predicates.<String, Integer>biAlways(true).test("a", 2)).isTrue();
         assertThat(Predicates.<String, Integer>biAlwaysTrue().toString()).isEqualTo("TRUE");
     }
 
     @Test
     public void triAlwaysFalse() {
-        assertThat(Predicates.<String, Integer, Float>triAlwaysFalse().test("a", 2, 3.0f)).isFalse();
+        assertThat(Predicates.<String, Integer, Float>triAlways(false).test("a", 2, 3.0f)).isFalse();
         assertThat(Predicates.<String, Integer, Float>triAlwaysFalse().toString()).isEqualTo("FALSE");
     }
 
