@@ -132,6 +132,16 @@ class SuppliersTest {
         assertThat(isup.closed).isTrue();
     }
 
+    /**
+     * default close() should not throw an exception or so
+     */
+    @Test
+    void closeableEmpty() throws Exception {
+        try (CloseableSupplier<Integer> closeable = () -> 1000) {
+            assertThat(closeable.get()).isEqualTo(1000);
+        }
+    }
+
     @Test
     void always() {
         Supplier<String> a1 = Suppliers.always("a");
