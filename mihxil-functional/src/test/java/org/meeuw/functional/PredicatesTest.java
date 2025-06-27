@@ -49,6 +49,7 @@ public class PredicatesTest {
     public void biAlwaysTrue() {
         assertThat(Predicates.<String, Integer>biAlways(true).test("a", 2)).isTrue();
         assertThat(Predicates.<String, Integer>biAlwaysTrue().toString()).isEqualTo("TRUE");
+        assertThat(Predicates.<String, Integer>biAlways(true, "waar").toString()).isEqualTo("waar");
     }
 
     @Test
@@ -59,8 +60,9 @@ public class PredicatesTest {
 
     @Test
     public void triAlwaysTrue() {
-        assertThat(Predicates.<String, Integer, Float>triAlwaysTrue().test("a", 2, 3.0f)).isTrue();
+        assertThat(Predicates.<String, Integer, Float>triAlways(true).test("a", 2, 3.0f)).isTrue();
         assertThat(Predicates.<String, Integer, Float>triAlwaysTrue().toString()).isEqualTo("TRUE");
+        assertThat(Predicates.<String, Integer, Float>triAlways(true, "ja").toString()).isEqualTo("ja");
     }
 
     final Predicate<String> mono = (s) -> s.length() > 5;
