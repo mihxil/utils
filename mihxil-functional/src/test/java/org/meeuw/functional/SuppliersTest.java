@@ -58,6 +58,10 @@ class SuppliersTest {
             assertThat(memoize.get()).isEqualTo(1);
             Supplier<Integer> another = Suppliers.memoize(isup);
             assertThat(memoize.equals(another)).isTrue();
+            assertThat(memoize.equals("")).isFalse();
+            assertThat(memoize.equals(memoize)).isTrue();
+            assertThat(memoize.equals(Suppliers.memoize(() -> i))).isFalse();
+
             assertThat(memoize.hashCode()).isEqualTo(another.hashCode());
 
             i++;
