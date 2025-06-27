@@ -19,7 +19,7 @@ public class PredicatesTest {
     @SuppressWarnings({"ConstantConditions", "EqualsBetweenInconvertibleTypes", "EqualsWithItself"})
     @Test
     public void testAlwaysFalse() {
-        Predicate<String> always = Predicates.alwaysFalse();
+        Predicate<String> always = Predicates.always(false);
         assertThat(Predicates.<String>alwaysFalse().test("a")).isFalse();
         assertThat(Predicates.<String>alwaysFalse().toString()).isEqualTo("FALSE");
         assertThat(Predicates.<String>alwaysFalse().equals(Predicates.alwaysFalse())).isTrue();
@@ -35,7 +35,7 @@ public class PredicatesTest {
 
     @Test
     public void alwaysTrue() {
-        assertThat(Predicates.<String>alwaysTrue().test("a")).isTrue();
+        assertThat(Predicates.<String>always(true).test("a")).isTrue();
         assertThat(Predicates.<String>alwaysTrue().toString()).isEqualTo("TRUE");
     }
 

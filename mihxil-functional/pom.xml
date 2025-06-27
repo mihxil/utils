@@ -26,36 +26,7 @@
           </archive>
         </configuration>
       </plugin>
-     <!-- <plugin>
-        <groupId>org.teavm</groupId>
-        <artifactId>teavm-maven-plugin</artifactId>
-        <version>0.12.1</version>
-        <dependencies>
-          &lt;!&ndash; This dependency is required by TeaVM to emulate subset of Java class library &ndash;&gt;
-          <dependency>
-            <groupId>org.teavm</groupId>
-            <artifactId>teavm-classlib</artifactId>
-            <version>0.12.1</version>
-          </dependency>
-        </dependencies>
-        <executions>
-          <execution>
-            <goals>
-              <goal>compile</goal>
-            </goals>
-            <phase>process-classes</phase>
-            <configuration>
-              <mainClass>org.meeuw.functional.Suppliers</mainClass>
-              <minifying>false</minifying>
-              <debugInformationGenerated>false</debugInformationGenerated>
-              <sourceMapsGenerated>true</sourceMapsGenerated>
-              <sourceFilesCopied>true</sourceFilesCopied>
-              <optimizationLevel>SIMPLE</optimizationLevel>
-              <wasmDebugInfoLocation>EXTERNAL</wasmDebugInfoLocation>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>-->
+
     </plugins>
   </build>
 
