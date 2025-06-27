@@ -30,6 +30,10 @@ public final class Predicates {
     private static final String FALSE = "FALSE";
     private static final String TRUE = "TRUE";
 
+    private static final Predicate<Object> ALWAYS_FALSE =  always(false, FALSE);
+    private static final Predicate<Object> ALWAYS_TRUE =  always(true, TRUE);
+
+
     private Predicates() {
     }
 
@@ -67,8 +71,9 @@ public final class Predicates {
      * @param <T> The type of the (ignored) argument of the predicate
      * @see #alwaysTrue()
      */
+    @SuppressWarnings("unchecked")
     public static <T> Predicate<T> alwaysFalse() {
-        return always(false, FALSE);
+        return (Predicate<T>) ALWAYS_FALSE;
     }
 
     /**
@@ -77,24 +82,31 @@ public final class Predicates {
      * @param <T> The type of the (ignored) argument of the predicate
      * @see #alwaysFalse()
      */
+    @SuppressWarnings("unchecked")
     public static <T> Predicate<T> alwaysTrue() {
-        return always(true, TRUE);
+        return (Predicate<T>) ALWAYS_TRUE;
     }
 
     /**
      * Returns a {@link BiPredicate} that always results in the same {@code boolean} value
      * @param value The boolean value to always return
-     * @param toString The description for that, used in {@link #toString()}
+     * @param toString The description for that, used in {@link #toString()}. If {@code null} then {@link #biAlways(boolean)} is called.
      * @param <T> The type of the (ignored) first argument of the predicate
      * @param <U> The type of the (ignored) second argument of the predicate
      * @see #biAlwaysFalse()
      * @see #biAlwaysTrue()
      */
     public static <T, U> BiPredicate<T, U> biAlways(boolean value, String toString) {
-        return new BiAlways<>(value, toString);
+        return toString == null ? biAlways(value) : new BiAlways<>(value, toString);
     }
 
     /**
+     * Returns a {@link BiPredicate} that always results in the same {@code boolean} value. For both values the returned instance will always be the same.
+     * @param value The boolean value to always return
+     * @param <T> The type of the (ignored) first argument of the predicate
+     * @param <U> The type of the (ignored) second argument of the predicate
+     * @see #biAlwaysFalse()
+     * @see #biAlwaysTrue()
      * @since 0.13
      */
     public static <T, U> BiPredicate<T, U> biAlways(boolean value) {
@@ -136,6 +148,19 @@ public final class Predicates {
      */
     public static <T, U, V> TriPredicate<T, U, V> triAlways(boolean value, String toString) {
         return new TriAlways<>(value, toString);
+    }
+
+    /**
+     * Returns a {@link TriPredicate} that always results in the same {@code boolean} value
+     * @param value The boolean value to always return
+     * @param <T> The type of the (ignored) first argument of the predicate
+     * @param <U> The type of the (ignored) second argument of the predicate
+     * @param <V> The type of the (ignored) third argument of the predicate
+     * @see #triAlwaysFalse()
+     * @see #triAlwaysTrue()
+     */
+    public static <T, U, V> TriPredicate<T, U, V> triAlways(boolean value) {
+        return value ? triAlwaysTrue() : triAlwaysFalse();
     }
 
     /**

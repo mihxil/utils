@@ -130,12 +130,12 @@ public class Suppliers {
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
             MemoizeSupplier<?> that = (MemoizeSupplier<?>) o;
-            return Objects.equals(get(), that.get());
+            return Objects.equals(wrapped, that.wrapped) && Objects.equals(get(), that.get());
         }
 
         @Override
         public int hashCode() {
-            return Objects.hashCode(get());
+            return Objects.hashCode(wrapped.hashCode());
         }
 
     }
