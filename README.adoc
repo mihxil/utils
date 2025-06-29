@@ -33,3 +33,29 @@ Classes related to `java.util.Function` and extensions like `Predicate`, `Consum
 Things like `memoize` (to memoize the value of a supplier), `closeable` (to make a Supplier `AutoCloseable`) and  `ignoreArg` (to morph a `Supplier` to a `Function` that ignores the argument) are provided.
 +
 * Consistent `equals` and `hashCode`, for the utility functions that produce functional implementations. E.g. the  above mentioned `ignoreArg*` and `withArg*` are not simply implemented with lambda's, but also with equals and hashcode based on the source functional class implementation.
+
+== Release history
+
+
+|===
+|Version |date |remarks
+
+|1.12
+| 2025-06-26
+|
+A.o, introduction of 'CloseableSupplier' and 'UnwrappableSupplier' interfaces,
+
+
+|1.11
+| 2024-05-11
+|
+
+| 1.10
+| 2023-12
+|
+
+| 1.0
+| 2020-11-30
+|
+|===
+
