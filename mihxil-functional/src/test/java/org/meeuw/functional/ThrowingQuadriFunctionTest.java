@@ -17,7 +17,7 @@ class ThrowingQuadriFunctionTest {
             throw new IOException();
         };
         assertThatThrownBy(() -> {
-                withThrows.apply("a", 1, 2.0f, 'z');
+            withThrows.apply("a", 1, 2.0f, 'z');
             }
         ).isInstanceOf(IOException.class);
     }
