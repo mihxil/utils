@@ -1,12 +1,10 @@
 package org.meeuw.functional;
 
-import java.util.function.Consumer;
-
 import static org.meeuw.functional.Sneaky.sneakyThrow;
 
 
 /**
- * An extension of {@link Consumer} that can throw exceptions too.
+ * An extension of {@link QuadriFunction} that can throw exceptions too.
  * @since 1.13
  */
 @FunctionalInterface

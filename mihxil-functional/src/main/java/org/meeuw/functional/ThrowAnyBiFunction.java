@@ -2,7 +2,7 @@ package org.meeuw.functional;
 
 
 /**
- * As {@link ThrowingSupplier}, just no need to specify the type of the exception.
+ * As {@link ThrowingBiFunction}, just no need to specify the type of the exception.
  *
  * @since 1.13
  */
