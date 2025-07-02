@@ -3,6 +3,7 @@ package org.meeuw.functional;
 import java.util.function.Supplier;
 
 /**
+ * A thing that is both a {@link Supplier} and an {@link AutoCloseable}.
  * @since 1.12
  * @param <T>
  */

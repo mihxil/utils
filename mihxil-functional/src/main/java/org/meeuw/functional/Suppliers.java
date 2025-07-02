@@ -57,7 +57,8 @@ public class Suppliers {
     }
 
     public static <T, S extends CloseableSupplier<T>> UnwrappableCloseableSupplier<T, Supplier<T>> memoize(S supplier) {
-        return  new CloseableSupplierWrapper<>(memoize((Supplier<T>) supplier), s -> supplier.close(), null);
+        return  new CloseableSupplierWrapper<>(memoize((Supplier<T>) supplier),
+            new SupplierConsumerWrapper<>(supplier), null);
     }
 
     /**
@@ -72,8 +73,25 @@ public class Suppliers {
     }
 
     public static <T, S extends Supplier<T> & AutoCloseable> UnwrappableCloseableSupplier<T, Supplier<T>> closeable(S supplier) {
-        return  new CloseableSupplierWrapper<>(supplier,  s -> supplier.close(), "closeable");
+        SupplierConsumerWrapper<T, S> consumerWrapper = new SupplierConsumerWrapper<>(supplier);
+        return new CloseableSupplierWrapper<>(supplier, consumerWrapper, "wrapper");
     }
+
+    /**
+     * Extension of {@link Wrapper} that implements {@link Supplier}.
+     */
+    protected static class SupplierConsumerWrapper<T, S extends Supplier<T> & AutoCloseable> extends Wrapper<S> implements ThrowAnyConsumer<Supplier<T>>  {
+
+        public SupplierConsumerWrapper(S wrapped) {
+            super(wrapped, null);
+        }
+
+       @Override
+       public void acceptThrows(Supplier<T> tSupplier) throws Exception {
+           wrapped.close();
+       }
+   }
+
 
 
     /**
@@ -86,10 +104,17 @@ public class Suppliers {
     }
 
 
+
+    /**
+     * W Wrapper that implements {@link UnwrappableCloseableSupplier} and wraps a {@link Supplier}.
+     */
     protected static class CloseableSupplierWrapper<T> extends SupplierWrapper<T, Supplier<T>> implements UnwrappableCloseableSupplier<T, Supplier<T>>  {
 
         ThrowAnyConsumer<Supplier<T>> closer;
 
+        /**
+         * @param closer What must happen on close. A Consume the wrapped object.
+         */
         CloseableSupplierWrapper(Supplier<T> wrapped, ThrowAnyConsumer<Supplier<T>> closer, String reason) {
             super(wrapped, reason);
             this.closer = closer;

@@ -5,5 +5,7 @@ package org.meeuw.functional;
  *
  * @since 1.8
  */
+@FunctionalInterface
 public interface ThrowAnyConsumer<T> extends ThrowingConsumer<T, Exception> {
+
 }
