@@ -5,6 +5,7 @@ import java.util.function.*;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.meeuw.functional.Functions.*;
 
 
@@ -23,7 +24,6 @@ class FunctionsTest {
         assertThat(x.equals(null)).isFalse();
         assertThat(x.equals(Functions.always("y"))).isFalse();
         assertThat(x.equals(new Object())).isFalse();
-
 
 
         assertThat(x.hashCode()).isEqualTo(Functions.always("x").hashCode());
@@ -71,9 +71,27 @@ class FunctionsTest {
 
     final Function<Float, String> mono = Object::toString;
 
+    final ThrowingFunction<Float, String, IllegalArgumentException> tmono = f -> {
+        if (f == 0) {
+            throw new IllegalArgumentException("f is 0");
+        }
+        return String.valueOf(1 / f);
+    };
+
+
+
     @Test
     void monoWithArg1() {
         assertThat(withArg1(mono, 1.0f).get()).isEqualTo(("1.0"));
+    }
+
+    @Test
+    void tmonoWithArg1() throws Exception {
+        assertThat(withArg1(tmono, 1.0f).call()).isEqualTo(("1.0"));
+
+        assertThatThrownBy(() ->
+            withArg1(tmono, 0.0f).call()).isInstanceOf(IllegalArgumentException.class);
+
     }
 
     @Test

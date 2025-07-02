@@ -42,6 +42,9 @@ public class Suppliers {
         };
     }
 
+
+
+
     /**
      * Wrap a given supplier. The result of the suppletion is memoized after the first call. Subsequent calls will give the same value, without calling the supplier again.
      *
@@ -99,6 +102,7 @@ public class Suppliers {
         public void close() throws Exception {
             closer.acceptThrows(wrapped);
         }
+
     }
 
     protected static class MemoizeSupplier<T> extends SupplierWrapper<T, Supplier<T>> {

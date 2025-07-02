@@ -1,6 +1,7 @@
 package org.meeuw.functional;
 
 import java.util.Objects;
+import java.util.concurrent.Callable;
 import java.util.function.*;
 
 /**
@@ -143,6 +144,15 @@ public final class Functions {
             @Override
             public R get() {
                 return wrapped.apply(value);
+            }
+        };
+    }
+
+     public static <A1, R, E extends Exception> Callable<R> withArg1(ThrowingFunction<A1, R, E> function, A1 value) {
+        return new CallableWrapper<ThrowingFunction<A1, R, E>, R>(function, "with  arg1 " + value) {
+            @Override
+            public R call() throws E {
+                return wrapped.applyWithException(value);
             }
         };
     }
@@ -340,6 +350,7 @@ public final class Functions {
         return function.ignoreArg1();
     }
 
+
     @SuppressWarnings("rawtypes")
     private static final UnaryOperator IDENTITY = new UnaryOperator() {
         @Override
@@ -480,5 +491,14 @@ public final class Functions {
             super(wrapped, value, why);
         }
     }
+
+    protected static abstract  class CallableWrapper<W, X>  extends Wrapper<W> implements Callable<X> {
+        public CallableWrapper(W wrapped, String why) {
+            super(wrapped, why);
+        }
+    }
+
+
+
 
 }

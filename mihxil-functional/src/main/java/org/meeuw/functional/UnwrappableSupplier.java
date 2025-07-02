@@ -4,7 +4,7 @@ import java.util.function.Supplier;
 
 
 /**
- * @sincen 0.12
+ * @since 0.12
  * @param <T>
  * @param <W>
  */
