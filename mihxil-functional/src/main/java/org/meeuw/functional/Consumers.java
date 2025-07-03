@@ -19,8 +19,9 @@ public final class Consumers {
      * Creates a new Runnable implemented using a {@link Consumer}, simply always consuming that same value.
      * @since 1.11
      * @param <U> the type {@link Consumer} argument
-     * @param consumer The consummer to adapt
+     * @param consumer The consumer to adapt
      * @param value the value to consume
+     * @return A new Runnable that will call the given {@link Consumer} with the given value every time it is run.
      */
     public static <U> Runnable withArg1(Consumer<U> consumer, U value) {
         return new RunnableWrapper<Consumer<U>>(consumer, value, "with arg1 " + value) {
@@ -31,12 +32,13 @@ public final class Consumers {
         };
     }
 
-      /**
+    /**
      * Creates a new Runnable implemented using a {@link Consumer}, simply always consuming that same value.
      * @since 1.11
      * @param <U> the type {@link Consumer} argument
      * @param consumer The consummer to adapt
      * @param valueSupplier supplier for the value to consume
+     * @return A new Runnable that will call the given {@link Consumer} with value supplied by the given supplier
      */
     public static <U> Runnable withArg1Supplier(Consumer<U> consumer, Supplier<U> valueSupplier) {
         return new RunnableWrapper<Consumer<U>>(consumer, valueSupplier, "with arg1 " + valueSupplier) {

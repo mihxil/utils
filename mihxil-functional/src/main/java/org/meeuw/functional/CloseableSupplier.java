@@ -5,7 +5,7 @@ import java.util.function.Supplier;
 /**
  * A thing that is both a {@link Supplier} and an {@link AutoCloseable}.
  * @since 1.12
- * @param <T>
+ * @param <T> The type of the object supplied by this supplier
  */
 @FunctionalInterface
 public interface CloseableSupplier<T> extends Supplier<T>, AutoCloseable {

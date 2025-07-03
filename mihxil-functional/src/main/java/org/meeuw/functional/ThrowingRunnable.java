@@ -20,6 +20,7 @@ public interface ThrowingRunnable<T extends Throwable> extends Runnable {
 
     /**
      * See {@link #run()}, but it may throw an exception.
+     * @throws T if an exception occurs during execution
      */
     void runThrows() throws T;
 

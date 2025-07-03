@@ -61,6 +61,7 @@ public interface ReasonedPredicate<T> extends Predicate<T> {
 
         /**
          * The reason of why a {code boolean} test result is what it is.
+         * @return A string describing the reason why the test result is {@code true} or {@code false}.
          */
         default String getReason() {
             return toString();
