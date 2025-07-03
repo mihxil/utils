@@ -1,5 +1,9 @@
 package org.meeuw.functional;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.*;
 
 import org.junit.jupiter.api.Test;
@@ -12,6 +16,7 @@ import static org.meeuw.functional.Functions.*;
 /**
  * @author Michiel Meeuwissen
  */
+@SuppressWarnings({"ConstantValue", "EqualsBetweenInconvertibleTypes"})
 class FunctionsTest {
 
     @Test
@@ -80,17 +85,32 @@ class FunctionsTest {
 
 
 
+
+
     @Test
     void monoWithArg1() {
         assertThat(withArg1(mono, 1.0f).get()).isEqualTo(("1.0"));
     }
 
     @Test
-    void tmonoWithArg1() throws Exception {
-        assertThat(withArg1(tmono, 1.0f).call()).isEqualTo(("1.0"));
+    void tmonoWithNull() throws Exception {
+        List<String> list = new ArrayList<>();
+        AtomicInteger counter = new AtomicInteger();
+        Callable<Integer> callable = () -> {
+            int result =  counter.incrementAndGet();
+            if (result % 3 == 0) {
+                throw new IllegalArgumentException();
+            }
+            return result;
+        };
+        Callable<Integer> wrapped = withNull(ignoreArg1(callable));
 
-        assertThatThrownBy(() ->
-            withArg1(tmono, 0.0f).call()).isInstanceOf(IllegalArgumentException.class);
+        assertThat(wrapped.call()).isEqualTo(1);
+        assertThat(wrapped.call()).isEqualTo(2);
+        assertThatThrownBy(wrapped::call).isInstanceOf(IllegalArgumentException.class);
+
+
+        assertThat(wrapped.toString()).endsWith("(function)(with  arg1 null)");
 
     }
 

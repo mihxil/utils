@@ -8,6 +8,7 @@ import static org.meeuw.functional.Sneaky.sneakyThrow;
 /**
  * An extension of {@link Function} that can throw exceptions too.
  * @since 1.13
+ * @param <E> the type of exception that can be thrown
  */
 @FunctionalInterface
 public interface ThrowingFunction<A, R, E extends Exception> extends Function<A, R> {

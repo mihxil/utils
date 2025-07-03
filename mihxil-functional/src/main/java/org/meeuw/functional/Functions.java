@@ -178,11 +178,29 @@ public final class Functions {
      * @return a new callable, which will use the given function and argument for its implementation
      * @since 0.14
      */
-    public static <A1, R, E extends Exception> Callable<R> withArg1(ThrowingFunction<A1, R, E> function) {
-        return new CallableWrapper<ThrowingFunction<A1, R, E>, R>(function, null) {
+    public static <A1, R, E extends Exception> Callable<R> withNull(ThrowingFunction<A1, R, E> function) {
+        return withArg1(function, null);
+    }
+
+
+    /**
+     * Giving a {@link ThrowingFunction function}, morphs it into a {@link Callable} that ignores its argument and just calls the function with {@code null}.
+     *
+     * @param <R> the return value of the function, and of the resulting {@link Callable}
+     * @param <E> the exception type that the function (and the callable) can throw
+     * @param callable the function on which to base the new {@code Callable} on
+     * @return a new function, which will use the given call its implementation. The argument of the function will be ignored, all calls just call the {@code Callable}.
+     * @since 0.14
+     */
+    public static <R, E extends Exception > ThrowingFunction<Void, R, E> ignoreArg1(Callable<R> callable) {
+        return new ThrowingMonoWrapper<Callable<R>, Void, R,  E>(callable, null, "function") {
             @Override
-            public R call() throws E {
-                return wrapped.applyWithException(null);
+            public R applyWithException(Void o) throws E {
+                try {
+                    return callable.call();
+                } catch (Exception e) {
+                    return Sneaky.sneakyThrow(e);
+                }
             }
         };
     }
@@ -522,6 +540,20 @@ public final class Functions {
         }
     }
 
+
+
+    protected static abstract  class ThrowingMonoWrapper<W, X, R, E extends Exception>  extends ValueWrapper<W> implements ThrowingFunction<X, R, E> {
+        public ThrowingMonoWrapper(W wrapped, Object value, String why) {
+            super(wrapped, value, why);
+        }
+    }
+
+
+    /**
+     * A wrapper that is  {@link Callable}
+     * @param <W>
+     * @param <X>
+     */
     protected static abstract  class CallableWrapper<W, X>  extends Wrapper<W> implements Callable<X> {
         public CallableWrapper(W wrapped, String why) {
             super(wrapped, why);
