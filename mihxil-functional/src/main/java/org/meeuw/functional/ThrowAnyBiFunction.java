@@ -6,6 +6,7 @@ package org.meeuw.functional;
  *
  * @since 1.13
  */
+@FunctionalInterface
 public interface ThrowAnyBiFunction<A, B,  R> extends ThrowingBiFunction<A, B, R, Exception> {
 
 }

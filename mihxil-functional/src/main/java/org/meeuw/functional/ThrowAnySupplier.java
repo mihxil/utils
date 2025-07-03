@@ -6,6 +6,7 @@ package org.meeuw.functional;
  *
  * @since 1.5
  */
+@FunctionalInterface
 public interface ThrowAnySupplier<T> extends ThrowingSupplier<T, Exception> {
 
 }

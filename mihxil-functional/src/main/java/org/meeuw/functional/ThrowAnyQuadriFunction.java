@@ -6,6 +6,7 @@ package org.meeuw.functional;
  *
  * @since 1.13
  */
+@FunctionalInterface
 public interface ThrowAnyQuadriFunction<A, B, C, D, R> extends ThrowingQuadriFunction<A, B, C, D, R, Exception> {
 
 }

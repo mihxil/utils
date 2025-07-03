@@ -5,6 +5,7 @@ package org.meeuw.functional;
  * @param <T> Type of supplier
  * @param <W> Type of wrapped object
  */
+
 public interface UnwrappableCloseableSupplier<T, W> extends CloseableSupplier<T>, Unwrappable<W> {
 
 }

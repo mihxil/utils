@@ -5,6 +5,7 @@ package org.meeuw.functional;
  * @param <W> The type of the wrapped object.
  * @since 1.12
  */
+@FunctionalInterface
 public interface Unwrappable<W> {
 
     /**

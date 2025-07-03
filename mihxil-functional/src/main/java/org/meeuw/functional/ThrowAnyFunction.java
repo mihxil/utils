@@ -6,6 +6,7 @@ package org.meeuw.functional;
  *
  * @since 1.13
  */
+@FunctionalInterface
 public interface ThrowAnyFunction<A, R> extends ThrowingFunction<A, R, Exception> {
 
 }

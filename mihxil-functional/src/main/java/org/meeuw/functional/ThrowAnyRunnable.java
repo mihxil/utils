@@ -5,5 +5,6 @@ package org.meeuw.functional;
  *
  * @since 1.8
  */
+@FunctionalInterface
 public interface ThrowAnyRunnable extends ThrowingRunnable<Exception> {
 }
