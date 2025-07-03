@@ -148,11 +148,41 @@ public final class Functions {
         };
     }
 
-     public static <A1, R, E extends Exception> Callable<R> withArg1(ThrowingFunction<A1, R, E> function, A1 value) {
+    /**
+     * Giving a {@link ThrowingFunction function}, morphs it into a {@link Callable} that ignores its argument and just calls the function always with {@code value}.
+     *
+     * @param <A1> the type of the argument to the function (which will be provided)
+     * @param <R> the return value of the function, and of the resulting {@link Callable}
+     * @param <E> the exception type that the function (and the callable) can throw
+     * @param function the function on which to base the new {@code Callable} on
+     * @param value the argument to always supply to the function
+     * @return a new callable, which will use the given function and argument for its implementation
+     * @since 0.14
+     */
+    public static <A1, R, E extends Exception> Callable<R> withArg1(ThrowingFunction<A1, R, E> function, A1 value) {
         return new CallableWrapper<ThrowingFunction<A1, R, E>, R>(function, "with  arg1 " + value) {
             @Override
             public R call() throws E {
                 return wrapped.applyWithException(value);
+            }
+        };
+    }
+
+    /**
+     * Giving a {@link ThrowingFunction function}, morphs it into a {@link Callable} that ignores its argument and just calls the function with {@code null}.
+     *
+     * @param <A1> the type of the argument to the function (which will be {@code null})
+     * @param <R> the return value of the function, and of the resulting {@link Callable}
+     * @param <E> the exception type that the function (and the callable) can throw
+     * @param function the function on which to base the new {@code Callable} on
+     * @return a new callable, which will use the given function and argument for its implementation
+     * @since 0.14
+     */
+    public static <A1, R, E extends Exception> Callable<R> withArg1(ThrowingFunction<A1, R, E> function) {
+        return new CallableWrapper<ThrowingFunction<A1, R, E>, R>(function, null) {
+            @Override
+            public R call() throws E {
+                return wrapped.applyWithException(null);
             }
         };
     }
