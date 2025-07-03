@@ -24,6 +24,8 @@ public class PredicatesTest {
         assertThat(Predicates.<String>alwaysFalse().toString()).isEqualTo("FALSE");
         assertThat(Predicates.<String>alwaysFalse().equals(Predicates.alwaysFalse())).isTrue();
         assertThat(always.equals(always)).isTrue();
+        assertThat(always.equals(Predicates.always(true))).isFalse();
+
         assertThat(always.equals(null)).isFalse();
         assertThat(always.equals("foobar")).isFalse();
         assertThat(Predicates.<String>alwaysFalse().equals(Predicates.alwaysTrue())).isFalse();
