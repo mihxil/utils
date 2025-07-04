@@ -8,6 +8,8 @@ import static org.meeuw.functional.Sneaky.sneakyThrow;
 /**
  * An extension of {@link Function} that can throw exceptions too.
  * @since 1.13
+ * @param <A> the type of the input to the function
+ * @param <R> the type of the result of the function
  * @param <E> the type of exception that can be thrown
  */
 @FunctionalInterface

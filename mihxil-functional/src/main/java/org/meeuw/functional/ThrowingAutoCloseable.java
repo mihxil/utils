@@ -5,6 +5,7 @@ import static org.meeuw.functional.Sneaky.sneakyThrow;
 /**
  * An extension of {@link AutoCloseable} that can throw exceptions too.
  * @since 1.8
+ * @param <E> the type of the exception that can be thrown
  */
 @FunctionalInterface
 public interface ThrowingAutoCloseable<E extends Exception> extends AutoCloseable {

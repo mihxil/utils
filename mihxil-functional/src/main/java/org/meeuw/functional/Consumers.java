@@ -296,11 +296,25 @@ public final class Consumers {
         return (Consumer<U>) NOP;
     }
 
+    /**
+     * Returns {@link BiConsumer} that complete ignores what it consumes.
+     * @param <U> The first type of the objects this BiConsumer 'consumes'
+     * @param <V> The second type of the objects this BiConsumer 'consumes'
+     * @return Always the same instance, a BiConsumer accepting and ignoring everything
+     */
     @SuppressWarnings("unchecked")
     public static  <U, V> BiConsumer<U, V> biNop() {
         return (BiConsumer<U, V>) BINOP;
     }
 
+    /**
+     * Produces consumer that complete ignores what it consumes.
+     *
+     * @param <U> The type of objects to consume
+     * @param <V> The type of objects to consume
+     * @param <W> The type of objects to consume
+     * @return Always the same instance, a consumer accepting and ignoring everything
+     */
     @SuppressWarnings("unchecked")
     public static  <U, V, W> TriConsumer<U, V, W> triNop() {
         return (TriConsumer<U, V, W>) TRINOP;

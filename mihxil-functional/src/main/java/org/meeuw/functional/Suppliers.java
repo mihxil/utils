@@ -106,7 +106,8 @@ public class Suppliers {
 
 
     /**
-     * W Wrapper that implements {@link UnwrappableCloseableSupplier} and wraps a {@link Supplier}.
+     * A Wrapper that implements {@link UnwrappableCloseableSupplier} and wraps a {@link Supplier}.
+     * @param <T> the type of the value supplied
      */
     protected static class CloseableSupplierWrapper<T> extends SupplierWrapper<T, Supplier<T>> implements UnwrappableCloseableSupplier<T, Supplier<T>>  {
 

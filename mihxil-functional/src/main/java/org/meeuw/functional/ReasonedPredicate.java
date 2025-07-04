@@ -70,6 +70,7 @@ public interface ReasonedPredicate<T> extends Predicate<T> {
         /**
          * Creates a {@link TestResult}, wrapping {@code false}, with given {@link #getReason()}.
          * @param reason Specified the reason why the test result is {@code false}
+         * @return A {@link TestResult} that always returns {@code false} for {@link #getAsBoolean()} and has the given reason.
          */
         static TestResult testsFalse(String reason) {
             return new TestResult() {
@@ -87,6 +88,7 @@ public interface ReasonedPredicate<T> extends Predicate<T> {
         /**
          * Creates a {@link TestResult}, wrapping {@code true}, with given {@link #getReason()}.
          * @param reason Specified the reason why the test result is {@code true}
+         * @return A {@link TestResult} that always returns {@code true} for {@link #getAsBoolean()} and has the given reason.
          */
         static TestResult testsTrue(String reason) {
             return new TestResult() {
@@ -109,6 +111,7 @@ public interface ReasonedPredicate<T> extends Predicate<T> {
          * Creates a {@link TestResult}, wrapping given {@code boolean}, with given {@link #getReason()}.
          * @param applies The boolean wrapped by the resulting {@code TestResult}
          * @param reason Specified the reason why the test result is {@code applies}
+         * @return A {@link TestResult} that returns {@code applies} for {@link #getAsBoolean()} and has the given reason.
          */
         static TestResult of(boolean applies, String reason) {
             return applies ? testsTrue(reason) : testsFalse(reason);
