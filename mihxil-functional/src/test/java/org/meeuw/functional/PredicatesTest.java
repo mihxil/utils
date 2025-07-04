@@ -46,6 +46,7 @@ public class PredicatesTest {
         assertThat(Predicates.biAlways(false).test("a", "b")).isFalse();
         assertThat(Predicates.biAlwaysFalse().toString()).isEqualTo("FALSE");
         assertThat(Predicates.<String, Integer>biAlways(false, "nietes").toString()).isEqualTo("nietes");
+        assertThat(Predicates.<String, Integer>biAlways(false, null).toString()).isEqualTo("FALSE");
 
     }
 
@@ -54,6 +55,7 @@ public class PredicatesTest {
         assertThat(Predicates.<String, Integer>biAlways(true).test("a", 2)).isTrue();
         assertThat(Predicates.<String, Integer>biAlwaysTrue().toString()).isEqualTo("TRUE");
         assertThat(Predicates.<String, Integer>biAlways(true, "waar").toString()).isEqualTo("waar");
+        assertThat(Predicates.<String, Integer>biAlways(true, null).toString()).isEqualTo("TRUE");
     }
 
     @Test
