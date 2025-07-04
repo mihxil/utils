@@ -58,6 +58,7 @@ class SuppliersTest {
             assertThat(memoize.get()).isEqualTo(1);
             Supplier<Integer> another = Suppliers.memoize(isup);
             assertThat(memoize.equals(another)).isTrue();
+
             assertThat(memoize.equals("")).isFalse();
             assertThat(memoize.equals(memoize)).isTrue();
             assertThat(memoize.equals(Suppliers.memoize(() -> i))).isFalse();
@@ -80,6 +81,7 @@ class SuppliersTest {
         assertThat(isup.closed).isTrue();
     }
 
+    @SuppressWarnings({"EqualsBetweenInconvertibleTypes", "EqualsWithItself"})
     @Test
     void memoizeSlow() throws InterruptedException {
         Supplier<Integer> isup = new SlowI();
@@ -88,6 +90,10 @@ class SuppliersTest {
         AtomicInteger result2= new AtomicInteger();
 
         Supplier<Integer> memoize = Suppliers.memoize(isup);
+
+        assertThat(memoize.equals("")).isFalse();
+        assertThat(memoize.equals(memoize)).isTrue();
+
         new Thread(() -> {
             result1.set(memoize.get());
             synchronized (SuppliersTest.this) {
