@@ -64,15 +64,26 @@ public enum OptionalBoolean {
      * Returns an empty {@code OptionalBoolean} instance.  No value is present for
      * this {@code OptionalBoolean}.
      *
-     * @returns the  empty {@code OptionalBoolean}.
+     * @return the  empty {@code OptionalBoolean}.
      */
     public static OptionalBoolean empty() {
         return EMPTY;
     }
 
+    /**
+     * Returns the {@code OptionalBoolean} containing {@code true}
+     *
+     * @return The {@link #isPresent()} {@code OptionalBoolean} containing {@code true}.
+     */
     public static OptionalBoolean optionalTrue() {
         return TRUE;
     }
+
+     /**
+     * Returns the {@code OptionalBoolean} containing {@code false}
+     *
+     * @return The {@link #isPresent()} {@code OptionalBoolean} containing {@code false}.
+     */
     public static OptionalBoolean optionalFalse() {
         return FALSE;
     }

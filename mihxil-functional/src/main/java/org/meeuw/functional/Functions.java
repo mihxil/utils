@@ -421,6 +421,8 @@ public final class Functions {
     /**
      * Returns a function that always returns its input argument.
      * @since 1.11
+     * @param <T> the type of the input and output of the function
+     * @return a function that returns its input argument
      */
     @SuppressWarnings("unchecked")
     public static <T> UnaryOperator<T> identity() {

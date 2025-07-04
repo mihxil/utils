@@ -63,10 +63,10 @@ public class Suppliers {
 
     /**
      * Wraps a {@link Supplier} in a {@link UnwrappableCloseableSupplier}, which can be closed to release resources.
-     * @param supplier
+     * @param supplier the supplier to wrap to make it closeable.
      * @param closer how the resource must be closed.
-     * @return
-     * @param <T>
+     * @return A new {@link UnwrappableCloseableSupplier} that wraps the given supplier and can be closed.
+     * @param <T> the type of the value supplied
      */
     public static <T> UnwrappableCloseableSupplier<T, Supplier<T>> closeable(Supplier<T> supplier, ThrowAnyConsumer<Supplier<T>> closer) {
         return  new CloseableSupplierWrapper<>(supplier, closer, "closeable");

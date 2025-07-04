@@ -70,6 +70,7 @@ public final class Predicates {
      * is {@link #FALSE}
      * @param <T> The type of the (ignored) argument of the predicate
      * @see #alwaysTrue()
+     * @return Always the same instance, the predicate that regardless of argument just always return {@code false}
      */
     @SuppressWarnings("unchecked")
     public static <T> Predicate<T> alwaysFalse() {
@@ -81,6 +82,7 @@ public final class Predicates {
      * is {@link #TRUE}
      * @param <T> The type of the (ignored) argument of the predicate
      * @see #alwaysFalse()
+     *  @return Always the same instance, the predicate that regardless of argument just always return {@code true}
      */
     @SuppressWarnings("unchecked")
     public static <T> Predicate<T> alwaysTrue() {
@@ -95,6 +97,7 @@ public final class Predicates {
      * @param <U> The type of the (ignored) second argument of the predicate
      * @see #biAlwaysFalse()
      * @see #biAlwaysTrue()
+     * @return A {@link BiPredicate} that regardless of arguments just always returns {@code value}
      */
     public static <T, U> BiPredicate<T, U> biAlways(boolean value, String toString) {
         return toString == null ? biAlways(value) : new BiAlways<>(value, toString);
@@ -108,6 +111,7 @@ public final class Predicates {
      * @see #biAlwaysFalse()
      * @see #biAlwaysTrue()
      * @since 0.13
+     * @return A {@link BiPredicate} that regardless of arguments just always returns {@code value}
      */
     public static <T, U> BiPredicate<T, U> biAlways(boolean value) {
         return value ? biAlwaysTrue() : biAlwaysFalse();
@@ -120,17 +124,19 @@ public final class Predicates {
      * @param <T> The type of the (ignored) first argument of the predicate
      * @param <U> The type of the (ignored) second argument of the predicate
      * @see #biAlwaysTrue() ()
+     * @return A {@link BiPredicate} that regardless of arguments just always returns {@code false}
      */
     public static <T, U> BiPredicate<T, U> biAlwaysFalse() {
         return biAlways(false, FALSE);
     }
 
-     /**
+    /**
      * Returns a {@link BiPredicate} that always results {@code true}, regardless of the argument. The toString value
      * is {@link #TRUE}
      * @param <T> The type of the (ignored) first argument of the predicate
      * @param <U> The type of the (ignored) second argument of the predicate
      * @see #biAlwaysFalse() ()
+     *  @return A {@link BiPredicate} that regardless of arguments just always returns {@code true}
      */
     public static <T, U> BiPredicate<T, U> biAlwaysTrue() {
         return biAlways(true, TRUE);
@@ -145,6 +151,7 @@ public final class Predicates {
      * @param <V> The type of the (ignored) third argument of the predicate
      * @see #triAlwaysFalse()
      * @see #triAlwaysTrue()
+     * @return A {@link TriPredicate} that regardless of arguments just always returns {@code value}
      */
     public static <T, U, V> TriPredicate<T, U, V> triAlways(boolean value, String toString) {
         return new TriAlways<>(value, toString);
@@ -158,6 +165,7 @@ public final class Predicates {
      * @param <V> The type of the (ignored) third argument of the predicate
      * @see #triAlwaysFalse()
      * @see #triAlwaysTrue()
+     * @return A {@link TriPredicate} that regardless of arguments just always returns {@code value}
      */
     public static <T, U, V> TriPredicate<T, U, V> triAlways(boolean value) {
         return value ? triAlwaysTrue() : triAlwaysFalse();
@@ -170,6 +178,7 @@ public final class Predicates {
      * @param <U> The type of the (ignored) second argument of the predicate
      * @param <V> The type of the (ignored) third argument of the predicate
      * @see #triAlwaysTrue()
+     * @return A {@link TriPredicate} that regardless of arguments just always returns {@code false}
      */
     public static <T, U, V> TriPredicate<T, U, V> triAlwaysFalse() {
         return triAlways(false, FALSE);
