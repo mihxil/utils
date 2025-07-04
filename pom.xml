@@ -226,6 +226,9 @@
                 <tag>
                   <name>apiNote</name>
                 </tag>
+                <tag>
+                  <name>implSpec</name>
+                </tag>
               </tags>
             </configuration>
           </plugin>
