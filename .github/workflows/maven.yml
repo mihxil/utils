@@ -24,6 +24,7 @@ jobs:
             java: 8
     env:
       MAVEN_ARGS: '--no-transfer-progress'
+      MAVEN_TARGET: 'package'
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
@@ -38,12 +39,8 @@ jobs:
           server-password: CENTRAL_PASSWORD
           gpg-private-key: ${{ secrets.GPG_SECRET_KEY }}
       - name: Set Maven Target
-        run: |
-          if [[ "${{ matrix.os }}" == "ubuntu-latest" && "${{ matrix.java }}" == "8" ]]; then
-            echo "MAVEN_TARGET=deploy" >> $GITHUB_ENV
-          else
-            echo "MAVEN_TARGET=package" >> $GITHUB_ENV
-          fi
+        if: ${{ matrix.os == 'ubuntu-latest' && matrix.java == '8' }}
+        run: echo "MAVEN_TARGET=deploy" >> $GITHUB_ENV
       - name: Build with Maven
         run: |
           mvn -B -Pdeploy  -D"maven.test.failure.ignore=true"  ${{ env.MAVEN_TARGET }}
