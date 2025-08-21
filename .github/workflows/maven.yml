@@ -29,7 +29,7 @@ jobs:
           server-password: CENTRAL_PASSWORD
           gpg-private-key: ${{ secrets.GPG_SECRET_KEY }}
       - name: Build with Maven
-        run: mvn -B -Pdeploy deploy
+        run: mvn -B -Pdeploy -fae deploy
         env:
           CENTRAL_USERNAME: ${{ secrets.CENTRAL_USERNAME }}
           CENTRAL_PASSWORD: ${{ secrets.CENTRAL_PASSWORD }}
@@ -43,6 +43,8 @@ jobs:
         if: always()
         with:
           files: "**/target/surefire-reports/*.xml"
+      - uses: mmprogrami/after-maven-action@main
+
 
 
 
