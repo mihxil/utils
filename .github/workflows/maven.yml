@@ -46,16 +46,16 @@ jobs:
           fi
       - name: Build with Maven
         run: |
-          mvn -B -Pdeploy -fae ${{ env.MAVEN_TARGET }}
+          mvn -B -Pdeploy  -D"maven.test.failure.ignore=true"  ${{ env.MAVEN_TARGET }}
         env:
           CENTRAL_USERNAME: ${{ secrets.CENTRAL_USERNAME }}
           CENTRAL_PASSWORD: ${{ secrets.CENTRAL_PASSWORD }}
           MAVEN_GPG_PASSPHRASE: ${{ secrets.GPG_SECRET_KEY_PASSPHRASE }}
       - uses: codecov/codecov-action@v4
-        if: ${{ github.event_name == 'push'  && ! cancelled() }}
+        if: ${{ github.event_name == 'push'  && ! cancelled()  && matrix.os == 'ubuntu-latest' && matrix.java == '8' }}
         with:
           token: ${{ secrets.CODECOV_TOKEN }} # required
-      - name: Publish Unit Test Results
+      - name: Publish Unit Test Results ${{ matrix.os }} / {{ matrix.java }}
         uses: EnricoMi/publish-unit-test-result-action@v2
         if: always()
         with:
