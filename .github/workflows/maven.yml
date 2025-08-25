@@ -64,7 +64,7 @@ jobs:
         with:
           check_name: "Unit Test Results ${{ matrix.os }} / ${{ matrix.java }}"
           files: "**/target/surefire-reports/*.xml"
-      - uses: MMProgrami/after-maven-action@main
+      - uses: MMProgrami/after-maven-action@v2
         if: true
 
 
