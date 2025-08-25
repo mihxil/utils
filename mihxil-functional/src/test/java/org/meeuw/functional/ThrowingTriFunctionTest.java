@@ -17,7 +17,7 @@ class ThrowingTriFunctionTest {
             throw new IOException();
         };
         assertThatThrownBy(() -> {
-                withThrows.apply("a", 1, 2.0f);
+            withThrows.apply("a", 1, 2.0f);
             }
         ).isInstanceOf(IOException.class);
     }

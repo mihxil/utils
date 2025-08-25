@@ -38,8 +38,15 @@ public enum OptionalBoolean {
      */
     EMPTY,
 
+    /**
+     * Common instance for {@code true}.
+     */
     TRUE(true),
 
+
+    /**
+     * Common instance for {@code false}.
+     */
     FALSE(false);
 
 

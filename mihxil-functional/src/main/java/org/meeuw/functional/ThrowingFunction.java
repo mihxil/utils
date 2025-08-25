@@ -23,6 +23,12 @@ public interface ThrowingFunction<A, R, E extends Exception> extends Function<A,
         }
     }
 
+     /**
+     * Applies this function to the given arguments.
+     * @param a  the first function argument
+     * @return the function result
+     * @throws E Checked exception that might occur.
+     */
     R applyWithException(A a) throws E;
 
 }

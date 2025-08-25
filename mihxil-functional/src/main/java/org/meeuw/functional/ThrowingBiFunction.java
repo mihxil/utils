@@ -24,6 +24,13 @@ public interface ThrowingBiFunction<A, B, R, E extends Exception> extends BiFunc
         }
     }
 
+    /**
+     * Applies this function to the given arguments.
+     * @param a  the first function argument
+     * @param b  the second function argument
+     * @return the function result
+     * @throws E Checked exception that might occur.
+     */
     R applyWithException(A a, B b) throws E;
 
 }

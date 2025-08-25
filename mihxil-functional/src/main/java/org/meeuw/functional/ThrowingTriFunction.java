@@ -25,6 +25,16 @@ public interface ThrowingTriFunction<A, B, C, R, E extends Exception> extends Tr
         }
     }
 
+
+    /**
+     * Applies this function to the given arguments.
+     * @param a  the first function argument
+     * @param b  the second function argument
+     * @param c  the third function argument
+     * @return the function result
+     * @throws E Checked exception that might occur.
+     */
+
     R applyWithException(A a, B b, C c) throws E;
 
 }

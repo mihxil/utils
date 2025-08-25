@@ -35,6 +35,8 @@ public final class Functions {
     }
 
     /**
+     * Provides an implementation of {@link Function} always returning the same value
+     *
      * @param <A> the type of the argument to the function (which will be ignored)
      * @param <R> the type of the return value of the function
      * @param returnValue the desired value to always return
@@ -60,6 +62,8 @@ public final class Functions {
     }
 
     /**
+     * Provides an implementation of {@link BiFunction} always returning the same value
+     *
      * @param <A1> the type of the first argument to the function (which will be ignored)
      * @param <A2> the type of the second argument to the function (which will be ignored)
      * @param <R>  the type of the return value
@@ -87,6 +91,7 @@ public final class Functions {
     }
 
     /**
+     * Provides an implementation of {@link TriFunction} always returning the same value
      *
      * @param <A1> the type of the first argument to the function (which will be ignored)
      * @param <A2> the type of the second argument to the function (which will be ignored)
@@ -116,6 +121,8 @@ public final class Functions {
     }
 
     /**
+     * Provides an implementation of {@link QuadriFunction} always returning the same value
+     *
      * @param <A1> the type of the first argument to the function (which will be ignored)
      * @param <A2> the type of the second argument to the function (which will be ignored)
      * @param <A3> the type of the third argument to the function (which will be ignored)

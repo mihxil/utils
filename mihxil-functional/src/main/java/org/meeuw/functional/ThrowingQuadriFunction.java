@@ -23,6 +23,15 @@ public interface ThrowingQuadriFunction<A, B, C, D, R, E extends Exception> exte
             return sneakyThrow(e);
         }
     }
+    /**
+     * Applies this function to the given arguments.
+     * @param a  the first function argument
+     * @param b  the second function argument
+     * @param c  the third function argument
+     * @param d  the fourth function argument
+     * @return the function result
+     * @throws E Checked exception that might occur.
+     */
 
     R applyWithException(A a, B b, C c, D d) throws E;
 

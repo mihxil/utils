@@ -56,8 +56,15 @@ public class Suppliers {
         return new MemoizeSupplier<T>(supplier);
     }
 
+    /**
+     * Wrap a given supplier. The result of the suppletion is memoized after the first call. Subsequent calls will give the same value, without calling the supplier again. The result is als {@link CloseableSupplier}
+     *
+     * @param supplier the supplier to memoize
+     * @param <T> The type of the objects to supply
+     * @return a new supplier that uses the argument supplier only once
+     */
     public static <T, S extends CloseableSupplier<T>> UnwrappableCloseableSupplier<T, Supplier<T>> memoize(S supplier) {
-        return  new CloseableSupplierWrapper<>(memoize((Supplier<T>) supplier),
+        return new CloseableSupplierWrapper<>(memoize((Supplier<T>) supplier),
             new SupplierConsumerWrapper<>(supplier), null);
     }
 
@@ -72,6 +79,13 @@ public class Suppliers {
         return  new CloseableSupplierWrapper<>(supplier, closer, "closeable");
     }
 
+
+    /**
+     * Wraps a {@link Supplier} in a {@link UnwrappableCloseableSupplier}, which can be closed to release resources.
+     * @param supplier the supplier to wrap to make it closeable.
+     * @return A new {@link UnwrappableCloseableSupplier} that wraps the given supplier and can be closed.
+     * @param <T> the type of the value supplied
+     */
     public static <T, S extends Supplier<T> & AutoCloseable> UnwrappableCloseableSupplier<T, Supplier<T>> closeable(S supplier) {
         SupplierConsumerWrapper<T, S> consumerWrapper = new SupplierConsumerWrapper<>(supplier);
         return new CloseableSupplierWrapper<>(supplier, consumerWrapper, "wrapper");
