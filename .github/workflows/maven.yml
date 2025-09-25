@@ -20,7 +20,9 @@ jobs:
         java: [ 8 ]
         # also check (once) on latest (no java 8 for macos)
         include:
-          - os: [ ubuntu-latest, macos-latest ]
+          - os: macos-latest
+            java: 25
+          - os: ubuntu-latest
             java: 25
     env:
       MAVEN_ARGS: '--no-transfer-progress'
@@ -42,6 +44,7 @@ jobs:
         if: ${{ matrix.os == 'ubuntu-latest' && matrix.java == '8' }}
         run: echo "MAVEN_TARGET=deploy" >> $GITHUB_ENV
       - name: Build with Maven
+        shell: bash
         run: |
           mvn -B -Pdeploy  -D"maven.test.failure.ignore=true"  ${{ env.MAVEN_TARGET }}
         env:
