@@ -17,17 +17,17 @@ jobs:
       fail-fast: false
       matrix:
         os: [ ubuntu-latest, windows-latest, macos-latest ]
-        java: [ 24 ]
+        java: [ 8 ]
         # also check (once) on latest
         include:
           - os: ubuntu-latest
-            java: 8
+            java: 25
     env:
       MAVEN_ARGS: '--no-transfer-progress'
       MAVEN_TARGET: 'package'
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Set up JDK
         uses: actions/setup-java@v5
         with:
@@ -48,7 +48,7 @@ jobs:
           CENTRAL_USERNAME: ${{ secrets.CENTRAL_USERNAME }}
           CENTRAL_PASSWORD: ${{ secrets.CENTRAL_PASSWORD }}
           MAVEN_GPG_PASSPHRASE: ${{ secrets.GPG_SECRET_KEY_PASSPHRASE }}
-      - uses: codecov/codecov-action@v4
+      - uses: codecov/codecov-action@v5
         if: ${{ github.event_name == 'push'  && ! cancelled()  && matrix.os == 'ubuntu-latest' && matrix.java == '8' }}
         with:
           token: ${{ secrets.CODECOV_TOKEN }} # required
