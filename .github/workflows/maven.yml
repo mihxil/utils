@@ -16,11 +16,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ ubuntu-latest, windows-latest, macos-latest ]
+        os: [ ubuntu-latest, windows-latest ]
         java: [ 8 ]
-        # also check (once) on latest
+        # also check (once) on latest (no java 8 for macos)
         include:
-          - os: ubuntu-latest
+          - os: [ ubuntu-latest, macos-latest ]
             java: 25
     env:
       MAVEN_ARGS: '--no-transfer-progress'
