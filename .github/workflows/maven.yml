@@ -61,9 +61,15 @@ jobs:
         with:
           check_name: "Unit Test Results ${{ matrix.os }} / ${{ matrix.java }}"
           files: "**/target/surefire-reports/*.xml"
-      - name: Publish Unit Test Results
+      - name: Publish Unit Test Results (windows)
         uses: EnricoMi/publish-unit-test-result-action/windows/bash@v2
         if: (success() || failure()) && runner.os == 'Windows'
+        with:
+          check_name: "Unit Test Results ${{ matrix.os }} / ${{ matrix.java }}"
+          files: "**/target/surefire-reports/*.xml"
+      - name: Publish Unit Test Results (macos)
+        uses: EnricoMi/publish-unit-test-result-action/macos@v2
+        if: (success() || failure()) && runner.os == 'MacOS'
         with:
           check_name: "Unit Test Results ${{ matrix.os }} / ${{ matrix.java }}"
           files: "**/target/surefire-reports/*.xml"
