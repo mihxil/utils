@@ -8,7 +8,7 @@
   <name>Mihxil's Util Parent</name>
   <description>Low level java utilities</description>
 
-  <url>https://github.com/mihxil/util</url>
+  <url>https://github.com/mihxil/util/tree/main</url>
 
   <modules>
     <module>mihxil-functional</module>
