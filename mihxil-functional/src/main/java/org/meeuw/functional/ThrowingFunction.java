@@ -1,6 +1,7 @@
 package org.meeuw.functional;
 
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 import static org.meeuw.functional.Sneaky.sneakyThrow;
 
@@ -30,5 +31,19 @@ public interface ThrowingFunction<A, R, E extends Exception> extends Function<A,
      * @throws E Checked exception that might occur.
      */
     R applyWithException(A a) throws E;
+
+    /**
+     * @since 1.17
+     * @param value
+     * @return
+     */
+     default ThrowingSupplier<R, E> withArg1(A value) {
+        return new Suppliers.ThrowingSupplierWrapper<R, ThrowingFunction<A, R, E>, E>(this, "with arg1 " + value) {
+            @Override
+            public R getThrows() throws E {
+                return wrapped.applyWithException(value);
+            }
+        };
+    }
 
 }

@@ -17,9 +17,13 @@ class ThrowingFunctionTest {
             throw new IOException();
         };
         assertThatThrownBy(() -> {
-                withThrows.apply("a");
+            withThrows.apply("a");
             }
         ).isInstanceOf(IOException.class);
+
+        ThrowingSupplier<String, IOException> withArg1 = withThrows.withArg1("a");
+        assertThatThrownBy(withArg1::get).isInstanceOf(IOException.class);
+        assertThat(withArg1.toString()).endsWith("(with arg1 a)");
     }
 
     @Test

@@ -20,6 +20,13 @@ class ThrowingBiFunctionTest {
                 withThrows.apply("a", 1);
             }
         ).isInstanceOf(IOException.class);
+
+        ThrowingFunction<String, String, IOException> withArg2 = withThrows.withArg2(1);
+        assertThatThrownBy(() -> {
+            withArg2.apply("a");
+        }).isInstanceOf(IOException.class);
+        assertThat(withArg2.toString()).endsWith("(with arg2 1)");
+
     }
 
     @Test

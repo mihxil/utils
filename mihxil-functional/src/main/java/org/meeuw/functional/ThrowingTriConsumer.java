@@ -40,4 +40,43 @@ public interface ThrowingTriConsumer<T, U, V, E extends Exception> extends TriCo
      */
     void acceptThrows(T t, U u, V v) throws E;
 
+    /**
+     * @since 1.17
+     */
+    default ThrowingBiConsumer<T, U, E> withArg3(V v) {
+        return new Consumers.ThrowingBiWrapper<ThrowingTriConsumer<T, U, V, E>, T, U, E>(this, v, "with arg3 " + v) {
+            @Override
+            public void acceptThrows(T t, U u) throws E{
+                wrapped.acceptThrows(t, u, v);
+            }
+        };
+    }
+
+    /**
+     * @since 1.17
+     */
+    default ThrowingBiConsumer<T, V, E> withArg2(U u) {
+        return new Consumers.ThrowingBiWrapper<ThrowingTriConsumer<T, U, V, E>, T, V, E>(this, u, "with arg2 " + u) {
+            @Override
+            public void acceptThrows(T t, V v) throws E{
+                wrapped.acceptThrows(t, u, v);
+            }
+        };
+    }
+
+    /**
+     * @since 1.17
+     */
+    default ThrowingBiConsumer<U, V, E> withArg1(T t) {
+        return new Consumers.ThrowingBiWrapper<ThrowingTriConsumer<T, U, V, E>, U, V, E>(this, t, "with arg1 " + t) {
+            @Override
+            public void acceptThrows(U u, V v) throws E{
+                wrapped.acceptThrows(t, u, v);
+            }
+        };
+    }
+
+
+
+
 }

@@ -26,6 +26,7 @@ public interface ThrowingBiConsumer<T, U, E extends Exception> extends BiConsume
     }
 
     default ThrowingBiConsumer<T, U,  E> andThen(ThrowingBiConsumer<? super T, ? super U, ? extends E> after) {
+
         return (T t, U u) -> {
             acceptThrows(t, u);
             after.acceptThrows(t, u);
@@ -38,5 +39,32 @@ public interface ThrowingBiConsumer<T, U, E extends Exception> extends BiConsume
      * @throws E if the operation somehow fails, it throws exceptions of this type
      */
     void acceptThrows(T t, U u) throws E;
+
+    /**
+     * @since 1.17
+     */
+    default ThrowingConsumer<T, E> withArg2(U u) {
+        return new Consumers.ThrowingMonoWrapper<ThrowingBiConsumer<T, U, E>, T, E>(this, u, "with arg2") {
+            @Override
+            public void acceptThrows(T t) throws E{
+                wrapped.acceptThrows(t, u);
+            }
+        };
+    }
+
+    /**
+     * @since 1.17
+     */
+    default ThrowingConsumer<U, E> withArg1(T t) {
+        return new Consumers.ThrowingMonoWrapper<ThrowingBiConsumer<T, U, E>, U, E>(this, t, "with arg1") {
+            @Override
+            public void acceptThrows(U u) throws E{
+                wrapped.acceptThrows(t, u);
+            }
+        };
+    }
+
+
+
 
 }

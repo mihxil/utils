@@ -320,7 +320,7 @@ public final class Consumers {
         return (TriConsumer<U, V, W>) TRINOP;
     }
 
-    protected static class NOPConsumer<U> implements Consumer<U> {
+    protected static class NOPConsumer<U> implements ThrowAnyConsumer<U> {
         final Class<U> clazz;
 
         public NOPConsumer(Class<U> clazz) {
@@ -328,7 +328,7 @@ public final class Consumers {
         }
 
         @Override
-        public void accept(U u) {
+        public void acceptThrows(U u) {
         }
 
         @Override
@@ -347,7 +347,7 @@ public final class Consumers {
         }
     }
 
-      protected static class NOPBiConsumer<U, V> implements BiConsumer<U, V> {
+      protected static class NOPBiConsumer<U, V> implements ThrowAnyBiConsumer<U, V> {
         final Class<U> clazz1;
         final Class<V> clazz2;
 
@@ -357,7 +357,7 @@ public final class Consumers {
         }
 
         @Override
-        public void accept(U u, V v) {
+        public void acceptThrows(U u, V v) {
         }
 
         @Override
@@ -378,7 +378,7 @@ public final class Consumers {
         }
     }
 
-    protected static class NOPTriConsumer<U, V, W> implements TriConsumer<U, V, W> {
+    protected static class NOPTriConsumer<U, V, W> implements ThrowAnyTriConsumer<U, V, W> {
         final Class<U> clazz1;
         final Class<V> clazz2;
         final Class<W> clazz3;
@@ -391,7 +391,7 @@ public final class Consumers {
         }
 
         @Override
-        public void accept(U u, V v, W w) {
+        public void acceptThrows(U u, V v, W w) {
         }
 
         @Override
@@ -453,5 +453,19 @@ public final class Consumers {
             super(wrapped, value, reason);
         }
     }
+
+    protected static abstract class ThrowingMonoWrapper<W, T, E extends Exception> extends ValueWrapper<W> implements ThrowingConsumer<T, E> {
+
+        public ThrowingMonoWrapper(W wrapped, Object value,  String reason) {
+            super(wrapped, value, reason);
+        }
+    }
+    protected static abstract class ThrowingBiWrapper<W, T, U, E extends Exception> extends ValueWrapper<W> implements ThrowingBiConsumer<T, U, E> {
+
+        public ThrowingBiWrapper(W wrapped, Object value,  String reason) {
+            super(wrapped, value, reason);
+        }
+    }
+
 
 }

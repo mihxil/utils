@@ -123,6 +123,16 @@ public class Suppliers {
         }
     }
 
+    /**
+     * Extension of {@link Wrapper} that implements {@link Supplier}.
+     * @param <T> the type of the value supplied
+     * @param <W> the type of the wrapped supplier
+     */
+    protected static abstract class ThrowingSupplierWrapper<T, W, E extends Exception> extends Wrapper<W> implements UnwrappableSupplier<T, W>, ThrowingSupplier<T, E> {
+        public ThrowingSupplierWrapper(W wrapped, String reason) {
+            super(wrapped, reason);
+        }
+    }
 
 
     /**
