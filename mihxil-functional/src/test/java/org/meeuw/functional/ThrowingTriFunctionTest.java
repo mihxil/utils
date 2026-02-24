@@ -52,4 +52,25 @@ class ThrowingTriFunctionTest {
         System.out.println("other:" + test.apply("foobar", 2, 5.0f));
     }
 
+    @Test
+    public void withArg3() {
+        ThrowingTriFunction<String, Integer, Float, String, IOException> func = (s1, s2, s3) -> s1 + ":" + s2 + ":" + s3;
+        ThrowingBiFunction<String, Integer, String, IOException> withArg3 = func.withArg3(3.0f);
+        assertThat(withArg3.apply("Hello", 1)).isEqualTo("Hello:1:3.0");
+    }
+
+    @Test
+    public void withArg2() {
+        ThrowingTriFunction<String, Integer, Float, String, IOException> func = (s1, s2, s3) -> s1 + ":" + s2 + ":" + s3;
+        ThrowingBiFunction<String, Float, String, IOException> withArg2 = func.withArg2(1);
+        assertThat(withArg2.apply("Hello", 3.0f)).isEqualTo("Hello:1:3.0");
+    }
+
+    @Test
+    public void withArg1() {
+        ThrowingTriFunction<String, Integer, Float, String, IOException> func = (s1, s2, s3) -> s1 + ":" + s2 + ":" + s3;
+        ThrowingBiFunction<Integer, Float, String, IOException> withArg1 = func.withArg1("foo");
+        assertThat(withArg1.apply(1,  3.0f)).isEqualTo("foo:1:3.0");
+    }
+
 }
