@@ -1,5 +1,6 @@
 package org.meeuw.functional;
 
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 import static org.meeuw.functional.Sneaky.sneakyThrow;
@@ -43,5 +44,29 @@ public interface ThrowingConsumer<T, E extends Exception> extends Consumer<T> {
      * @throws E if the operation somehow fails, it throws {@link Exception exceptions} of this type
      */
     void acceptThrows(T t) throws E;
+
+    /**
+     * @since 1.17
+     */
+    default <X> ThrowingBiConsumer<T, X, E> ignoreArg2() {
+        return new Consumers.ThrowingBiWrapper<ThrowingConsumer<T, E>, T, X, E>(this, null, "ignore arg2") {
+            @Override
+            public void acceptThrows(T t, X u) throws E {
+                wrapped.acceptThrows(t);
+            }
+        };
+    }
+    /**
+     * @since 1.17
+     */
+    default <X> ThrowingBiConsumer<X, T, E> ignoreArg1() {
+        return new Consumers.ThrowingBiWrapper<ThrowingConsumer<T, E>, X, T,  E>(this, null, "ignore arg1") {
+            @Override
+            public void acceptThrows(X u, T t) throws E {
+                wrapped.acceptThrows(t);
+            }
+        };
+    }
+
 
 }

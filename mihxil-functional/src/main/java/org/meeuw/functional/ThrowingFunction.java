@@ -46,4 +46,29 @@ public interface ThrowingFunction<A, R, E extends Exception> extends Function<A,
         };
     }
 
+    /**
+     * @since 1.17
+     */
+    default <X> ThrowingBiFunction<A, X, R, E> ignoreArg2() {
+        return new Functions.ThrowingBiWrapper<ThrowingFunction<A, R, E>,  A, X, R , E>(this, null, "ignore arg2") {
+
+            @Override
+            public R applyWithException(A a, X x) throws E {
+                return wrapped.applyWithException(a);
+            }
+        };
+    }
+
+    /**
+     * @since 1.17
+     */
+    default <X> ThrowingBiFunction<X, A, R, E> ignoreArg1() {
+        return new Functions.ThrowingBiWrapper<ThrowingFunction<A, R, E>,  X, A,  R , E>(this, null, "ignore arg1") {
+            @Override
+            public R applyWithException(X x, A a) throws E {
+                return wrapped.applyWithException(a);
+            }
+        };
+    }
+
 }

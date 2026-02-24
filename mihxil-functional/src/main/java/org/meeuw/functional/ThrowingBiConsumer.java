@@ -64,6 +64,42 @@ public interface ThrowingBiConsumer<T, U, E extends Exception> extends BiConsume
         };
     }
 
+    /**
+     * @since 1.17
+     */
+    default <X> ThrowingTriConsumer<T, U, X, E> ignoreArg3() {
+        return new Consumers.ThrowingTriWrapper<ThrowingBiConsumer<T, U, E>, T, U, X,  E>(this, null, "ignore arg2") {
+            @Override
+            public void acceptThrows(T t, U u, X v) throws E {
+                wrapped.acceptThrows(t, u);
+            }
+        };
+    }
+    /**
+     * @since 1.17
+     */
+    default <X> ThrowingTriConsumer<T, X, U, E> ignoreArg2() {
+        return new Consumers.ThrowingTriWrapper<ThrowingBiConsumer<T, U, E>, T, X, U,  E>(this, null, "ignore arg2") {
+            @Override
+            public void acceptThrows(T t, X u, U v) throws E {
+                wrapped.acceptThrows(t, v);
+            }
+        };
+    }
+
+    /**
+     * @since 1.17
+     */
+    default <X> ThrowingTriConsumer<X, T, U, E> ignoreArg1() {
+        return new Consumers.ThrowingTriWrapper<ThrowingBiConsumer<T, U, E>, X, T,  U,  E>(this, null, "ignore arg1") {
+            @Override
+            public void acceptThrows(X t, T u, U v) throws E {
+                wrapped.acceptThrows(u, v);
+            }
+        };
+    }
+
+
 
 
 

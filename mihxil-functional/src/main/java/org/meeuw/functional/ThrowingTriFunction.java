@@ -37,4 +37,47 @@ public interface ThrowingTriFunction<A, B, C, R, E extends Exception> extends Tr
 
     R applyWithException(A a, B b, C c) throws E;
 
+    /**
+     * @since 1.17
+     * @param value
+     * @return
+     */
+    default ThrowingBiFunction<A, B, R, E> withArg3(C value) {
+        return new Functions.ThrowingBiWrapper<ThrowingTriFunction<A, B, C, R, E>, A, B, R, E>(this, value, "with arg3 " + value) {
+
+            @Override
+            public R applyWithException(A a, B b) throws E {
+                return wrapped.applyWithException(a, b, value);
+            }
+
+        };
+    }
+    /**
+     * @since 1.17
+     * @param value
+     */
+    default ThrowingBiFunction<A, C, R, E> withArg2(B value) {
+        return new Functions.ThrowingBiWrapper<ThrowingTriFunction<A, B, C, R, E>, A, C, R, E>(this, value, "with arg2 " + value) {
+
+            @Override
+            public R applyWithException(A a, C c) throws E {
+                return wrapped.applyWithException(a, value, c);
+            }
+        };
+    }
+
+    /**
+     * @since 1.17
+     * @param value
+     */
+    default ThrowingBiFunction<B, C, R, E> withArg1(A value) {
+        return new Functions.ThrowingBiWrapper<ThrowingTriFunction<A, B, C, R, E>, B, C, R, E>(this, value, "with arg1 " + value) {
+
+            @Override
+            public R applyWithException(B b, C c) throws E {
+                return wrapped.applyWithException(value, b,  c);
+            }
+        };
+    }
+
 }

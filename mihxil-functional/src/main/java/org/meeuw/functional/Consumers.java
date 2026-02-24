@@ -468,4 +468,11 @@ public final class Consumers {
     }
 
 
+    protected static abstract class ThrowingTriWrapper<W, T, U, V, E extends Exception> extends ValueWrapper<W> implements ThrowingTriConsumer<T, U, V, E> {
+
+        public ThrowingTriWrapper(W wrapped, Object value,  String reason) {
+            super(wrapped, value, reason);
+        }
+    }
+
 }

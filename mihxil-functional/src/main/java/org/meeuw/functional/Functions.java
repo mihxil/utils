@@ -557,6 +557,13 @@ public final class Functions {
         }
     }
 
+    protected static abstract  class ThrowingBiWrapper<W, A, B, R, E extends Exception>  extends ValueWrapper<W> implements ThrowingBiFunction<A, B, R, E> {
+        public ThrowingBiWrapper(W wrapped, Object value, String why) {
+            super(wrapped, value, why);
+        }
+    }
+
+
 
     /**
      * A wrapper that is  {@link Callable}
