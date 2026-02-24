@@ -24,9 +24,11 @@ public interface ThrowingConsumer<T, E extends Exception> extends Consumer<T> {
     }
 
     /**
+     * A version of {@link #andThen(Consumer)} then accepts a {@link ThrowingConsumer} instead of a {@link Consumer}, and also produces one.
      * @since 1.16
-     * @param after
-     * @return
+     * @param after The consumer to perform after this operation is performed
+     * @return a composed Consumer that performs in sequence this operation followed by the after operation
+     * @see #andThen(Consumer)
      */
     default ThrowingConsumer<T, E> andThen(ThrowingConsumer<? super T, ? extends E> after) {
         return (T t) -> {
@@ -38,7 +40,7 @@ public interface ThrowingConsumer<T, E extends Exception> extends Consumer<T> {
     /**
      * Performs this operation on the given argument, while allowing for an exception.
      * @param t  the input argument
-     * @throws E if the operation somehow fails, it throws exceptions of this type
+     * @throws E if the operation somehow fails, it throws {@link Exception exceptions} of this type
      */
     void acceptThrows(T t) throws E;
 

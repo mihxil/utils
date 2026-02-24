@@ -61,6 +61,7 @@ public class Suppliers {
      *
      * @param supplier the supplier to memoize
      * @param <T> The type of the objects to supply
+     * @param <S> The type of the supplier
      * @return a new supplier that uses the argument supplier only once
      */
     public static <T, S extends CloseableSupplier<T>> UnwrappableCloseableSupplier<T, Supplier<T>> memoize(S supplier) {
@@ -85,6 +86,7 @@ public class Suppliers {
      * @param supplier the supplier to wrap to make it closeable.
      * @return A new {@link UnwrappableCloseableSupplier} that wraps the given supplier and can be closed.
      * @param <T> the type of the value supplied
+     * @param <S> the type of the supplier, which must (also) be AutoCloseable
      */
     public static <T, S extends Supplier<T> & AutoCloseable> UnwrappableCloseableSupplier<T, Supplier<T>> closeable(S supplier) {
         SupplierConsumerWrapper<T, S> consumerWrapper = new SupplierConsumerWrapper<>(supplier);
@@ -93,6 +95,8 @@ public class Suppliers {
 
     /**
      * Extension of {@link Wrapper} that implements {@link Supplier}.
+     * @param <T> the type of the value supplied
+     * @param <S> the type of the wrapped supplier, which must be AutoCloseable
      */
     protected static class SupplierConsumerWrapper<T, S extends Supplier<T> & AutoCloseable> extends Wrapper<S> implements ThrowAnyConsumer<Supplier<T>>  {
 
@@ -110,6 +114,8 @@ public class Suppliers {
 
     /**
      * Extension of {@link Wrapper} that implements {@link Supplier}.
+     * @param <T> the type of the value supplied
+     * @param <W> the type of the wrapped supplier
      */
     protected static abstract class SupplierWrapper<T, W> extends Wrapper<W> implements UnwrappableSupplier<T, W> {
         public SupplierWrapper(W wrapped, String reason) {

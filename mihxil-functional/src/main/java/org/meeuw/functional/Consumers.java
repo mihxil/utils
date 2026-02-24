@@ -443,8 +443,9 @@ public final class Consumers {
         }
     }
 
-     /**
+    /**
      * Abstract base class for implementing {@link Consumer}s based on wrapping something else.
+     * @param <W>
      */
     protected static abstract class RunnableWrapper<W> extends ValueWrapper<W> implements Runnable {
 
