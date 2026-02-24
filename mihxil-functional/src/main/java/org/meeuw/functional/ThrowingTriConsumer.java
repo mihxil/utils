@@ -15,21 +15,21 @@ import static org.meeuw.functional.Sneaky.sneakyThrow;
  * @param <E> the type of the exception that can be thrown
  */
 @FunctionalInterface
-public interface ThrowingTriiConsumer<T, U, E extends Exception> extends BiConsumer<T, U> {
+public interface ThrowingTriConsumer<T, U, V, E extends Exception> extends TriConsumer<T, U, V> {
 
     @Override
-    default void accept(final T t, final U u) {
+    default void accept(final T t, final U u, final V v) {
         try {
-            acceptThrows(t, u);
+            acceptThrows(t, u, v);
         } catch (final Exception e) {
             sneakyThrow(e);
         }
     }
 
-    default ThrowingTriiConsumer<T, U,  E> andThen(ThrowingTriiConsumer<? super T, ? super U, ? extends E> after) {
-        return (T t, U u) -> {
-            acceptThrows(t, u);
-            after.acceptThrows(t, u);
+    default ThrowingTriConsumer<T, U, V,  E> andThen(ThrowingTriConsumer<? super T, ? super U, ? super V, ? extends E> after) {
+        return (T t, U u, V v) -> {
+            acceptThrows(t, u, v);
+            after.acceptThrows(t, u,  v);
         };
     }
 
@@ -38,6 +38,6 @@ public interface ThrowingTriiConsumer<T, U, E extends Exception> extends BiConsu
      * @param t  the input argument
      * @throws E if the operation somehow fails, it throws exceptions of this type
      */
-    void acceptThrows(T t, U u) throws E;
+    void acceptThrows(T t, U u, V v) throws E;
 
 }
