@@ -1,5 +1,6 @@
 package org.meeuw.functional;
 
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 import static org.meeuw.functional.Sneaky.sneakyThrow;
@@ -7,31 +8,27 @@ import static org.meeuw.functional.Sneaky.sneakyThrow;
 
 /**
  * An extension of {@link Consumer} that can throw exceptions too.
- * @since 1.4
+ * @since 1.16
  * @param <T> the type of the input to the operation
+ * @param <U> the type of the input to the operation
  * @param <E> the type of the exception that can be thrown
  */
 @FunctionalInterface
-public interface ThrowingConsumer<T, E extends Exception> extends Consumer<T> {
+public interface ThrowingBiConsumer<T, U, E extends Exception> extends BiConsumer<T, U> {
 
     @Override
-    default void accept(final T t) {
+    default void accept(final T t, final U u) {
         try {
-            acceptThrows(t);
+            acceptThrows(t, u);
         } catch (final Exception e) {
             sneakyThrow(e);
         }
     }
 
-    /**
-     * @since 1.16
-     * @param after
-     * @return
-     */
-    default ThrowingConsumer<T, E> andThen(ThrowingConsumer<? super T, ? extends E> after) {
-        return (T t) -> {
-            acceptThrows(t);
-            after.acceptThrows(t);
+    default ThrowingBiConsumer<T, U,  E> andThen(ThrowingBiConsumer<? super T, ? super U, ? extends E> after) {
+        return (T t, U u) -> {
+            acceptThrows(t, u);
+            after.acceptThrows(t, u);
         };
     }
 
@@ -40,6 +37,6 @@ public interface ThrowingConsumer<T, E extends Exception> extends Consumer<T> {
      * @param t  the input argument
      * @throws E if the operation somehow fails, it throws exceptions of this type
      */
-    void acceptThrows(T t) throws E;
+    void acceptThrows(T t, U u) throws E;
 
 }

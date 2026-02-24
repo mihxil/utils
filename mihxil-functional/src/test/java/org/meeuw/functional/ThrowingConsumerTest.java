@@ -22,6 +22,23 @@ class ThrowingConsumerTest {
     }
 
     @Test
+    public void withThrowsAndThen() {
+
+        ThrowingConsumer<String, IOException> withThrows = string -> {
+            //throw new IOException();
+        };
+        ThrowingConsumer<String, IOException>  withThrows2 = withThrows.andThen(s -> {
+            throw new IOException(s);
+        });
+        assertThatThrownBy(() -> {
+            withThrows2.accept("bla");
+        }).hasMessage("bla")
+            .isInstanceOf(IOException.class)
+
+        ;
+    }
+
+    @Test
     public void withoutThrows() {
 
         ThrowingConsumer<String, IOException> withoutThrows = System.out::println;
