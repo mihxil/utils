@@ -27,9 +27,15 @@ class ThrowingBiFunctionTest {
         }).isInstanceOf(IOException.class);
         assertThat(withArg2.toString()).endsWith("(with arg2 1)");
 
+        ThrowingFunction<Integer, String, IOException> withArg1 = withThrows.withArg1("x");
+        assertThatThrownBy(() -> {
+            withArg1.apply(1);
+        }).isInstanceOf(IOException.class);
+        assertThat(withArg1.toString()).endsWith("(with arg1 x)");
+
         ThrowingTriFunction<String, Integer, Float, String, IOException> ignoreArg3 = withThrows.ignoreArg3();
         assertThatThrownBy(() -> {
-                ignoreArg3.apply("a", 1, 1.0f);
+            ignoreArg3.apply("a", 1, 1.0f);
         }).isInstanceOf(IOException.class);
         assertThat(ignoreArg3.toString()).endsWith("(ignore arg3)");
 
