@@ -562,7 +562,17 @@ public final class Functions {
             super(wrapped, value, why);
         }
     }
+    protected static abstract  class ThrowingTriWrapper<W, X, Y, Z,  R, E extends Exception> extends ValueWrapper<W> implements ThrowingTriFunction<X, Y, Z, R, E> {
+        public ThrowingTriWrapper(W wrapped, Object value, String why) {
+            super(wrapped, value, why);
+        }
+    }
 
+    protected static abstract  class ThrowingQuadriWrapper<W, A, B, C, D,  R, E extends Exception> extends ValueWrapper<W> implements ThrowingQuadriFunction<A, B, C, D, R, E> {
+        public ThrowingQuadriWrapper(W wrapped, Object value, String why) {
+            super(wrapped, value, why);
+        }
+    }
 
 
     /**

@@ -52,4 +52,13 @@ class ThrowingQuadriFunctionTest {
         System.out.println("other:" + test.apply("foobar", 2, 5.0f, 'd'));
     }
 
+    @Test
+    public void withArg3() {
+        ThrowingQuadriFunction<String, Integer, Float, Double, String, IOException> func = (s1, s2, s3, s4) -> s1 + ":" + s2 + ":" + s3 + ":" + s4;
+        ThrowingTriFunction<String, Integer, Double, String, IOException> withArg3 = func.withArg3(3.0f);
+        assertThat(withArg3.apply("Hello", 1, 1d)).isEqualTo("Hello:1:3.0");
+    }
+
+
+
 }

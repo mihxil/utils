@@ -1,6 +1,9 @@
 package org.meeuw.functional;
 
+import java.util.Objects;
 import java.util.function.Consumer;
+
+import java.util.function.Function;
 
 import static org.meeuw.functional.Sneaky.sneakyThrow;
 
@@ -37,10 +40,36 @@ public interface ThrowingTriFunction<A, B, C, R, E extends Exception> extends Tr
 
     R applyWithException(A a, B b, C c) throws E;
 
+
     /**
+     * Returns a composed function that first applies this function to
+     * its input, and then applies the {@code after} function to the result.
+     * If evaluation of either function throws an exception, it is relayed to
+     * the caller of the composed function.
+     *
+     * @param <S> the type of output of the {@code after} function, and of the composed function
+     * @param after the function to apply after this function is applied
+     * @return a composed function that first applies this function and then applies the {@code after} function
+     * @throws NullPointerException if after is null
+     * @see Function#andThen(Function)
+     */
+    default <S> ThrowingTriFunction<A, B, C, S, E> andThen(Function<? super R, ? extends S> after) {
+        Objects.requireNonNull(after);
+        return new Functions.ThrowingTriWrapper<ThrowingTriFunction<A, B, C, R, E>, A, B, C, S, E>(this, after, "and then " + after) {
+            @Override
+            public S applyWithException(A a, B b, C c) throws E {
+                R result = wrapped.applyWithException(a, b, c);
+                return after.apply(result);
+            }
+        };
+    }
+
+
+    /**
+     * Morphs this {@link ThrowingTriFunction} into a {@link ThrowingBiFunction}, with a certain given value for the third argument.
+     * @param value the argument to always supply to this function third argument
+     * @return a new {@code ThrowingBiFunction}, which will use the given function and argument for its implementation
      * @since 1.17
-     * @param value
-     * @return
      */
     default ThrowingBiFunction<A, B, R, E> withArg3(C value) {
         return new Functions.ThrowingBiWrapper<ThrowingTriFunction<A, B, C, R, E>, A, B, R, E>(this, value, "with arg3 " + value) {
@@ -53,8 +82,10 @@ public interface ThrowingTriFunction<A, B, C, R, E extends Exception> extends Tr
         };
     }
     /**
+     * Morphs this {@link ThrowingTriFunction} into a {@link ThrowingBiFunction}, with a certain given value for the second argument.
+     * @param value the argument to always supply to this function third argument
+     * @return a new {@code ThrowingBiFunction}, which will use the given function and argument for its implementation
      * @since 1.17
-     * @param value
      */
     default ThrowingBiFunction<A, C, R, E> withArg2(B value) {
         return new Functions.ThrowingBiWrapper<ThrowingTriFunction<A, B, C, R, E>, A, C, R, E>(this, value, "with arg2 " + value) {
@@ -67,8 +98,10 @@ public interface ThrowingTriFunction<A, B, C, R, E extends Exception> extends Tr
     }
 
     /**
+     * Morphs this {@link ThrowingTriFunction} into a {@link ThrowingBiFunction}, with a certain given value for the first argument.
+     * @param value the argument to always supply to this function third argument
+     * @return a new {@code ThrowingBiFunction}, which will use the given function and argument for its implementation
      * @since 1.17
-     * @param value
      */
     default ThrowingBiFunction<B, C, R, E> withArg1(A value) {
         return new Functions.ThrowingBiWrapper<ThrowingTriFunction<A, B, C, R, E>, B, C, R, E>(this, value, "with arg1 " + value) {

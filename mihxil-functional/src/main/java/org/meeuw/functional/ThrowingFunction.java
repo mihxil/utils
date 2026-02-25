@@ -1,7 +1,7 @@
 package org.meeuw.functional;
 
+import java.util.Objects;
 import java.util.function.Function;
-import java.util.function.Supplier;
 
 import static org.meeuw.functional.Sneaky.sneakyThrow;
 
@@ -33,9 +33,35 @@ public interface ThrowingFunction<A, R, E extends Exception> extends Function<A,
     R applyWithException(A a) throws E;
 
     /**
+     * Returns a composed function that first applies this function to
+     * its input, and then applies the {@code after} function to the result.
+     * If evaluation of either function throws an exception, it is relayed to
+     * the caller of the composed function.
+     *
+     * @param <S> the type of output of the {@code after} function, and of the composed function
+     * @param after the function to apply after this function is applied
+     * @return a composed function that first applies this function and then applies the {@code after} function
+     * @throws NullPointerException if after is null
+     * @see Function#andThen(Function)
      * @since 1.17
-     * @param value
-     * @return
+     */
+    default <S> ThrowingFunction<A,S, E> andThen(ThrowingFunction<? super R, ? extends S, ? extends E> after) {
+        Objects.requireNonNull(after);
+        return new Functions.ThrowingMonoWrapper<ThrowingFunction<A, R, E>, A, S, E>(this, after, "and then " + after) {
+            @Override
+            public S applyWithException(A a) throws E {
+                R result = wrapped.applyWithException(a);
+                return after.apply(result);
+            }
+        };
+    }
+
+
+    /**
+     * Morphs this {@link ThrowingFunction} into a {@link ThrowingSupplier}, with a certain given value for the argument
+     * @param value the argument to always supply to this function's first argument
+     * @return a new {@code ThrowingSupplier}, which will use the given function and argument for its implementation
+     * @since 1.17
      */
      default ThrowingSupplier<R, E> withArg1(A value) {
         return new Suppliers.ThrowingSupplierWrapper<R, ThrowingFunction<A, R, E>, E>(this, "with arg1 " + value) {
@@ -47,6 +73,9 @@ public interface ThrowingFunction<A, R, E extends Exception> extends Function<A,
     }
 
     /**
+     * Creates a new {@link ThrowingBiFunction} using this {@link ThrowingFunction}, simply completely ignoring the second argument
+     * @param <X> type of second argument to the resulting {@link ThrowingBiFunction}  (ignored)
+     * @return the new {@code ThrowingBiFunction}
      * @since 1.17
      */
     default <X> ThrowingBiFunction<A, X, R, E> ignoreArg2() {
@@ -60,6 +89,9 @@ public interface ThrowingFunction<A, R, E extends Exception> extends Function<A,
     }
 
     /**
+     * Creates a new {@link ThrowingBiFunction} using this {@link ThrowingFunction}, simply completely ignoring the first argument
+     * @param <X> type of first argument to the resulting {@link ThrowingBiFunction}  (ignored)
+     * @return the new {@code ThrowingBiFunction}
      * @since 1.17
      */
     default <X> ThrowingBiFunction<X, A, R, E> ignoreArg1() {
