@@ -15,6 +15,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @author Michiel Meeuwissen
  * @since 0.1
  */
+@SuppressWarnings({"ConstantValue", "EqualsWithItself"})
 @Execution(ExecutionMode.SAME_THREAD)
 class SuppliersTest {
 
@@ -92,6 +93,7 @@ class SuppliersTest {
         Supplier<Integer> memoize = Suppliers.memoize(isup);
 
         assertThat(memoize.equals("")).isFalse();
+        assertThat(memoize.equals(null)).isFalse();
         assertThat(memoize.equals(memoize)).isTrue();
 
         new Thread(() -> {
@@ -157,6 +159,8 @@ class SuppliersTest {
         assertThat(a1.get()).isEqualTo("a");
         Supplier<String> b = Suppliers.always("b");
         assertThat(a1).isNotEqualTo(b);
+        assertThat(a1.equals(null)).isFalse();
+
     }
 
     @Test

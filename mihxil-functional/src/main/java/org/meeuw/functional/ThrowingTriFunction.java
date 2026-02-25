@@ -113,4 +113,68 @@ public interface ThrowingTriFunction<A, B, C, R, E extends Exception> extends Tr
         };
     }
 
+    /**
+     * Creates a new {@link ThrowingQuadriFunction} using this {@link ThrowingTriFunction}, simply completely ignoring the fourth argument
+     * @param <X> type of fourth argument to the resulting {@link ThrowingQuadriFunction}  (ignored)
+     * @return the new {@code ThrowingQuadriFunction}
+     * @since 1.17
+     */
+    default <X> ThrowingQuadriFunction<A, B, C, X, R, E> ignoreArg4() {
+        return new Functions.ThrowingQuadriWrapper<ThrowingTriFunction<A, B, C, R, E>,  A, B, C, X, R , E>(this, null, "ignore arg4") {
+
+            @Override
+            public R applyWithException(A a, B b, C c, X x) throws E {
+                return wrapped.applyWithException(a, b, c);
+            }
+        };
+    }
+
+    /**
+     * Creates a new {@link ThrowingQuadriFunction} using this {@link ThrowingTriFunction}, simply completely ignoring the third argument
+     * @param <X> type of third argument to the resulting {@link ThrowingQuadriFunction}  (ignored)
+     * @return the new {@code ThrowingQuadriFunction}
+     * @since 1.17
+     */
+    default <X> ThrowingQuadriFunction<A, B, X, C, R, E> ignoreArg3() {
+        return new Functions.ThrowingQuadriWrapper<ThrowingTriFunction<A, B, C, R, E>,  A, B, X, C, R , E>(this, null, "ignore arg3") {
+
+            @Override
+            public R applyWithException(A a, B b, X x, C c) throws E {
+                return wrapped.applyWithException(a, b, c);
+            }
+        };
+    }
+
+    /**
+     * Creates a new {@link ThrowingQuadriFunction} using this {@link ThrowingTriFunction}, simply completely ignoring the fourth argument
+     * @param <X> type of fourth argument to the resulting {@link ThrowingQuadriFunction}  (ignored)
+     * @return the new {@code ThrowingQuadriFunction}
+     * @since 1.17
+     */
+    default <X> ThrowingQuadriFunction<A, X, B, C, R, E> ignoreArg2() {
+        return new Functions.ThrowingQuadriWrapper<ThrowingTriFunction<A, B, C, R, E>,  A, X, B, C, R , E>(this, null, "ignore arg2") {
+
+            @Override
+            public R applyWithException(A a, X x, B b, C c) throws E {
+                return wrapped.applyWithException(a, b, c);
+            }
+        };
+    }
+    /**
+     * Creates a new {@link ThrowingQuadriFunction} using this {@link ThrowingTriFunction}, simply completely ignoring the first argument
+     * @param <X> type of first argument to the resulting {@link ThrowingQuadriFunction}  (ignored)
+     * @return the new {@code ThrowingQuadriFunction}
+     * @since 1.17
+     */
+    default <X> ThrowingQuadriFunction<X, A, B, C, R, E> ignoreArg1() {
+        return new Functions.ThrowingQuadriWrapper<ThrowingTriFunction<A, B, C, R, E>,  X, A, B, C, R , E>(this, null, "ignore arg2") {
+
+            @Override
+            public R applyWithException(X x, A a, B b, C c) throws E {
+                return wrapped.applyWithException(a, b, c);
+            }
+        };
+    }
+
+
 }

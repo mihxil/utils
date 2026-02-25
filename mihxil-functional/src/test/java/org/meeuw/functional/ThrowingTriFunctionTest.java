@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.*;
 
 
+@SuppressWarnings("rawtypes")
 class ThrowingTriFunctionTest {
 
 
@@ -16,9 +17,7 @@ class ThrowingTriFunctionTest {
         ThrowingTriFunction<String, Integer, Float, String, IOException> withThrows = (a ,b, c) -> {
             throw new IOException();
         };
-        assertThatThrownBy(() -> {
-            withThrows.apply("a", 1, 2.0f);
-            }
+        assertThatThrownBy(() -> withThrows.apply("a", 1, 2.0f)
         ).isInstanceOf(IOException.class);
     }
 
@@ -32,16 +31,15 @@ class ThrowingTriFunctionTest {
         someMethod(withoutThrows);
         someOtherMethod(withoutThrowsAny);
 
-        assertThatThrownBy(() -> {
-            someMethod((a, b, c) -> {
-                throw new IllegalArgumentException();
-            });}).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> someMethod((a, b, c) -> {
+            throw new IllegalArgumentException();
+        })).isInstanceOf(IllegalArgumentException.class);
 
         someOtherMethod(withoutThrows);
 
-        assertThatNoException().isThrownBy(() -> {
-            assertThat(withoutThrows.apply("a", 1, 3.0f)).isEqualTo("A:1:3.0");
-        });
+        assertThatNoException().isThrownBy(() ->
+            assertThat(withoutThrows.apply("a", 1, 3.0f)).isEqualTo("A:1:3.0")
+        );
     }
 
     protected void someMethod(ThrowingTriFunction<String, Integer, Float,  String, ? extends Exception> test ) {
@@ -81,6 +79,20 @@ class ThrowingTriFunctionTest {
         assertThat(andThen.apply("Hello", 1, 2f)).isEqualTo("Hello:1:2.0:andthen");
         assertThat(andThen.toString()).contains("(and then ");
         assertThat(((Unwrappable) andThen).unwrap()).isSameAs(func);
+    }
+
+    @Test
+    public void ignoreArg() {
+        ThrowingTriFunction<String, Integer, Float, String, IOException> func = (s1, s2, s3) -> s1 + ":" + s2 + ":" + s3;
+        ThrowingQuadriFunction<String, Integer, Float, Double, String, IOException> ignoreArg4 = func.ignoreArg4();
+        ThrowingQuadriFunction<String, Integer, Double, Float, String, IOException> ignoreArg3 = func.ignoreArg3();
+        ThrowingQuadriFunction<String, Double, Integer, Float, String, IOException> ignoreArg2 = func.ignoreArg2();
+        ThrowingQuadriFunction<Double, String, Integer, Float, String, IOException> ignoreArg1 = func.ignoreArg1();
+
+        assertThat(ignoreArg4.apply("Hello", 1, 2f, 3d)).isEqualTo("Hello:1:2.0");
+        assertThat(ignoreArg3.apply("Hello", 1, 3d, 2f)).isEqualTo("Hello:1:2.0");
+        assertThat(ignoreArg2.apply("Hello", 3d, 1, 2f)).isEqualTo("Hello:1:2.0");
+        assertThat(ignoreArg1.apply(3d, "Hello", 1, 2f)).isEqualTo("Hello:1:2.0");
     }
 
 }
