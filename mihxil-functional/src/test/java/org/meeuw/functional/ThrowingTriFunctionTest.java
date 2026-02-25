@@ -73,4 +73,14 @@ class ThrowingTriFunctionTest {
         assertThat(withArg1.apply(1,  3.0f)).isEqualTo("foo:1:3.0");
     }
 
+    @Test
+    public void andThen() {
+        ThrowingTriFunction<String, Integer, Float, String, IOException> func = (s1, s2, s3) -> s1 + ":" + s2 + ":" + s3;
+
+        ThrowingTriFunction<String,  Integer, Float, String, IOException> andThen = func.andThen(s -> s + ":andthen");
+        assertThat(andThen.apply("Hello", 1, 2f)).isEqualTo("Hello:1:2.0:andthen");
+        assertThat(andThen.toString()).contains("(and then ");
+        assertThat(((Unwrappable) andThen).unwrap()).isSameAs(func);
+    }
+
 }

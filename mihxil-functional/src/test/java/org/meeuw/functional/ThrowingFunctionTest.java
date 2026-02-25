@@ -56,4 +56,29 @@ class ThrowingFunctionTest {
         System.out.println("other:" + test.apply("foobar"));
     }
 
+    @Test
+    public void andThen() {
+        ThrowingFunction<String, String, IOException> func = (s1) -> s1 + ":" + s1.length();
+
+        ThrowingFunction<String,  String, IOException> andThen = func.andThen(s -> s + ":andthen");
+        assertThat(andThen.apply("Hello")).isEqualTo("Hello:5:andthen");
+        assertThat(andThen.toString()).contains("(and then ");
+        assertThat(((Unwrappable) andThen).unwrap()).isSameAs(func);
+    }
+
+
+    @Test
+    public void ignoreArg() {
+        ThrowingFunction<String, String, IOException> func = (s1) -> s1 + ":" + s1.length();
+
+        ThrowingBiFunction<Float, String,  String, IOException> ignoreArg1 = func.ignoreArg1();
+        ThrowingBiFunction<String, Double, String, IOException> ignoreArg2 = func.ignoreArg2();
+
+        assertThat(ignoreArg1.apply(1.0f, "Hello")).isEqualTo("Hello:5");
+        assertThat(ignoreArg2.apply("Hello", 2d)).isEqualTo("Hello:5");
+    }
+
+
+
+
 }
