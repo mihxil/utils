@@ -40,6 +40,13 @@ Things like `memoize` (to memoize the value of a supplier), `closeable` (to make
 |===
 |Version |date |remarks
 
+
+|1.17
+| 2026-03
+|
+For the 'Throwing-' functional interfaces, there are now also overridden verison of the 'withArgN' and 'ignoreArgN' morphing methods, that remain 'Throwing-' functional interfaces, and throw the same exception as the original functional interface.
+
+
 |1.12
 | 2025-06-26
 |
