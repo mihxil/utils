@@ -69,4 +69,21 @@ class ThrowingConsumerTest {
         });
     }
 
+    @Test
+    public void ignoreArg1() {
+        ThrowAnyConsumer<String> withoutThrows = System.out::println;
+
+        assertThatNoException().isThrownBy(() -> {
+            withoutThrows.ignoreArg1().accept("bloa", "bla");
+        });
+    }
+    @Test
+    public void ignoreArg2() {
+        ThrowAnyConsumer<String> withoutThrows = System.out::println;
+
+        assertThatNoException().isThrownBy(() -> {
+            withoutThrows.ignoreArg2().accept("bloa", 1);
+        });
+    }
+
 }
