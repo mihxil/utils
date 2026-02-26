@@ -39,14 +39,28 @@ public interface ThrowingConsumer<T, E extends Exception> extends Consumer<T> {
 
     /**
      * Performs this operation on the given argument, while allowing for an exception.
+     *
      * @param t  the input argument
      * @throws E if the operation somehow fails, it throws {@link Exception exceptions} of this type
      */
     void acceptThrows(T t) throws E;
 
     /**
+     * Creates a new Runnable implemented using a {@link Consumer}, simply always consuming that same value.
+     * @since 1.17
+     * @param value the value to consume
+     * @return A new Runnable that will call the given {@link Consumer} with the given value every time it is run.
+     */
+    default ThrowingRunnable<E> withArg1(T value) {
+        return new Consumers.ThrowingRunnableWrapper<ThrowingConsumer<T, E>, E>(this, value, "with arg1 " + value) {
+            @Override
+            public void runThrows() throws E {
+                wrapped.acceptThrows(value);
+            }
+        };
+    }
+    /**
      * Morphs this {@link ThrowingConsumer} into a {@link ThrowingBiConsumer}.
-     * <p>
      *
      * @param <X> the type of the second argument of the given {@code BiConsumer}, which is ignored
      * @return a new {@code ThrowingBiConsumer} that is calling the given {@code ThrowingConsumer}
@@ -62,7 +76,6 @@ public interface ThrowingConsumer<T, E extends Exception> extends Consumer<T> {
     }
     /**
      * Morphs this {@link ThrowingConsumer} into a {@link ThrowingBiConsumer}.
-     * <p>
      *
      * @param <X> the type of the first argument of the given {@code BiConsumer}, which is ignored
      * @return a new {@code ThrowingBiConsumer} that is calling the given {@code ThrowingConsumer}

@@ -27,9 +27,9 @@ class ThrowingBiConsumerTest {
     void accept() {
         consumer.accept("Hello", 1);
         assertThat(counter.get()).isEqualTo(1);
-        assertThatThrownBy(() -> {
-            consumer.accept("throw", 2);
-        }).isInstanceOf(Exception.class)
+        assertThatThrownBy(() ->
+            consumer.accept("throw", 2)
+        ).isInstanceOf(Exception.class)
             .hasMessage("Test exception");
         assertThat(counter.get()).isEqualTo(1);
     }
@@ -44,9 +44,7 @@ class ThrowingBiConsumerTest {
         });
         andThen.accept("Hello", 1);
         assertThat(counter.get()).isEqualTo(11);
-        assertThatThrownBy(() -> {
-            andThen.accept("throw2", 2);
-        }).isInstanceOf(Exception.class)
+        assertThatThrownBy(() -> andThen.accept("throw2", 2)).isInstanceOf(Exception.class)
             .hasMessage("Test exception in andThen");
         assertThat(counter.get()).isEqualTo(13);
     }
@@ -60,6 +58,19 @@ class ThrowingBiConsumerTest {
     @Test
     void withArg1() {
         consumer.withArg1("hello").accept(3);
+        assertThat(counter.get()).isEqualTo(3);
+    }
+
+
+    @Test
+    void withArg2Supplier() {
+        consumer.withArg2Supplier(() -> 5).accept("Hello");
+        assertThat(counter.get()).isEqualTo(5);
+    }
+
+    @Test
+    void withArg1Supplier() {
+        consumer.withArg1Supplier(() -> "hello").accept(3);
         assertThat(counter.get()).isEqualTo(3);
     }
 

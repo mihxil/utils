@@ -453,6 +453,12 @@ public final class Consumers {
             super(wrapped, value, reason);
         }
     }
+    protected static abstract class ThrowingRunnableWrapper<W, E extends Exception> extends ValueWrapper<W> implements ThrowingRunnable<E> {
+
+        public ThrowingRunnableWrapper(W wrapped, Object value,  String reason) {
+            super(wrapped, value, reason);
+        }
+    }
 
     protected static abstract class ThrowingMonoWrapper<W, T, E extends Exception> extends ValueWrapper<W> implements ThrowingConsumer<T, E> {
 
