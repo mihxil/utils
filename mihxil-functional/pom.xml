@@ -12,20 +12,14 @@
   <version>1.18-SNAPSHOT</version>
   <description>Utilities related and like java.util.Function</description>
 
+  <properties>
+    <automatic.module.name>org.meeuw.functional</automatic.module.name>
+  </properties>
+
   <build>
     <defaultGoal>install</defaultGoal>
     <plugins>
-      <plugin>
-        <artifactId>maven-jar-plugin</artifactId>
 
-        <configuration>
-          <archive>
-            <manifestEntries>
-              <Automatic-Module-Name>org.meeuw.functional</Automatic-Module-Name>
-            </manifestEntries>
-          </archive>
-        </configuration>
-      </plugin>
     </plugins>
   </build>
 

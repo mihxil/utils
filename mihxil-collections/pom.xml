@@ -14,21 +14,13 @@
 
   <properties>
     <lombok.version>1.18.46</lombok.version>
+    <automatic.module.name>org.meeuw.collectons</automatic.module.name>
+
   </properties>
 
   <build>
     <defaultGoal>install</defaultGoal>
     <plugins>
-      <plugin>
-        <artifactId>maven-jar-plugin</artifactId>
-        <configuration>
-          <archive>
-            <manifestEntries>
-              <Automatic-Module-Name>org.meeuw.collections</Automatic-Module-Name>
-            </manifestEntries>
-          </archive>
-        </configuration>
-      </plugin>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
         <configuration>
@@ -40,9 +32,7 @@
           </path>
         </annotationProcessorPaths>
         <compilerArgs>
-          <arg>-Xlint:-requires-transitive-automatic</arg>
         </compilerArgs>
-        <testCompilerArgument>-Xlint:-exports</testCompilerArgument>
         </configuration>
       </plugin>
     </plugins>
@@ -52,7 +42,7 @@
     <dependency>
       <groupId>org.checkerframework</groupId>
       <artifactId>checker-qual</artifactId>
-      <version>4.2.2</version>
+      <version>3.55.1</version>
       <optional>true</optional>
     </dependency>
     <dependency>

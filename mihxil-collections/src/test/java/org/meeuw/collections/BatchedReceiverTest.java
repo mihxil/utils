@@ -149,7 +149,7 @@ public class BatchedReceiverTest {
                      if (i % 2 == 0) {
                          return Optional.of(Collections.emptyIterator());
                      }
-                     return Optional.of(List.of(String.valueOf((char) ('a' + i)), "x" + i).iterator());
+                     return Optional.of(Arrays.asList(String.valueOf((char) ('a' + i)), "x" + i).iterator());
                  } else {
                      return Optional.empty();
                  }

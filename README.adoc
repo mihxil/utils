@@ -1,4 +1,5 @@
 = java.util extensions
+:toc:
 
 image:https://github.com/mihxil/utils/actions/workflows/maven.yml/badge.svg?[Build Status,link=https://github.com/mihxil/utils/actions/workflows/maven.yml]
 image:https://img.shields.io/maven-central/v/org.meeuw.util/mihxil-functional.svg?label=Maven%20Central[Maven Central,link=https://central.sonatype.com/artifact/org.meeuw.util/mihxil-functional/overview]
@@ -34,12 +35,21 @@ Things like `memoize` (to memoize the value of a supplier), `closeable` (to make
 +
 * Consistent `equals` and `hashCode`, for the utility functions that produce functional implementations. E.g. the  above mentioned `ignoreArg*` and `withArg*` are not simply implemented with lambda's, but also with equals and hashcode based on the source functional class implementation.
 
+== Collections
+
+
+
 == Release history
 
 
 |===
 |Version |date |remarks
 
+
+1.18
+| 2026-08
+|
+Having collection module too.
 
 |1.17
 | 2026-03
