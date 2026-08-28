@@ -108,6 +108,7 @@ public interface ThrowingBiConsumer<T, U, E extends Exception> extends BiConsume
 
     /**
      * @since 1.17
+     * @param <X> Typed of ignored third argument
      */
     default <X> ThrowingTriConsumer<T, U, X, E> ignoreArg3() {
         return new Consumers.ThrowingTriWrapper<ThrowingBiConsumer<T, U, E>, T, U, X,  E>(this, null, "ignore arg2") {
@@ -119,6 +120,7 @@ public interface ThrowingBiConsumer<T, U, E extends Exception> extends BiConsume
     }
     /**
      * @since 1.17
+     * @param <X> Typed of ignored second argument
      */
     default <X> ThrowingTriConsumer<T, X, U, E> ignoreArg2() {
         return new Consumers.ThrowingTriWrapper<ThrowingBiConsumer<T, U, E>, T, X, U,  E>(this, null, "ignore arg2") {
@@ -131,6 +133,7 @@ public interface ThrowingBiConsumer<T, U, E extends Exception> extends BiConsume
 
     /**
      * @since 1.17
+     * @param <X> Typed of ignored first argument
      */
     default <X> ThrowingTriConsumer<X, T, U, E> ignoreArg1() {
         return new Consumers.ThrowingTriWrapper<ThrowingBiConsumer<T, U, E>, X, T,  U,  E>(this, null, "ignore arg1") {
