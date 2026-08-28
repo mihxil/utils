@@ -1,7 +1,6 @@
 package org.meeuw.collections;
 
-import java.util.Arrays;
-import java.util.NoSuchElementException;
+import java.util.*;
 
 import org.junit.jupiter.api.Test;
 
@@ -13,24 +12,44 @@ public class CallbackIteratorTest {
 
 
     @Test
-    public void test() {
+    public void test() throws Exception {
         Runnable runnable = mock(Runnable.class);
-        CallbackIterator<String> i = CallbackIterator.<String>builder()
+        try (CallbackIterator<String> i = CallbackIterator.<String>builder()
             .wrapped(Arrays.asList("A", "B").iterator())
             .callback(runnable)
-            .build()
-            ;
-        verifyNoInteractions(runnable);
-        i.next();
-        assertThatThrownBy(i::remove).isInstanceOf(UnsupportedOperationException.class);
-        verifyNoInteractions(runnable);
-        i.next();
-        verify(runnable).run();
-        assertThat(i.hasNext()).isFalse();
+            .build()) {
 
-        assertThat(i.getCount()).isEqualTo(2);
-        assertThat(i.getSize()).isNotPresent();
-        assertThat(i.getTotalSize()).isNotPresent();
+            verifyNoInteractions(runnable);
+            i.next();
+            assertThatThrownBy(i::remove).isInstanceOf(UnsupportedOperationException.class);
+            verifyNoInteractions(runnable);
+            i.next();
+            verify(runnable).run();
+            assertThat(i.hasNext()).isFalse();
+
+            assertThat(i.getCount()).isEqualTo(2);
+            assertThat(i.getSize()).isNotPresent();
+            assertThat(i.getTotalSize()).isNotPresent();
+        }
+    }
+
+    @Test
+    public void modify() throws Exception {
+        List<String> list = new ArrayList<>();
+        list.add("a");
+        list.add("b");
+        try (CallbackIterator<String> i = CallbackIterator.<String>builder()
+            .wrapped(list.iterator())
+            .build()) {
+
+
+            assertThat(i.next()).isEqualTo("a");
+            i.remove();
+            assertThat(i.next()).isEqualTo("b");
+            i.remove();
+            assertThat(i.hasNext()).isFalse();
+        }
+        assertThat(list).isEmpty();
     }
 
 
