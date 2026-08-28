@@ -29,16 +29,16 @@ jobs:
       MAVEN_TARGET: 'package'
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - name: Set up JDK
-        uses: actions/setup-java@v5
+        uses: actions/setup-java@v6
         with:
           java-version: ${{ matrix.java }}
           distribution: 'temurin'
           cache: "maven"
           server-id: central
-          server-username: CENTRAL_USERNAME
-          server-password: CENTRAL_PASSWORD
+          server-username-env-var: CENTRAL_USERNAME
+          server-password-env-var: CENTRAL_PASSWORD
           gpg-private-key: ${{ secrets.GPG_SECRET_KEY }}
       - name: Set Maven Target
         if: ${{ matrix.os == 'ubuntu-latest' && matrix.java == '8' }}
@@ -50,8 +50,8 @@ jobs:
         env:
           CENTRAL_USERNAME: ${{ secrets.CENTRAL_USERNAME }}
           CENTRAL_PASSWORD: ${{ secrets.CENTRAL_PASSWORD }}
-          MAVEN_GPG_PASSPHRASE: ${{ secrets.GPG_SECRET_KEY_PASSPHRASE }}
-      - uses: codecov/codecov-action@v5
+          GPG_PASSPHRASE: ${{ secrets.GPG_SECRET_KEY_PASSPHRASE }}
+      - uses: codecov/codecov-action@v6
         if: ${{ github.event_name == 'push'  && ! cancelled()  && matrix.os == 'ubuntu-latest' && matrix.java == '8' }}
         with:
           token: ${{ secrets.CODECOV_TOKEN }} # required
