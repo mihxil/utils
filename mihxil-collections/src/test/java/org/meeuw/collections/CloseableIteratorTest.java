@@ -51,15 +51,16 @@ class CloseableIteratorTest {
     }
 
     @Test
-    void stream() {
-        Impl i = new Impl();
-        try (Stream<String> stream = i.stream().limit(2)) {
-            assertThat(stream).contains("a", "b");
+    void stream() throws Exception {
+        try (Impl i = new Impl()) {
+            try (Stream<String> stream = i.stream().limit(2)) {
+                assertThat(stream).contains("a", "b");
+            }
+            assertThat(i.closed.get()).isEqualTo(1);
         }
-        assertThat(i.closed.get()).isEqualTo(1);
     }
     @Test
-    void streamCloseThrows() {
+    void streamCloseThrows() throws Exception {
         Impl i = new Impl(true);
         assertThatThrownBy(() -> {
             try (Stream<String> stream = i.stream().limit(2)) {

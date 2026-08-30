@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.NoSuchElementException;
 
 import org.junit.jupiter.api.Test;
+import org.meeuw.functional.Unwrappable;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -15,15 +16,17 @@ class CountedPeekingIteratorImplTest {
 
     @Test
     public void basic() throws Exception {
-        BasicWrappedIterator<String> wrapped = BasicWrappedIterator.<String>builder()
+        try (BasicWrappedIterator<String> wrapped = BasicWrappedIterator.<String>builder()
             .wrapped(Arrays.asList("a", "b", "c").iterator())
             .size(3L)
             .build();
-        try(CountedPeekingIterator<String> i = wrapped.peeking()) {
+             CountedPeekingIterator<String> i = wrapped.peeking()) {
 
             assertThat(i.peek()).isEqualTo("a");
+            assertThatThrownBy(i::remove).isInstanceOf(IllegalStateException.class); // alaready peeked
             assertThat(i.peek()).isEqualTo("a");
             assertThat(i.next()).isEqualTo("a");
+            assertThatThrownBy(i::remove).isInstanceOf(UnsupportedOperationException.class); // wrappes is unmodifiable
             assertThat(i.peek()).isEqualTo("b");
             assertThat(i.peek()).isEqualTo("b");
             assertThat(i.getCount()).isEqualTo(2L);
@@ -34,6 +37,8 @@ class CountedPeekingIteratorImplTest {
             assertThat(i.hasNext()).isFalse();
 
             assertThat(i.peeking()).isSameAs(i);
+            Unwrappable<?> u = (Unwrappable<?>) assertThat(i).isInstanceOf(Unwrappable.class).actual();
+            assertThat(u.unwrap()).isSameAs(wrapped);
         }
 
 
