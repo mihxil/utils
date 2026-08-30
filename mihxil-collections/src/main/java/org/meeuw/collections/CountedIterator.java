@@ -6,7 +6,7 @@ import java.util.stream.Stream;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-import com.google.common.collect.PeekingIterator;
+
 
 /**
  * An iterator that is also aware of the current position {@link #getCount()}, and optionally of the size of the object that is iterated {@link #getSize()}, and also optionally of a 'total' size (in case this iterator presents some sub-collection) {@link #getTotalSize()}.
@@ -81,7 +81,7 @@ public interface CountedIterator<T> extends Iterator<T>, CloseableIterator<T>, C
     }
 
     /**
-     * If you need a guava {@link PeekingIterator}, this will make you one. It remains also a {@link CountedIterator}
+     * If you need a {@link PeekingIterator}, this will make you one. It remains also a {@link CountedIterator}
      */
     @Override
     default CountedPeekingIterator<T> peeking() {

@@ -4,7 +4,6 @@ import java.util.Iterator;
 
 import org.meeuw.functional.Unwrappable;
 
-import static com.google.common.base.Preconditions.checkState;
 
 /**
  *
@@ -38,7 +37,9 @@ class CloseablePeekingIteratorImpl<T> implements CloseablePeekingIterator<T>, Un
 
     @Override
     public void remove() {
-        checkState(!hasPeeked, "Can't remove after you've peeked at next");
+        if (hasPeeked) {
+            throw new IllegalStateException("Can't remove after you've peeked at next");
+        }
         iterator.remove();
     }
 

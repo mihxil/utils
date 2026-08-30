@@ -1,7 +1,5 @@
 package org.meeuw.collections;
 
-import com.google.common.collect.PeekingIterator;
-
 /**
  * A {@link PeekingIterator} that is also {@link CountedIterator}.
  * @author Michiel Meeuwissen

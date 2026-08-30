@@ -4,7 +4,7 @@ import java.util.*;
 
 import org.junit.jupiter.api.Test;
 
-import com.google.common.collect.Lists;
+
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -12,6 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @author Michiel Meeuwissen
  * @since 0.32
  */
+@SuppressWarnings("OptionalGetWithoutIsPresent")
 public class MergedSortedIteratorTest {
 
     @Test
@@ -21,7 +22,7 @@ public class MergedSortedIteratorTest {
 
         CountedIterator<String> merged = MergedSortedIterator.merge(Comparator.naturalOrder(), CountedIterator.of(l1), CountedIterator.of(l2));
 
-        assertThat(Lists.newArrayList(merged)).isEqualTo(Arrays.asList("a", "b", "c", "d", "e"));
+        assertThat(merged.stream().collect(java.util.stream.Collectors.toList())).isEqualTo(Arrays.asList("a", "b", "c", "d", "e"));
         assertThat(merged.getSize().get()).isEqualTo(5L);
         assertThat(merged.getTotalSize().get()).isEqualTo(5L);
 
@@ -35,7 +36,7 @@ public class MergedSortedIteratorTest {
 
         CountedIterator<String> merged = MergedSortedIterator.mergeInSameThread(Comparator.naturalOrder(), CountedIterator.of(l1), CountedIterator.of(l2));
 
-        assertThat(Lists.newArrayList(merged)).isEqualTo(Arrays.asList("a", "b", "c", "d", "e"));
+        assertThat(merged.stream().collect(java.util.stream.Collectors.toList())).isEqualTo(Arrays.asList("a", "b", "c", "d", "e"));
         assertThat(merged.getSize().get()).isEqualTo(5L);
         assertThat(merged.getTotalSize().get()).isEqualTo(5L);
 
@@ -49,7 +50,7 @@ public class MergedSortedIteratorTest {
 
         CountedIterator<String> merged = MergedSortedIterator.mergeInSameThread(Comparator.naturalOrder(), CountedIterator.of(l2), CountedIterator.of(l1));
 
-        assertThat(Lists.newArrayList(merged)).isEqualTo(Arrays.asList("a", "b", "c", "d", "e"));
+        assertThat(merged.stream().collect(java.util.stream.Collectors.toList())).isEqualTo(Arrays.asList("a", "b", "c", "d", "e"));
         assertThat(merged.getSize().get()).isEqualTo(5L);
         assertThat(merged.getTotalSize().get()).isEqualTo(5L);
 

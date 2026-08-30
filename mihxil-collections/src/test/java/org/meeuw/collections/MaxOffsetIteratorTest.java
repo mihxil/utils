@@ -4,7 +4,7 @@ import java.util.*;
 
 import org.junit.jupiter.api.Test;
 
-import com.google.common.collect.*;
+
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -14,26 +14,25 @@ public class MaxOffsetIteratorTest {
     @Test
     public void testMax() {
         List<String> test = Arrays.asList("a", "b", "c", "d");
-        assertThat(Lists.newArrayList(new MaxOffsetIterator<>(test.iterator(), 2))).containsExactly("a", "b");
+        assertThat(new MaxOffsetIterator<>(test.iterator(), 2).stream().collect(java.util.stream.Collectors.toList())).containsExactly("a", "b");
     }
 
     @Test
     public void testMaxNull() {
         List<String> test = Arrays.asList("a", "b", "c", "d");
-        assertThat(Lists.newArrayList(
-            new MaxOffsetIterator<>(test.iterator(), null))).containsExactly("a", "b", "c", "d");
+        assertThat(new MaxOffsetIterator<>(test.iterator(), null).stream().collect(java.util.stream.Collectors.toList())).containsExactly("a", "b", "c", "d");
     }
 
     @Test
     public void testMaxOffset() {
         List<String> test = Arrays.asList("a", "b", null, "c", "d");
-        assertThat(Lists.newArrayList(new MaxOffsetIterator<>(test.iterator(), 2, 1))).containsExactly("b", null);
+        assertThat(new MaxOffsetIterator<>(test.iterator(), 2, 1).stream().collect(java.util.stream.Collectors.toList())).containsExactly("b", null);
     }
 
     @Test
     public void testMaxOffsetDontcountNulls() {
         List<String> test = Arrays.asList("a", null, "b", "c", null, "d", "e");
-        assertThat(Lists.newArrayList(new MaxOffsetIterator<>(test.iterator(), 2, 2, false))).containsExactly("c", null, "d");
+        assertThat(new MaxOffsetIterator<>(test.iterator(), 2, 2, false).stream().collect(java.util.stream.Collectors.toList())).containsExactly("c", null, "d");
     }
 
     @Test
@@ -49,7 +48,7 @@ public class MaxOffsetIteratorTest {
             .build()
             .autoClose(autoCloseable);
 
-        assertThat(Lists.newArrayList(i)).containsExactly("a", "b");
+        assertThat(i.stream().collect(java.util.stream.Collectors.toList())).containsExactly("a", "b");
         assertThat(booleans[0]).isTrue();
         assertThat(booleans[1]).isTrue();
     }
@@ -67,7 +66,7 @@ public class MaxOffsetIteratorTest {
     @Test
     public void peeking() {
         List<String> list = Arrays.asList("a", "b", "c", "d");
-        PeekingIterator<String> i = Iterators.peekingIterator(list.iterator());
+        PeekingIterator<String> i = MergedSortedIterator.peekingIterator(list.iterator());
         assertThat(i.peek()).isEqualTo("a");
 
         MaxOffsetIterator<String> mo = MaxOffsetIterator

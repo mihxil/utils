@@ -7,7 +7,7 @@ import java.util.function.Consumer;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 /**
- * A modifiable SortedSet, that wraps another collection (changes are reflected), with an explicit sort order.
+ * A modifiable SortedSet that wraps another collection (changes are reflected), with an explicit sort order.
  * @author Michiel Meeuwissen
  * @since 2.1
  */

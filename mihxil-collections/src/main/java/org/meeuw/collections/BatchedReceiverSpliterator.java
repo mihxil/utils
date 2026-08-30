@@ -8,10 +8,10 @@ import java.util.Spliterator;
 import java.util.function.*;
 
 /**
- * Given some API which supplies only 'batched' retrieval (so with offset and max/batchsize parameters),
+ * Given some API that supplies only 'batched' retrieval (so with offset and max/batchsize parameters),
  * access such an API as an iterator to visit all elements.
- *
- * If an API provides access to huge set of elements, they often do it with some paging mechanism, or by some 'resumption token' formalism. With {@link BatchedReceiverSpliterator} this can be morphed into a simple {@link Spliterator}.
+ * <p>
+ * If an API provides access to a huge set of elements, they often do it with some paging mechaism or by some 'resumption token' formalism. With {@link BatchedReceiverSpliterator} this can be morphed into a simple {@link Spliterator}.
 
  *
  * <h3>Paging</h3>

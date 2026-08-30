@@ -3,9 +3,6 @@ package org.meeuw.collections;
 import java.util.*;
 import java.util.function.Supplier;
 
-import com.google.common.collect.Iterators;
-import com.google.common.collect.PeekingIterator;
-
 /**
  * @author Michiel Meeuwissen
  * @since 0.32
@@ -33,12 +30,15 @@ public class MergedSortedIterator<T>  extends BasicWrappedIterator<T> implements
         return mergeInSameThread(comparator, Arrays.asList(iterators));
     }
 
+    /**
+     * This uses a priority queue to merge sorted iterators efficiently.
+     */
     @SuppressWarnings("UnstableApiUsage")
     public static <T> MergedSortedIterator<T> merge(Comparator<? super T> comparator, Iterable<CountedIterator<T>> iterators) {
         return new MergedSortedIterator<>(
             () -> getSize(iterators),
             () -> getTotalSize(iterators),
-            Iterators.mergeSorted(iterators, comparator));
+            new PriorityQueueMergingIterator<>(comparator, iterators));
     }
 
     /**
@@ -88,7 +88,7 @@ public class MergedSortedIterator<T>  extends BasicWrappedIterator<T> implements
             this.comparator = comparator;
             this.iterators = new ArrayList<>();
             for (Iterator<S> i : iterators) {
-                this.iterators.add(Iterators.peekingIterator(i));
+                this.iterators.add(peekingIterator(i));
             }
         }
 
@@ -128,4 +128,45 @@ public class MergedSortedIterator<T>  extends BasicWrappedIterator<T> implements
         }
     }
 
+    protected static class PriorityQueueMergingIterator<S> implements Iterator<S> {
+        private final PriorityQueue<S[]> queue;
+        private final List<Iterator<S>> iterators;
+
+        @SuppressWarnings("unchecked")
+        PriorityQueueMergingIterator(Comparator<? super S> comparator, Iterable<? extends Iterator<S>> iterators) {
+            this.queue = new PriorityQueue<>((a, b) -> comparator.compare(a[0], b[0]));
+            this.iterators = new ArrayList<>();
+            for (Iterator<S> i : iterators) {
+                this.iterators.add(i);
+                if (i.hasNext()) {
+                    queue.add((S[]) new Object[]{i.next(), i});
+                }
+            }
+        }
+
+        @Override
+        public boolean hasNext() {
+            return !queue.isEmpty();
+        }
+
+        @Override
+        @SuppressWarnings("unchecked")
+        public S next() {
+            if (queue.isEmpty()) throw new NoSuchElementException();
+            S[] entry = queue.poll();
+            S value = entry[0];
+            Iterator<S> source = (Iterator<S>) entry[1];
+            if (source.hasNext()) {
+                queue.add((S[]) new Object[]{source.next(), source});
+            }
+            return value;
+        }
+    }
+
+    static <S> PeekingIterator<S> peekingIterator(Iterator<S> iterator) {
+        if (iterator instanceof PeekingIterator) {
+            return (PeekingIterator<S>) iterator;
+        }
+        return new CloseablePeekingIteratorImpl<>(CloseableIterator.of(iterator));
+    }
 }

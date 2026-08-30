@@ -13,7 +13,7 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.meeuw.functional.Predicates;
 
-import com.google.common.collect.PeekingIterator;
+
 
 /**
  * An iterator implementing offset and max, for another iterator.

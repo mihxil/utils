@@ -141,9 +141,7 @@ public class FilteringIterator<T> implements CloseableIterator<T>, Unwrappable<I
                 next = null;
             }
         }
-
     }
-
 
     private boolean inFilter(T object) {
         return filter == null || filter.test(object);

@@ -6,7 +6,6 @@ import java.util.stream.StreamSupport;
 
 import org.meeuw.functional.Unwrappable;
 
-import com.google.common.collect.PeekingIterator;
 
 /**
  * An iterator that is also {@link AutoCloseable}.
@@ -86,7 +85,7 @@ public interface CloseableIterator<T> extends Iterator<T>, AutoCloseable {
     }
 
     /**
-     * If you need a guava {@link PeekingIterator}, this will make you one. It remains also a {@link CloseableIterator}
+     * If you need a {@link PeekingIterator}, this will make you one. It remains also a {@link CloseableIterator}
      */
     default CloseablePeekingIterator<T> peeking() {
         return new CloseablePeekingIteratorImpl<>(this);
