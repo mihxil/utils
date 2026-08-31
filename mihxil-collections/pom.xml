@@ -14,7 +14,7 @@
 
   <properties>
     <lombok.version>1.18.46</lombok.version>
-    <automatic.module.name>org.meeuw.collectons</automatic.module.name>
+    <automatic.module.name>org.meeuw.collections</automatic.module.name>
 
   </properties>
 
