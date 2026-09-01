@@ -13,7 +13,7 @@ public class TransformingIterator<T, W> implements CloseableIterator<T> {
     final Function<W, T> transformer;
 
     @lombok.Builder
-    TransformingIterator(
+    protected TransformingIterator(
         Function<W, T> transformer,
         Iterator<? extends W> wrapped) {
         this.wrapped = wrapped;

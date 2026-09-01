@@ -20,7 +20,7 @@ public class CountedMaxOffsetIterator<T>  extends MaxOffsetIterator<T>  implemen
 
 
     @lombok.Builder(builderClassName = "Builder", builderMethodName = "_countedBuilder")
-    private CountedMaxOffsetIterator(
+    protected CountedMaxOffsetIterator(
         @NonNull CountedIterator<T> wrapped,
         @Nullable Number max,
         @Nullable Number offset,

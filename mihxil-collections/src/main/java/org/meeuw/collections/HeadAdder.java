@@ -30,7 +30,7 @@ public class HeadAdder<T> implements Iterator<T>, Unwrappable<Iterator<T>> {
 
     @SuppressWarnings("unchecked")
     @lombok.Builder(builderClassName = "Builder")
-    private HeadAdder(Iterator<T> wrapped, final boolean onlyIfEmpty, final boolean onlyIfNotEmpty, @lombok.Singular  List<Function<T, T>> adders) {
+    protected HeadAdder(Iterator<T> wrapped, final boolean onlyIfEmpty, final boolean onlyIfNotEmpty, @lombok.Singular  List<Function<T, T>> adders) {
         this.wrapped = wrapped;
         if (onlyIfEmpty && onlyIfNotEmpty) {
             throw new IllegalArgumentException("Cant specify both onlyIfEmpty and onlyIfNotEmpty");

@@ -39,7 +39,7 @@ public class TailAdder<T> implements CountedIterator<T> {
     }
 
     @SafeVarargs
-    private TailAdder(Iterator<T> wrapped, boolean onlyIfEmpty, boolean onlyIfNotEmpty, Function<T, T>... adder) {
+    protected TailAdder(Iterator<T> wrapped, boolean onlyIfEmpty, boolean onlyIfNotEmpty, Function<T, T>... adder) {
         this.wrapped = CloseableIterator.of(wrapped);
         this.onlyIfEmpty = onlyIfEmpty;
         this.onlyIfNotEmpty = onlyIfNotEmpty;
@@ -51,7 +51,7 @@ public class TailAdder<T> implements CountedIterator<T> {
 
     @SuppressWarnings("unchecked")
     @lombok.Builder(builderClassName = "Builder")
-    private TailAdder(Iterator<T> wrapped, boolean onlyIfEmpty, boolean onlyIfNotEmpty, @lombok.Singular  List<Function<T, T>> adders) {
+    protected TailAdder(Iterator<T> wrapped, boolean onlyIfEmpty, boolean onlyIfNotEmpty, @lombok.Singular  List<Function<T, T>> adders) {
         this(wrapped, onlyIfEmpty, onlyIfNotEmpty, adders.toArray(new Function[0]));
     }
 

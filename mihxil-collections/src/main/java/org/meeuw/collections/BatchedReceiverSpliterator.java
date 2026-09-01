@@ -72,7 +72,7 @@ public class BatchedReceiverSpliterator<T> implements Spliterator<T> {
 
 
     @lombok.Builder(builderClassName = "Builder", buildMethodName = "_build")
-    public BatchedReceiverSpliterator(
+    protected BatchedReceiverSpliterator(
             Integer batchSize,
             Long offset,
             BiFunction<Long, Integer, Iterator<T>> _batchGetter) {

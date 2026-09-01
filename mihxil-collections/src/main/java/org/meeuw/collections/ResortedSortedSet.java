@@ -29,7 +29,7 @@ public class ResortedSortedSet<T> extends AbstractSet<T> implements SortedSet<T>
     }
 
     @SafeVarargs
-    private ResortedSortedSet(Collection<T> wrapped, SortedSet<T> set, Consumer<T>... addListeners) {
+    protected ResortedSortedSet(Collection<T> wrapped, SortedSet<T> set, Consumer<T>... addListeners) {
         this.set = set;
         set.addAll(wrapped);
         this.wrapped = wrapped;

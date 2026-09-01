@@ -33,17 +33,14 @@ public abstract class SortedSetElementWrapper<T, S> extends AbstractSet<S> imple
             @Override
             public S next() {
                 return adapt(iterator.next());
-
             }
 
             @Override
             public void remove() {
                 iterator.remove();
-
             }
         };
     }
-
 
     @Override
     public int size() {
@@ -54,7 +51,6 @@ public abstract class SortedSetElementWrapper<T, S> extends AbstractSet<S> imple
     @Override
     public Comparator<? super S> comparator() {
         return (Comparator<S>) (o1, o2) -> wrapped.comparator().compare(find(o1), find(o2));
-
     }
 
     @NonNull
@@ -67,7 +63,6 @@ public abstract class SortedSetElementWrapper<T, S> extends AbstractSet<S> imple
     @Override
     public SortedSet<S> headSet(S toElement) {
         return sub(wrapped.headSet(find(toElement)));
-
     }
 
     @NonNull
@@ -79,7 +74,6 @@ public abstract class SortedSetElementWrapper<T, S> extends AbstractSet<S> imple
     @Override
     public S first() {
         return adapt(wrapped.first());
-
     }
 
     @Override

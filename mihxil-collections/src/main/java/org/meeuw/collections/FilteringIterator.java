@@ -56,7 +56,7 @@ public class FilteringIterator<T> implements CloseableIterator<T>, Unwrappable<I
     }
 
     @lombok.Builder(builderClassName = "Builder")
-    private FilteringIterator(
+    protected FilteringIterator(
             Iterator<? extends T> wrapped,
             Predicate<? super T> filter,
             KeepAlive keepAlive,

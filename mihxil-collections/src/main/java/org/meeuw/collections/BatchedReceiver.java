@@ -112,7 +112,7 @@ public class BatchedReceiver<T> implements Iterator<T> {
     @lombok.Builder(
         builderClassName = "Builder",
         buildMethodName = "_build")
-    private BatchedReceiver(
+    protected BatchedReceiver(
         Long offset,
         Supplier<Optional<Iterator<T>>> supplier) {
         this.supplier = supplier;
