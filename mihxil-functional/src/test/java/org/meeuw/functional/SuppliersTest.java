@@ -33,7 +33,7 @@ class SuppliersTest {
         }
 
         @Override
-        public void close() throws Exception {
+        public void close() {
             closed = true;
         }
     }
@@ -173,6 +173,13 @@ class SuppliersTest {
         assertThat(fa1).isEqualTo(Suppliers.ignoreArg(a1));
         assertThat(fa1.apply(1)).isEqualTo("a");
         assertThat(fa1.apply(2)).isEqualTo("a");
+    }
+
+    @Test
+    void wraps() {
+        Supplier<String> a1 = Suppliers.wraps(Suppliers.always("a"));
+        assertThat(a1.get()).isEqualTo("a");
+        assertThat(a1.toString()).isEqualTo("->a");
     }
 
 

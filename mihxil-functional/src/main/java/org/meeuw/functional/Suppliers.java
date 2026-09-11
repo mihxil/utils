@@ -1,8 +1,7 @@
 package org.meeuw.functional;
 
 import java.util.Objects;
-import java.util.function.Function;
-import java.util.function.Supplier;
+import java.util.function.*;
 
 /**
  * Utilities related to {@link Supplier}s.
@@ -23,6 +22,30 @@ public class Suppliers {
      */
     public static <T> Supplier<T> always(T value) {
         return new Always<>(value, "always");
+    }
+
+    /**
+     * Wraps a supplier with supplier for {@link #toString()} too.
+     * @param value the supplier to wrap
+     * @param toString the supplier for {@link #toString()}
+     * @param <T> the type of the value to supply
+     * @return a new supplier always supplying the value supplied by the given supplier, but with a toString that is supplied by the given supplier
+     * @since 1.21
+     */
+    public static <T> Supplier<T> wraps(Supplier<T> value, Supplier<String> toString) {
+        return new WithToString<>(value, "wrapped with toString", toString);
+    }
+
+    /**
+     * Shortcut for {@link #wraps(Supplier, Supplier)} with a supplier for {@link #toString()} that just returns
+     * a {@link #toString()} based on the {@link #toString()} of {@link Supplier#get()}
+     * @param value the supplier to wrap
+     * @param <T> the type of the value to supply
+     * @return a new supplier always supplying the value supplied by the given supplier, but with a toString that is supplied by the given supplier
+     * @since 1.21
+     */
+    public static <T> Supplier<T> wraps(Supplier<T> value) {
+        return wraps(value, () -> "->" + value.get());
     }
 
     /**
@@ -208,6 +231,25 @@ public class Suppliers {
         @Override
         public W get() {
             return wrapped;
+        }
+    }
+
+    protected static class WithToString<W> extends Wrapper<Supplier<W>> implements Supplier<W> {
+
+        final Supplier<String> toString;
+        public WithToString(Supplier<W> wrapped, String why, Supplier<String> toString) {
+            super(wrapped, why);
+            this.toString = toString;
+        }
+
+        @Override
+        public W get() {
+            return wrapped.get();
+        }
+
+        @Override
+        public String toString() {
+            return toString.get();
         }
     }
 
