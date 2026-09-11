@@ -26,6 +26,14 @@ abstract class Wrapper<W> implements Unwrappable<W> {
     }
 
     /**
+     * The given reason when this wrapper was created.
+     * @since 1.21
+     */
+    public String reason() {
+        return reason;
+    }
+
+    /**
      * The string representation of a {@code Wrapper} is the string representation of wrapped object to which a
      * 'reason' for the wrapping is appended.
      */
