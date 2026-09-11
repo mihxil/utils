@@ -13,9 +13,8 @@
   <description>Utilities related and like java.util.collections</description>
 
   <properties>
-    <lombok.version>1.18.46</lombok.version>
+    <lombok.version>1.18.48</lombok.version>
     <automatic.module.name>org.meeuw.collections</automatic.module.name>
-
   </properties>
 
   <build>
