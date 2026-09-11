@@ -32,20 +32,20 @@ public class Suppliers {
      * @return a new supplier always supplying the value supplied by the given supplier, but with a toString that is supplied by the given supplier
      * @since 1.21
      */
-    public static <T> Supplier<T> wraps(Supplier<T> value, Supplier<String> toString) {
+    public static <T> Supplier<T> wrap(Supplier<T> value, Supplier<String> toString) {
         return new WithToString<>(value, "wrapped with toString", toString);
     }
 
     /**
-     * Shortcut for {@link #wraps(Supplier, Supplier)} with a supplier for {@link #toString()} that just returns
+     * Shortcut for {@link #wrap(Supplier, Supplier)} with a supplier for {@link #toString()} that just returns
      * a {@link #toString()} based on the {@link #toString()} of {@link Supplier#get()}
      * @param value the supplier to wrap
      * @param <T> the type of the value to supply
      * @return a new supplier always supplying the value supplied by the given supplier, but with a toString that is supplied by the given supplier
      * @since 1.21
      */
-    public static <T> Supplier<T> wraps(Supplier<T> value) {
-        return wraps(value, () -> "->" + value.get());
+    public static <T> Supplier<T> wrap(Supplier<T> value) {
+        return wrap(value, () -> "->" + value.get());
     }
 
     /**

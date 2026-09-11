@@ -176,8 +176,8 @@ class SuppliersTest {
     }
 
     @Test
-    void wraps() {
-        Supplier<String> a1 = Suppliers.wraps(Suppliers.always("a"));
+    void wrap() {
+        Supplier<String> a1 = Suppliers.wrap(Suppliers.always("a"));
         assertThat(a1.get()).isEqualTo("a");
         assertThat(a1.toString()).isEqualTo("->a");
     }
