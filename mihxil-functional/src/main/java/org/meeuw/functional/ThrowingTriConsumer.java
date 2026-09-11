@@ -25,6 +25,15 @@ public interface ThrowingTriConsumer<T, U, V, E extends Exception> extends TriCo
         }
     }
 
+    /**
+     * Returns a composed {@code ThrowingTriConsumer} that performs, in sequence, this
+     * operation followed by the {@code after} operation.
+     *
+     * @param after the operation to perform after this operation
+     * @return a composed {@code BiConsumer} that performs in sequence this
+     * operation followed by the {@code after} operation
+     * @throws NullPointerException if {@code after} is null
+     */
     default ThrowingTriConsumer<T, U, V,  E> andThen(ThrowingTriConsumer<? super T, ? super U, ? super V, ? extends E> after) {
         return (T t, U u, V v) -> {
             acceptThrows(t, u, v);

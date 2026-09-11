@@ -24,6 +24,16 @@ public interface ThrowingBiConsumer<T, U, E extends Exception> extends BiConsume
         }
     }
 
+    /**
+     * Returns a composed {@code ThrowingBiConsumer} that performs, in sequence, this
+     * operation followed by the {@code after} operation.
+     *
+     * @param after the operation to perform after this operation
+     * @return a composed {@code BiConsumer} that performs in sequence this
+     * operation followed by the {@code after} operation
+     * @throws NullPointerException if {@code after} is null
+     */
+
     default ThrowingBiConsumer<T, U,  E> andThen(ThrowingBiConsumer<? super T, ? super U, ? extends E> after) {
 
         return (T t, U u) -> {
@@ -107,7 +117,7 @@ public interface ThrowingBiConsumer<T, U, E extends Exception> extends BiConsume
     }
 
     /**
-     * @since 1.17
+     * Creates a new ThrowingTriConsumer implemented using this {@link ThrowingBiConsumer}, simply ignoring the third argument
      * @param <X> Typed of ignored third argument
      * @return A new ThrowingTriConsumer that will call the current {@link ThrowingBiConsumer} with the given value for the third argument every time it is run.
      */
@@ -120,6 +130,7 @@ public interface ThrowingBiConsumer<T, U, E extends Exception> extends BiConsume
         };
     }
     /**
+     * Creates a new ThrowingTriConsumer implemented using this {@link ThrowingBiConsumer}, simply ignoring the second argument
      * @since 1.17
      * @param <X> Typed of ignored second argument
      * @return A new ThrowingTriConsumer that will call the current {@link ThrowingBiConsumer} with the given value for the second argument every time it is run.
@@ -134,6 +145,7 @@ public interface ThrowingBiConsumer<T, U, E extends Exception> extends BiConsume
     }
 
     /**
+     * Creates a new ThrowingTriConsumer implemented using this {@link ThrowingBiConsumer}, simply ignoring the first argument
      * @since 1.17
      * @param <X> Typed of ignored first argument
      * @return A new ThrowingTriConsumer that will call the current {@link ThrowingBiConsumer} with the given value for the first argument every time it is run.
