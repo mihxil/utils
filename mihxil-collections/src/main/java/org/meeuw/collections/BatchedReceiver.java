@@ -7,10 +7,10 @@ import java.util.*;
 import java.util.function.*;
 
 /**
- * Given some API which supplies only 'batched' retrieval (so e.g. with offset and max/batchsize parameters),
+ * Given some API that supplies only 'batched' retrieval (so e.g. with offset and max/batchsize parameters),
  * access such an API as an iterator to visit all elements.
  * <p>
- * If an API provides access to huge set of elements, they often do it with some paging mechanism, or by some 'resumption token' formalism. With {@link BatchedReceiver} this can be morphed into a simple {@link Iterator}.
+ * If an API provides access to a huge set of elements, they often do it with some paging mechanism or by some 'resumption token' formalism. With {@link BatchedReceiver} this can be morphed into a simple {@link Iterator}.
  *
  *
  * <h3>Paging</h3>
@@ -28,7 +28,7 @@ import java.util.function.*;
  *   });
  * }</pre>
  * <h3>Resumption token formalism</h3>
- * You simply provide a {@link Supplier}. A lambda would probably not suffice because you might need the previous result the get the next one. E.g. this (using olingo code)
+ * You simply provide a {@link Supplier}. A lambda would probably not suffice because you might need the previous result to get the next one. E.g. this (using olingo code)
  * <h4>Just use a supplier</h4>
  * <pre>
  * {@code

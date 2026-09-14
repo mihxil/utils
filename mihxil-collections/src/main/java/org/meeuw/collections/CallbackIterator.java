@@ -9,7 +9,7 @@ import org.meeuw.functional.Unwrappable;
 /**
  * An iterator that can call a callback function when its iteration is finished.
  * <p>
- * It simply wraps another iterator, which is one iteration ahead on call of 'hasNext'.
+ * It simply wraps another iterator, which is one iteration ahead on the call of 'hasNext'.
  * @author Michiel Meeuwissen
  */
 public class CallbackIterator<T> implements CountedIterator<T>, Unwrappable<CloseableIterator<T>> {

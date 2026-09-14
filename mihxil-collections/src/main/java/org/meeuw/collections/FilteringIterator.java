@@ -90,7 +90,9 @@ public class FilteringIterator<T> implements CloseableIterator<T>, Unwrappable<I
     }
 
     /**
-     * It is impossible to implement this, because the wrapped iterator is always 'one ahead'
+     * It is impossible to implement this always, because the wrapped iterator can be 'one ahead'
+     *
+     * @throws UnsupportedOperationException if 'hasNext' has already been called and not yet consumed by {@link #next()}
      */
     @Override
     public void remove() {
