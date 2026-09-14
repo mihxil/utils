@@ -21,7 +21,7 @@ public class SkippingIterator<T> implements Iterator<T> {
 
     private T next;
 
-    private boolean findFirst = false;
+    private boolean foundFirst = false;
 
     @lombok.Builder(builderClassName = "Builder")
     public SkippingIterator(
@@ -43,13 +43,13 @@ public class SkippingIterator<T> implements Iterator<T> {
 
     @Override
     public boolean hasNext() {
-        findCandidateForNext();
+        findNext();
         return hasNext;
     }
 
     @Override
     public T next() {
-        findCandidateForNext();
+        findNext();
         if (hasNext) {
             hasNext = null;
             return next;
@@ -58,18 +58,18 @@ public class SkippingIterator<T> implements Iterator<T> {
         }
     }
 
-    protected void findCandidateForNext() {
+    protected void findNext() {
 
         if (hasNext == null) {
 
             hasNext = false;
 
             while (wrapped.hasNext()) {
-                boolean foundFirst = findFirst;
-                findFirst = true;
+                boolean hadFirst = this.foundFirst;
+                this.foundFirst = true;
                 T n = wrapped.next();
                 T previous = next;
-                if (foundFirst && comparator.apply(previous, n)) {
+                if (hadFirst && comparator.apply(previous, n)) {
                     continue;
                 } else {
                     hasNext = true;
