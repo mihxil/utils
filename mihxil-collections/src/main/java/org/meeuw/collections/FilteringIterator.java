@@ -89,9 +89,16 @@ public class FilteringIterator<T> implements CloseableIterator<T>, Unwrappable<I
         return next;
     }
 
+    /**
+     * It is impossible to implement this, because the wrapped iterator is always 'one ahead'
+     */
     @Override
     public void remove() {
-        wrapped.remove();
+        if (hasNext == null) {
+            wrapped.remove();
+            return;
+        }
+        throw new UnsupportedOperationException("remove cannot be called after hasNext");
     }
 
     @Override

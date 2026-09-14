@@ -4,6 +4,7 @@ import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Predicate;
 
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -86,6 +87,16 @@ public class FilteringIteratorTest {
         }
         assertEquals(Arrays.asList("a", "c", "d"), list);
 
+    }
+
+
+    @Test
+    public void testRemoveUnsupportedAfterHasNext() {
+        List<String> list = new ArrayList<>(Arrays.asList("a", "b", "c", null, "d"));
+
+        Iterator<String> iterator = new FilteringIterator<>(list.iterator(), input -> input == null || input.equals("b"));
+        iterator.hasNext();
+        Assertions.assertThatThrownBy(iterator::remove).isInstanceOf(UnsupportedOperationException.class);
     }
 
 }
