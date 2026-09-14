@@ -14,10 +14,10 @@ public class SkippingIteratorTest {
 
     @Test
     public void basicTest() {
-        List<String> test = Arrays.asList("a", "b", "b", "c");
+        List<String> test = Arrays.asList(null, "a", "b", "b", null, "c");
 
         SkippingIterator<String> iterator = new SkippingIterator<>(test.iterator());
-        assertThat(iterator).toIterable().containsExactly("a", "b", "c");
+        assertThat(iterator).toIterable().containsExactly(null, "a", "b", null, "c");
 
     }
 
