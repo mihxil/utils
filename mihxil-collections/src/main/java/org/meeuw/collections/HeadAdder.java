@@ -49,14 +49,12 @@ public class HeadAdder<T> implements Iterator<T>, Unwrappable<Iterator<T>> {
         } else {
             adderHasNext = false;
         }
-
     }
 
     @Override
     public boolean hasNext() {
         findNextFromAdder();
-        return adderHasNext || first != null || wrapped.hasNext();
-
+        return adderHasNext || (hasFirst != null && hasFirst) || wrapped.hasNext();
     }
 
     @Override
