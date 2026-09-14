@@ -39,8 +39,9 @@ public class TransformingList<T, S> extends AbstractList<T> implements Transform
 
     @Override
     public T set(int i, T toSet) {
-        S newObject = wrapped.set(i, produce(toSet));
-        return transform(i, newObject);
+        S previous = wrapped.set(i, produce(toSet));
+        transformed.set(i, Optional.ofNullable(transformer.apply(wrapped.get(i))));
+        return transformer.apply(previous);
     }
 
     @Override

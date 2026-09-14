@@ -1,7 +1,6 @@
 package org.meeuw.collections;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import org.junit.jupiter.api.Test;
 
@@ -57,6 +56,21 @@ public class TransformingListTest {
 
         assertThat(set).containsExactly(10, 2);
 
+    }
+
+    @Test
+    public void setReplacesCachedValue() {
+        List<Integer> set = new ArrayList<>(Arrays.asList(1, 2));
+        TransformingList<String, Integer> transforming =
+            new TransformingList<>(set, String::valueOf, Integer::parseInt);
+
+        transforming.get(0);
+        transforming.get(1);
+
+        assertThat(transforming.set(0, "3")).isEqualTo("1");
+        assertThat(transforming.get(0)).isEqualTo("3");
+        assertThat(transforming.get(1)).isEqualTo("2");
+        assertThat(set).containsExactly(3, 2);
     }
 
 }
