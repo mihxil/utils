@@ -35,6 +35,9 @@ public interface ThrowingTriConsumer<T, U, V, E extends Exception> extends TriCo
      * @throws NullPointerException if {@code after} is null
      */
     default ThrowingTriConsumer<T, U, V,  E> andThen(ThrowingTriConsumer<? super T, ? super U, ? super V, ? extends E> after) {
+        if (after == null) {
+            throw new NullPointerException("after cannot be null");
+        }
         return (T t, U u, V v) -> {
             acceptThrows(t, u, v);
             after.acceptThrows(t, u,  v);

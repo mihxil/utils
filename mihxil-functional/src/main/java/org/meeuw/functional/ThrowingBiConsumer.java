@@ -35,7 +35,9 @@ public interface ThrowingBiConsumer<T, U, E extends Exception> extends BiConsume
      */
 
     default ThrowingBiConsumer<T, U,  E> andThen(ThrowingBiConsumer<? super T, ? super U, ? extends E> after) {
-
+        if (after == null) {
+            throw new NullPointerException("after cannot be null");
+        }
         return (T t, U u) -> {
             acceptThrows(t, u);
             after.acceptThrows(t, u);
