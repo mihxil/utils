@@ -108,7 +108,6 @@ public class BatchedReceiver<T> implements Iterator<T> {
     Boolean hasNext;
     T next;
 
-
     @lombok.Builder(
         builderClassName = "Builder",
         buildMethodName = "_build")
@@ -118,9 +117,6 @@ public class BatchedReceiver<T> implements Iterator<T> {
         this.supplier = supplier;
         this.offset = offset == null ? 0L : offset;
     }
-
-
-
 
     @Override
     public boolean hasNext() {

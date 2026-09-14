@@ -29,6 +29,7 @@ public class TailAdder<T> implements CountedIterator<T> {
 
     int wrapcount = 0;
     int addercount = 0;
+    int tailcount = 0;
     T nextFromAdder;
     Boolean adderHasNext = null;
     T last = null;
@@ -106,6 +107,7 @@ public class TailAdder<T> implements CountedIterator<T> {
             throw new NoSuchElementException();
         }
         adderHasNext = null;
+        tailcount++;
         return nextFromAdder;
     }
 
@@ -154,8 +156,8 @@ public class TailAdder<T> implements CountedIterator<T> {
             Optional<Long> wrappedSize = ((CountedIterator) wrapped).getSize();
             if (wrappedSize.isPresent()) {
                 long l = wrappedSize.get();
-                if (!onlyIfEmpty || l == 0L) {
-                    l++;
+                if ((!onlyIfEmpty || l == 0L) && (!onlyIfNotEmpty || l > 0L)) {
+                    l += adder.length;
                 }
                 return Optional.of(l);
             }
@@ -166,7 +168,7 @@ public class TailAdder<T> implements CountedIterator<T> {
 
     @Override
     public Long getCount() {
-        return (long) wrapcount + addercount;
+        return (long) wrapcount + tailcount;
     }
 
 
