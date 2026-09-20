@@ -14,7 +14,7 @@ import org.meeuw.functional.Unwrappable;
 /**
  * Filtering, or Transforming iterator.
  * @author Michiel Meeuwissen
- * @since 1.3
+ * @since 1.18 (since 1.3 in vpro-shared-util)
  */
 @Log
 public class FilteringIterator<T> implements CloseableIterator<T>, Unwrappable<Iterator<? extends T>> {

@@ -5,7 +5,7 @@ import java.util.function.Function;
 
 /**
  * @author Michiel Meeuwissen
- * @since 2.9
+ * @since 1.18 (since 2.9 in vpro-shared-util)
  */
 public class TransformingIterator<T, W> implements CloseableIterator<T> {
 

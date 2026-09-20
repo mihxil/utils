@@ -8,7 +8,7 @@ import java.util.function.BiFunction;
 /**
  * A wrapping iterator with the option to skip certain entries (based on comparing with the previous entry)
  * @author Michiel Meeuwissen
- * @since 1.68
+ * @since 1.18 (since 1.68 in vpro-shared-util)
  */
 @ToString
 public class SkippingIterator<T> implements Iterator<T> {

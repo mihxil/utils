@@ -9,7 +9,7 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 /**
  * A modifiable SortedSet that wraps another collection (changes are reflected), with an explicit sort order.
  * @author Michiel Meeuwissen
- * @since 2.1
+ * @since 1.18 (since 2.1 in vpro-shared-util)
  */
 public class ResortedSortedSet<T> extends AbstractSet<T> implements SortedSet<T>, Serializable {
 

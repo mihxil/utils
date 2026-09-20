@@ -8,7 +8,7 @@ import java.util.Iterator;
  * Equivalent to the guava version, but without the pretty big dependency
  *
  * @author Michiel Meeuwissen
- * @since 1.19
+ * @since 1.18 (since 1.19 in vpro-shared-util)
  */
 public interface PeekingIterator<E> extends Iterator<E> {
 

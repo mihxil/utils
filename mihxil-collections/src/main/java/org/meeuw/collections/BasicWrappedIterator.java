@@ -8,7 +8,7 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 
 /**
  * @author Michiel Meeuwissen
- * @since 0.31
+ * @since 1.18 (since 0.31 in vpro-shared-util)
  */
 public class BasicWrappedIterator<T> extends WrappedIterator<T, T> {
 

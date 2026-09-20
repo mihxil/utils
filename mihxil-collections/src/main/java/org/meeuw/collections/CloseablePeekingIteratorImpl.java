@@ -8,7 +8,7 @@ import org.meeuw.functional.Unwrappable;
 /**
  *
  * @author Michiel Meeuwissen
- * @since 5.1
+ * @since 1.18 (since 5.1 in vpro-shared-util)
  */
 class CloseablePeekingIteratorImpl<T> implements CloseablePeekingIterator<T>, Unwrappable<CloseableIterator<? extends T>> {
     protected final CloseableIterator<? extends T> iterator;
@@ -62,4 +62,3 @@ class CloseablePeekingIteratorImpl<T> implements CloseablePeekingIterator<T>, Un
         return iterator;
     }
 }
-

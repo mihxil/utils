@@ -8,7 +8,7 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 
 /**
  * @author Michiel Meeuwissen
- * @since 4.3
+ * @since 1.18 (since 4.3 in vpro-shared-util)
  */
 public class TransformingSortedSet<T, S> extends AbstractSet<T> implements SortedSet<T>, TransformingCollection<T, S, SortedSet<T>, SortedSet<S>> {
     private final SortedSet<S> wrapped;

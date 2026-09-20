@@ -12,7 +12,7 @@ import org.meeuw.functional.Unwrappable;
 
 /**
  * @author Michiel Meeuwissen
- * @since 2.23
+ * @since 1.18 (since 2.23 in vpro-shared-util)
  */
 public class CountedMaxOffsetIterator<T>  extends MaxOffsetIterator<T>  implements CountedIterator<T>, Unwrappable<CountedIterator<T>> {
 

@@ -2,15 +2,15 @@ package org.meeuw.collections;
 
 import java.util.*;
 import java.util.stream.Stream;
-import java.util.stream.StreamSupport;
 
 import org.meeuw.functional.Unwrappable;
 
 
 /**
  * An iterator that is also {@link AutoCloseable}.
+ *
  * @author Michiel Meeuwissen
- * @since 1.1
+ * @since 1.18 (since 1.1 in vpro-shared-util)
  */
 public interface CloseableIterator<T> extends Iterator<T>, AutoCloseable {
 
@@ -28,17 +28,19 @@ public interface CloseableIterator<T> extends Iterator<T>, AutoCloseable {
     }
 
     /**
-     * @since 2.9
+     * @since 1.18 (since 2.9 in vpro-shared-util)
      */
     static <T> CloseableIterator<T> empty() {
         return new CloseableIterator<T>() {
             @Override
             public void close() {
             }
+
             @Override
             public boolean hasNext() {
                 return false;
             }
+
             @Override
             public T next() {
                 throw new NoSuchElementException();
@@ -55,7 +57,7 @@ public interface CloseableIterator<T> extends Iterator<T>, AutoCloseable {
      * If not then the {@link #close()} method will do nothing.
      * </p>
      *
-     * @since 2.9
+     * @since 1.18 (since 2.9 in vpro-shared-util)
      */
     static <T> CloseableIterator<T> of(final Iterator<T> iterator) {
         if (iterator instanceof CloseableIterator) {
@@ -67,21 +69,18 @@ public interface CloseableIterator<T> extends Iterator<T>, AutoCloseable {
         }
     }
 
-    static <S> CloseablePeekingIterator<S> peeking(CloseableIterator<S> wrapped){
+    static <S> CloseablePeekingIterator<S> peeking(CloseableIterator<S> wrapped) {
         return wrapped == null ? null : wrapped.peeking();
     }
 
-    default  Stream<T> stream() {
-        return StreamSupport.stream(
+    default CloseableSpliterator<T> spliterator() {
+        return CloseableSpliterator.of(
             Spliterators.spliteratorUnknownSize(this, Spliterator.ORDERED),
-            false).onClose(() -> {
-            try {
-                this.close();
-            } catch (Exception exception) {
-                throw new RuntimeException(exception);
-            }
-        });
+            this);
+    }
 
+    default Stream<T> stream() {
+        return spliterator().stream();
     }
 
     /**
@@ -104,18 +103,22 @@ public interface CloseableIterator<T> extends Iterator<T>, AutoCloseable {
                 ((AutoCloseable) iterator).close();
             }
         }
+
         @Override
         public boolean hasNext() {
             return iterator.hasNext();
         }
+
         @Override
         public S next() {
             return iterator.next();
         }
+
         @Override
         public void remove() {
             iterator.remove();
         }
+
         @Override
         public String toString() {
             return "Closeable[" + iterator + "]";

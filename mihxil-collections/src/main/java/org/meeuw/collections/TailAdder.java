@@ -16,7 +16,7 @@ import org.meeuw.functional.Functions;
  * Adapts an existing iterator to add elements at the end, perhaps based on the last element.
  *
  * @author Michiel Meeuwissen
- * @since 1.17
+ * @since 1.18 (since 1.17 in vpro-shared-util)
  */
 @Log
 public class TailAdder<T> implements CountedIterator<T> {

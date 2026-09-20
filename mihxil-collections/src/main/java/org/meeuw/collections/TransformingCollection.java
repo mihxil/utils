@@ -8,7 +8,7 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 
 /**
  * @author Michiel Meeuwissen
- * @since 4.3
+ * @since 1.18 (since 4.3 in vpro-shared-util)
  */
 public interface TransformingCollection<T, S, U extends Collection<T>, V extends Collection<S>> extends Collection<T> {
 

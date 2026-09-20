@@ -5,7 +5,7 @@ import java.util.function.Supplier;
 
 /**
  * @author Michiel Meeuwissen
- * @since 0.32
+ * @since 1.18 (since 0.32 in vpro-shared-util)
  */
 public class MergedSortedIterator<T>  extends BasicWrappedIterator<T> implements  CountedIterator<T> {
 

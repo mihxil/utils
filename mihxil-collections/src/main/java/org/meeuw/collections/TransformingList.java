@@ -5,7 +5,7 @@ import java.util.function.Function;
 
 /**
  * @author Michiel Meeuwissen
- * @since 4.3
+ * @since 1.18 (since 4.3 in vpro-shared-util)
  */
 public class TransformingList<T, S> extends AbstractList<T> implements TransformingCollection<T, S, List<T>, List<S>> {
 

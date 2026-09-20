@@ -6,7 +6,7 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 
 /**
  * @author Michiel Meeuwissen
- * @since 2.3.1
+ * @since 1.18 (since 2.3.1 in vpro-shared-util)
  */
 public abstract class SortedSetElementWrapper<T, S> extends AbstractSet<S> implements SortedSet<S> {
 

@@ -76,10 +76,8 @@ import java.util.function.*;
  * }
  * </pre>
  *
- *
- *
  * @author Michiel Meeuwissen
- * @since 1.68
+ * @since 1.18 (since 1.68 in vpro-shared-util)
  */
 @ToString
 @Log
@@ -140,7 +138,7 @@ public class BatchedReceiver<T> implements CloseableIterator<T> {
             if (subIterator == null) {
                 Optional<Iterator<T>> optionalNewIterator = supplier.get();
                 subCount = 0;
-                if (! optionalNewIterator.isPresent()) {
+                if (!optionalNewIterator.isPresent()) {
                     hasNext = false;
                     return;
                 } else {
@@ -181,20 +179,6 @@ public class BatchedReceiver<T> implements CloseableIterator<T> {
         }
     }
 
-    /**
-     * Returns an ordered spliterator over this receiver.
-     * <p>
-     * The returned spliterator has an unknown size and consumes this receiver. It does not close
-     * the receiver automatically; prefer {@link #stream()} when stream traversal must close
-     * resource-backed batch iterators.
-     * </p>
-     *
-     * @return a spliterator over the values supplied by this receiver
-     */
-    public Spliterator<T> spliterator() {
-        return Spliterators.spliteratorUnknownSize(this, Spliterator.ORDERED);
-    }
-
     public static class Builder<T> {
 
         private Integer batchSize = null;
@@ -208,10 +192,10 @@ public class BatchedReceiver<T> implements CloseableIterator<T> {
          * See {@link #initialAndResumption(Supplier, Function)} if the received objects are iterable themselves,
          * in which case two parameter suffice.
          *
-         * @param initial A supplier to get the object representing the first batch
+         * @param initial    A supplier to get the object representing the first batch
          * @param resumption A function to get the next batch from the previous one
-         * @param getter A function to get the iterator from the object representing the batch
-         * @since 5.6
+         * @param getter     A function to get the iterator from the object representing the batch
+         * @since 1.18 (since 5.6 in vpro-shared-util)
          */
         public <X> Builder<T> initialAndResumption(
             Supplier<X> initial,
@@ -237,10 +221,10 @@ public class BatchedReceiver<T> implements CloseableIterator<T> {
         }
 
         /**
-         * @param initial A supplier to get the {@link Iterable} representing the first batch
+         * @param initial    A supplier to get the {@link Iterable} representing the first batch
          * @param resumption A function to get the next batch from the previous one
          * @see #initialAndResumption(Supplier, Function, Function)
-         * @since 5.6
+         * @since 1.18 (since 5.6 in vpro-shared-util)
          */
         public <X extends Iterable<T>> Builder<T> initialAndResumption(
             Supplier<X> initial,
@@ -303,7 +287,7 @@ public class BatchedReceiver<T> implements CloseableIterator<T> {
                     )._build();
             }
             if (batchSize != null) {
-                 throw new IllegalStateException("Specifying batch size only makes sense with a batchGetter");
+                throw new IllegalStateException("Specifying batch size only makes sense with a batchGetter");
             }
             if (supplier == null) {
                 throw new IllegalStateException("No supplier defined");

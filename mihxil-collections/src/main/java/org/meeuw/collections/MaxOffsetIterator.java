@@ -17,7 +17,7 @@ import org.meeuw.functional.Predicates;
  * An iterator implementing offset and max, for another iterator.
  *
  * @author Michiel Meeuwissen
- * @since 3.1
+ * @since 1.18 (since 3.1 in vpro-shared-util)
  */
 @SuppressWarnings("UnusedReturnValue")
 @Log

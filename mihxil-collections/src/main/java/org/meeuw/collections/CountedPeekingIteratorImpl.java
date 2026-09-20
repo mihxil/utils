@@ -8,7 +8,7 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 /**
  *
  * @author Michiel Meeuwissen
- * @since 5.1
+ * @since 1.18 (since 5.1 in vpro-shared-util)
  */
 @SuppressWarnings("rawtypes")
 class CountedPeekingIteratorImpl<T> extends CloseablePeekingIteratorImpl<T> implements  CountedPeekingIterator<T> {
@@ -42,4 +42,3 @@ class CountedPeekingIteratorImpl<T> extends CloseablePeekingIteratorImpl<T> impl
         return this;
     }
 }
-

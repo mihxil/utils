@@ -8,7 +8,7 @@ import org.meeuw.functional.Unwrappable;
 
 /**
  * @author Michiel Meeuwissen
- * @since 1.3
+ * @since 1.18 (since 1.3 in vpro-shared-util)
  */
 public  abstract class WrappedIterator<T, S> implements CountedIterator<S>, Unwrappable<CloseableIterator<T>> {
 

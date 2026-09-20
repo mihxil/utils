@@ -7,19 +7,19 @@ import java.util.stream.Stream;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 
-
 /**
  * An iterator that is also aware of the current position {@link #getCount()}, and optionally of the size of the object that is iterated {@link #getSize()}, and also optionally of a 'total' size (in case this iterator presents some sub-collection) {@link #getTotalSize()}.
  *
  * @author Michiel Meeuwissen
- * @since 0.31
+ * @since 1.18 (since 0.31 in vpro-shared-util)
  */
 public interface CountedIterator<T> extends Iterator<T>, CloseableIterator<T>, Counted {
 
     static <S> CountedIterator<S> of(Collection<S> wrapped) {
         return new BasicWrappedIterator<>(wrapped);
     }
-    static <S> CountedPeekingIterator<S> peeking(CountedIterator<S> wrapped){
+
+    static <S> CountedPeekingIterator<S> peeking(CountedIterator<S> wrapped) {
         return wrapped == null ? null : wrapped.peeking();
     }
 
@@ -80,11 +80,12 @@ public interface CountedIterator<T> extends Iterator<T>, CloseableIterator<T>, C
      * Returns this iterator as {@link Spliterator}.
      */
 
-    default Spliterator<T> spliterator() {
+    default CloseableSpliterator<T> spliterator() {
         Optional<Long> size = getSize();
-        return size
+        Spliterator<T> spliterator = size
             .map(s -> Spliterators.spliterator(this, s, Spliterator.SIZED))
             .orElseGet(() -> Spliterators.spliteratorUnknownSize(this, 0));
+        return CloseableSpliterator.of(spliterator, this);
     }
 
     @Override
