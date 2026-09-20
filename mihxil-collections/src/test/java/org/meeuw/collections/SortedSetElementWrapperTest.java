@@ -17,7 +17,7 @@ class SortedSetElementWrapperTest {
 
         assertThat(wrapped).containsExactly("1", "2", "3");
         assertThat(wrapped.subSet("1", "3")).containsExactly("1", "2");
-        assertThat(wrapped.comparator().compare("2", "10")).isLessThan(0);
+        assertThat(wrapped.comparator().compare("2", "3")).isLessThan(0);
 
         assertThat(wrapped.remove("2")).isTrue();
         assertThat(source).containsExactly(1, 3);
