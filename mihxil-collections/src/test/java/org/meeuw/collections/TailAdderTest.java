@@ -8,9 +8,9 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
-@SuppressWarnings("deprecation")
 public class TailAdderTest {
 
+    @SuppressWarnings("ConstantValue")
     @Test
     public void closesOnExhaustion() throws Exception {
         AtomicInteger closes = new AtomicInteger();
@@ -58,7 +58,11 @@ public class TailAdderTest {
     @Test
     public void onlyIfEmptyOnNotEmpty() throws Exception {
         Iterator<String> i = Arrays.asList("a", "b").iterator();
-        try (TailAdder<String> adder = new TailAdder<>(i, true, () -> "c")) {
+        try (TailAdder<String> adder = TailAdder.<String>builder()
+            .wrapped(i)
+            .onlyIfEmpty(true)
+            .callableAdder(() -> "c")
+            .build()) {
             assertEquals("a", adder.next());
             assertEquals("b", adder.next());
             assertFalse(adder.hasNext());
@@ -69,7 +73,11 @@ public class TailAdderTest {
     @Test
     public void onlyIfEmptyOnEmpty() throws Exception {
         Iterator<String> i = Collections.emptyIterator();
-        try (TailAdder<String> adder = new TailAdder<>(i, true, () -> "c")) {
+        try (TailAdder<String> adder = TailAdder.<String>builder()
+            .wrapped(i)
+            .onlyIfEmpty(true)
+            .callableAdder(() -> "c")
+            .build()) {
             assertEquals("c", adder.next());
             assertFalse(adder.hasNext());
         }
@@ -100,7 +108,7 @@ public class TailAdderTest {
     @Test
     public void tailNull() throws Exception {
         Iterator<String> i = Collections.emptyIterator();
-        try (TailAdder<String> adder = new TailAdder<>(i, () -> null)) {
+        try (TailAdder<String> adder =  TailAdder.<String>builder().wrapped(i).adder((a) -> null).build()) {
             assertNull(adder.next());
             assertFalse(adder.hasNext());
         }
@@ -110,11 +118,28 @@ public class TailAdderTest {
     @Test
     public void tailException() throws Exception {
         Iterator<String> i = Collections.emptyIterator();
-        try (TailAdder<String> adder = new TailAdder<>(i, () -> {
-            throw new Exception();
-        })) {
+        try (TailAdder<String> adder = TailAdder.<String>builder()
+            .wrapped(i)
+            .callableAdder(() -> {
+                throw new Exception();
+            })
+            .build()) {
             assertFalse(adder.hasNext());
         }
+    }
+
+    @Test
+    void combinesFunctionAndCallableAddersInOrder() {
+        TailAdder<Integer> iterator = TailAdder.<Integer>builder()
+            .wrapped(Collections.singletonList(1).iterator())
+            .adder(last -> last + 1)
+            .callableAdder(() -> 3)
+            .build();
+
+        assertThat(iterator.next()).isEqualTo(1);
+        assertThat(iterator.next()).isEqualTo(2);
+        assertThat(iterator.next()).isEqualTo(3);
+        assertThat(iterator.hasNext()).isFalse();
     }
 
 

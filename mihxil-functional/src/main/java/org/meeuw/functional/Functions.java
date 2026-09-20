@@ -199,10 +199,10 @@ public final class Functions {
      * @return a new function, which will use the given call its implementation. The argument of the function will be ignored, all calls just call the {@code Callable}.
      * @since 0.14
      */
-    public static <R, E extends Exception > ThrowingFunction<Void, R, E> ignoreArg1(Callable<R> callable) {
-        return new ThrowingMonoWrapper<Callable<R>, Void, R,  E>(callable, null, "function") {
+    public static <A1, R, E extends Exception > ThrowingFunction<A1, R, E> ignoreArg1(Callable<R> callable) {
+        return new ThrowingMonoWrapper<Callable<R>, A1, R, E>(callable, null, "function") {
             @Override
-            public R applyWithException(Void o) throws E {
+            public R applyWithException(A1 o) throws E {
                 try {
                     return callable.call();
                 } catch (Exception e) {

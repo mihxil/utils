@@ -6,8 +6,10 @@ import java.util.*;
 import java.util.concurrent.Callable;
 import java.util.function.Function;
 import java.util.logging.Level;
+import java.util.stream.Stream;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
+import org.meeuw.functional.Functions;
 
 
 /**
@@ -53,38 +55,19 @@ public class TailAdder<T> implements CountedIterator<T> {
 
     @SuppressWarnings("unchecked")
     @lombok.Builder(builderClassName = "Builder")
-    private TailAdder(Iterator<T> wrapped, boolean onlyIfEmpty, boolean onlyIfNotEmpty, @lombok.Singular  List<Function<T, T>> adders) {
-        this(wrapped, onlyIfEmpty, onlyIfNotEmpty, adders.toArray(new Function[0]));
+    private TailAdder(Iterator<T> wrapped,
+                      boolean onlyIfEmpty,
+                      boolean onlyIfNotEmpty,
+                      @lombok.Singular  List<Function<T, T>> adders,
+                      @lombok.Singular List<Callable<T>> callableAdders) {
+        this(wrapped, onlyIfEmpty, onlyIfNotEmpty,
+            Stream.<Function<T, T>>concat(
+                adders.stream(),
+                callableAdders.stream().map(Functions::ignoreArg1)
+            ).toArray(Function[]::new)
+        );
     }
 
-    @SafeVarargs
-    private TailAdder(Iterator<T> wrapped, Function<T, T>... adder) {
-        this(wrapped, false, false, adder);
-    }
-
-
-
-    @SuppressWarnings("unchecked")
-    @SafeVarargs
-    @Deprecated
-    public TailAdder(Iterator<T> wrapped, boolean onlyIfEmpty, Callable<T>... adder) {
-        this(wrapped, onlyIfEmpty, false, Arrays.stream(adder).map(c -> (Function<T, T>) last1 -> {
-            try {
-                return c.call();
-            } catch (RuntimeException e) {
-                throw e;
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        }).toArray(Function[]::new));
-    }
-
-
-
-    @Deprecated
-    public TailAdder(Iterator<T> wrapped, Callable<T> adder) {
-        this(wrapped, false, adder);
-    }
 
     @Override
     public boolean hasNext() {
