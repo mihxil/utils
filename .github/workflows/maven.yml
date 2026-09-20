@@ -51,7 +51,7 @@ jobs:
           CENTRAL_USERNAME: ${{ secrets.CENTRAL_USERNAME }}
           CENTRAL_PASSWORD: ${{ secrets.CENTRAL_PASSWORD }}
           GPG_PASSPHRASE: ${{ secrets.GPG_SECRET_KEY_PASSPHRASE }}
-      - uses: codecov/codecov-action@v6
+      - uses: codecov/codecov-action@v7
         if: ${{ github.event_name == 'push'  && ! cancelled()  && matrix.os == 'ubuntu-latest' && matrix.java == '8' }}
         with:
           token: ${{ secrets.CODECOV_TOKEN }} # required
