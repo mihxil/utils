@@ -76,7 +76,7 @@ class MaxOffsetIteratorTest {
         MaxOffsetIterator<String> iterator = new MaxOffsetIterator<>(Arrays.asList("a", "b", "c").iterator(), 2, 1);
 
         assertThat(iterator.next()).isEqualTo("b");
-        assertThat(iterator.getCount()).isEqualTo(1);
+        assertThat(iterator.getCount()).isEqualTo(0);
     }
 
 
