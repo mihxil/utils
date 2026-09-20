@@ -59,6 +59,7 @@ class CloseableIteratorTest {
             assertThat(i.closed.get()).isEqualTo(1);
         }
     }
+
     @Test
     void streamCloseThrows() throws Exception {
         Impl i = new Impl(true);
@@ -70,16 +71,27 @@ class CloseableIteratorTest {
         assertThat(i.closed.get()).isEqualTo(1);
     }
 
+    @Test
+    void countedIteratorClosesItsSourceStream() throws Exception {
+        AtomicInteger closes = new AtomicInteger();
+        CountedIterator<String> iterator = CountedIterator.of(Stream.of("a", "b").onClose(closes::incrementAndGet));
+
+        iterator.close();
+
+        assertThat(closes).hasValue(1);
+    }
 
 
-    private static class Impl implements  CloseableIterator<String> {
+    private static class Impl implements CloseableIterator<String> {
         List<String> list = Arrays.asList("a", "b", "c");
         AtomicInteger closed = new AtomicInteger(0);
         private final Iterator<String> wrapped = list.iterator();
         private final boolean closeThrows;
+
         public Impl(boolean t) {
             this.closeThrows = t;
         }
+
         public Impl() {
             this(false);
         }
@@ -103,10 +115,11 @@ class CloseableIteratorTest {
         }
     }
 
-    private static class Impl2 implements  Iterator<String>, AutoCloseable {
+    private static class Impl2 implements Iterator<String>, AutoCloseable {
         List<String> list = Arrays.asList("a", "b", "c");
         AtomicInteger closed = new AtomicInteger(0);
         private final Iterator<String> wrapped = list.iterator();
+
         @Override
         public void close() throws Exception {
             closed.incrementAndGet();

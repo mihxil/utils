@@ -4,39 +4,36 @@ import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Predicate;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
 
 /**
  * @author Michiel Meeuwissen
  * @since 1.8
  */
-public class FilteringIteratorTest {
+class FilteringIteratorTest {
 
     private static final Predicate<String> notC = input -> !"c".equals(input);
 
     @Test
-    public void test() {
+    void filters() {
         List<String> list = Arrays.asList("a", "b", "c", null, "d");
         AtomicInteger i = new AtomicInteger(0);
         Iterator<String> iterator = new FilteringIterator<>(list.iterator(), notC,
-                FilteringIterator.keepAliveWithoutBreaks(2,  value -> i.getAndIncrement()));
+            FilteringIterator.keepAliveWithoutBreaks(2, value -> i.getAndIncrement()));
         StringBuilder build = new StringBuilder();
-        while(iterator.hasNext()) {
+        while (iterator.hasNext()) {
             iterator.hasNext(); // check that you can call it multiple times
             build.append(iterator.next());
         }
-        assertEquals("abnulld", build.toString());
+        assertThat(build).hasToString("abnulld");
         assertThat(i.get()).isEqualTo(2);
     }
 
     @Test
-    public void testWithNull() {
+    void acceptsNulls() {
         List<String> list = Arrays.asList("a", "b", "c", null, "d");
 
         Iterator<String> iterator = new FilteringIterator<>(list.iterator(), null);
@@ -44,18 +41,18 @@ public class FilteringIteratorTest {
         while (iterator.hasNext()) {
             build.append(iterator.next());
         }
-        assertEquals("abcnulld", build.toString());
+        assertThat(build).hasToString("abcnulld");
 
     }
 
     @Test
-    public void noSuchElement() {
-        assertThatThrownBy(()-> {
+    void noSuchElement() {
+        assertThatThrownBy(() -> {
             Iterator<String> iterator = new FilteringIterator<>(Arrays.asList("a", "b", "c", null, "d").iterator(), notC);
-            assertEquals("a", iterator.next());
-            assertEquals("b", iterator.next());
-            assertNull(iterator.next());
-            assertEquals("d", iterator.next());
+            assertThat(iterator.next()).isEqualTo("a");
+            assertThat(iterator.next()).isEqualTo("b");
+            assertThat(iterator.next()).isNull();
+            assertThat(iterator.next()).isEqualTo("d");
 
             iterator.next();
         }).isInstanceOf(NoSuchElementException.class);
@@ -63,21 +60,21 @@ public class FilteringIteratorTest {
 
 
     @Test
-    public void testRemove() {
+    void removesAcceptedElement() {
         List<String> list = new ArrayList<>(Arrays.asList("a", "b", "c", null, "d"));
 
-        Iterator<String> iterator = new FilteringIterator<>(list.iterator(),  null);
+        Iterator<String> iterator = new FilteringIterator<>(list.iterator(), null);
         while (iterator.hasNext()) {
             if ("b".equals(iterator.next())) {
                 iterator.remove();
             }
         }
-        assertEquals(Arrays.asList("a", "c", null, "d"), list);
+        assertThat(list).containsExactly("a", "c", null, "d");
 
     }
 
     @Test
-    public void testRemove2() {
+    void removesAllAcceptedElements() {
         List<String> list = new ArrayList<>(Arrays.asList("a", "b", "c", null, "d"));
 
         Iterator<String> iterator = new FilteringIterator<>(list.iterator(), input -> input == null || input.equals("b"));
@@ -85,18 +82,18 @@ public class FilteringIteratorTest {
             iterator.next();
             iterator.remove();
         }
-        assertEquals(Arrays.asList("a", "c", "d"), list);
+        assertThat(list).containsExactly("a", "c", "d");
 
     }
 
 
     @Test
-    public void testRemoveUnsupportedAfterHasNext() {
+    void rejectsRemoveAfterHasNext() {
         List<String> list = new ArrayList<>(Arrays.asList("a", "b", "c", null, "d"));
 
         Iterator<String> iterator = new FilteringIterator<>(list.iterator(), input -> input == null || input.equals("b"));
         iterator.hasNext();
-        Assertions.assertThatThrownBy(iterator::remove).isInstanceOf(UnsupportedOperationException.class);
+        assertThatThrownBy(iterator::remove).isInstanceOf(UnsupportedOperationException.class);
     }
 
 }

@@ -4,16 +4,16 @@ import java.util.*;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Michiel Meeuwissen
  * @since 2.0
  */
-public class WrappedIteratorTest {
+class WrappedIteratorTest {
 
     @Test
-    public void test() {
+    void iteratesAndRemoves() {
         List<String> list = new ArrayList<>(Arrays.asList("a", "b", "c", null, "d"));
         WrappedIterator<String, String> wrapped = new WrappedIterator<String, String>(list.iterator()) {
 
@@ -24,14 +24,14 @@ public class WrappedIteratorTest {
             }
         };
         StringBuilder build = new StringBuilder();
-        while(wrapped.hasNext()) {
+        while (wrapped.hasNext()) {
             String s = wrapped.next();
             build.append(s);
             if ("{b}".equals(s)) {
                 wrapped.remove();
             }
         }
-        assertEquals("{a}{b}{c}{null}{d}", build.toString());
-        assertEquals(Arrays.asList("a", "c", null, "d"), list);
+        assertThat(build).hasToString("{a}{b}{c}{null}{d}");
+        assertThat(list).containsExactly("a", "c", null, "d");
     }
 }

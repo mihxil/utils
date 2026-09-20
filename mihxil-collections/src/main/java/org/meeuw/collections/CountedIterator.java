@@ -25,7 +25,24 @@ public interface CountedIterator<T> extends Iterator<T>, CloseableIterator<T>, C
 
     static <S> CountedIterator<S> of(Stream<S> wrapped) {
         Spliterator<S> spliterator = wrapped.spliterator();
-        return new BasicWrappedIterator<>(spliterator.getExactSizeIfKnown(), Spliterators.iterator(spliterator));
+        return new BasicWrappedIterator<>(spliterator.getExactSizeIfKnown(), new CloseableIterator<S>() {
+            private final Iterator<S> iterator = Spliterators.iterator(spliterator);
+
+            @Override
+            public boolean hasNext() {
+                return iterator.hasNext();
+            }
+
+            @Override
+            public S next() {
+                return iterator.next();
+            }
+
+            @Override
+            public void close() {
+                wrapped.close();
+            }
+        });
     }
 
     static <C> CountedIterator<C> of(Long size, Iterator<C> wrapped) {
@@ -90,4 +107,3 @@ public interface CountedIterator<T> extends Iterator<T>, CloseableIterator<T>, C
 
 
 }
-

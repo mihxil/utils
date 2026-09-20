@@ -83,7 +83,7 @@ import java.util.function.*;
  */
 @ToString
 @Log
-public class BatchedReceiver<T> implements Iterator<T> {
+public class BatchedReceiver<T> implements CloseableIterator<T> {
 
     /**
      * Supplies the next iterator.
@@ -107,6 +107,7 @@ public class BatchedReceiver<T> implements Iterator<T> {
 
     Boolean hasNext;
     T next;
+    private boolean closed;
 
     @lombok.Builder(
         builderClassName = "Builder",
@@ -154,8 +155,29 @@ public class BatchedReceiver<T> implements Iterator<T> {
                 return;
             } else {
                 hasNext = null;
+                closeSubIterator();
                 subIterator = null;
             }
+        }
+    }
+
+    private void closeSubIterator() {
+        if (subIterator instanceof AutoCloseable) {
+            try {
+                ((AutoCloseable) subIterator).close();
+            } catch (Exception e) {
+                throw new IllegalStateException("Could not close batch iterator", e);
+            }
+        }
+    }
+
+    @Override
+    public void close() {
+        if (!closed) {
+            closed = true;
+            closeSubIterator();
+            subIterator = null;
+            hasNext = false;
         }
     }
 

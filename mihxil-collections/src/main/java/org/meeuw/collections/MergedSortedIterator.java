@@ -9,8 +9,11 @@ import java.util.function.Supplier;
  */
 public class MergedSortedIterator<T>  extends BasicWrappedIterator<T> implements  CountedIterator<T> {
 
-    protected MergedSortedIterator(Supplier<Long> size, Supplier<Long> totalSize, Iterator<T> iterator) {
+    private final List<CountedIterator<T>> sources;
+
+    protected MergedSortedIterator(Supplier<Long> size, Supplier<Long> totalSize, Iterator<T> iterator, List<CountedIterator<T>> sources) {
         super(size, totalSize, null, null, iterator);
+        this.sources = sources;
     }
 
     /**
@@ -35,17 +38,56 @@ public class MergedSortedIterator<T>  extends BasicWrappedIterator<T> implements
      */
     @SuppressWarnings("UnstableApiUsage")
     public static <T> MergedSortedIterator<T> merge(Comparator<? super T> comparator, Iterable<CountedIterator<T>> iterators) {
+        List<CountedIterator<T>> sources = copyOf(iterators);
         return new MergedSortedIterator<>(
-            () -> getSize(iterators),
-            () -> getTotalSize(iterators),
-            new PriorityQueueMergingIterator<>(comparator, iterators));
+            () -> getSize(sources),
+            () -> getTotalSize(sources),
+            new PriorityQueueMergingIterator<>(comparator, sources),
+            sources);
     }
 
     /**
      * This doesn't usea  queue, so it is also useable with Hibernate.
      */
     public static <T> MergedSortedIterator<T> mergeInSameThread(Comparator<? super T> comparator, Iterable<CountedIterator<T>> iterators) {
-        return new MergedSortedIterator<>(() -> getSize(iterators), () -> getTotalSize(iterators), new SameThreadMergingIterator<>(comparator, iterators));
+        List<CountedIterator<T>> sources = copyOf(iterators);
+        return new MergedSortedIterator<>(
+            () -> getSize(sources),
+            () -> getTotalSize(sources),
+            new SameThreadMergingIterator<>(comparator, sources),
+            sources);
+    }
+
+    private static <T> List<CountedIterator<T>> copyOf(Iterable<CountedIterator<T>> iterators) {
+        List<CountedIterator<T>> result = new ArrayList<>();
+        for (CountedIterator<T> iterator : iterators) {
+            result.add(iterator);
+        }
+        return result;
+    }
+
+    @Override
+    public void close() throws Exception {
+        Exception failure = null;
+        try {
+            super.close();
+        } catch (Exception e) {
+            failure = e;
+        }
+        for (CountedIterator<T> source : sources) {
+            try {
+                source.close();
+            } catch (Exception e) {
+                if (failure == null) {
+                    failure = e;
+                } else {
+                    failure.addSuppressed(e);
+                }
+            }
+        }
+        if (failure != null) {
+            throw failure;
+        }
     }
 
     protected static <T> Long getSize(Iterable<CountedIterator<T>> iterators) {

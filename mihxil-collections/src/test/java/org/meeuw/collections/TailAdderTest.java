@@ -6,13 +6,12 @@ import java.util.concurrent.atomic.AtomicInteger;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
-public class TailAdderTest {
+class TailAdderTest {
 
     @SuppressWarnings("ConstantValue")
     @Test
-    public void closesOnExhaustion() throws Exception {
+    void closesOnExhaustion() throws Exception {
         AtomicInteger closes = new AtomicInteger();
         CloseableIterator<String> iterator = new CloseableIterator<String>() {
             private final Iterator<String> delegate = Collections.singletonList("a").iterator();
@@ -34,89 +33,89 @@ public class TailAdderTest {
         };
 
         TailAdder<String> adder = TailAdder.withFunctions(iterator, last -> "b");
-        assertEquals("a", adder.next());
-        assertEquals("b", adder.next());
-        assertFalse(adder.hasNext());
-        assertFalse(adder.hasNext());
-        assertEquals(1, closes.get());
+        assertThat(adder.next()).isEqualTo("a");
+        assertThat(adder.next()).isEqualTo("b");
+        assertThat(adder.hasNext()).isFalse();
+        assertThat(adder.hasNext()).isFalse();
+        assertThat(closes).hasValue(1);
     }
 
     @Test
-    public void addTo() throws Exception {
+    void addTo() throws Exception {
         Iterator<String> i = Arrays.asList("a", "b").iterator();
         try (TailAdder<String> adder = TailAdder.<String>builder().wrapped(i).adder((s) -> "c").build()) {
-            assertEquals("a", adder.next());
-            assertEquals(1, adder.getCount());
-            assertEquals("b", adder.next());
-            assertEquals(2, adder.getCount());
-            assertEquals("c", adder.next());
-            assertEquals(3, adder.getCount());
-            assertFalse(adder.hasNext());
+            assertThat(adder.next()).isEqualTo("a");
+            assertThat(adder.getCount()).isEqualTo(1);
+            assertThat(adder.next()).isEqualTo("b");
+            assertThat(adder.getCount()).isEqualTo(2);
+            assertThat(adder.next()).isEqualTo("c");
+            assertThat(adder.getCount()).isEqualTo(3);
+            assertThat(adder.hasNext()).isFalse();
         }
     }
 
     @Test
-    public void onlyIfEmptyOnNotEmpty() throws Exception {
+    void onlyIfEmptyOnNotEmpty() throws Exception {
         Iterator<String> i = Arrays.asList("a", "b").iterator();
         try (TailAdder<String> adder = TailAdder.<String>builder()
             .wrapped(i)
             .onlyIfEmpty(true)
             .callableAdder(() -> "c")
             .build()) {
-            assertEquals("a", adder.next());
-            assertEquals("b", adder.next());
-            assertFalse(adder.hasNext());
+            assertThat(adder.next()).isEqualTo("a");
+            assertThat(adder.next()).isEqualTo("b");
+            assertThat(adder.hasNext()).isFalse();
         }
     }
 
 
     @Test
-    public void onlyIfEmptyOnEmpty() throws Exception {
+    void onlyIfEmptyOnEmpty() throws Exception {
         Iterator<String> i = Collections.emptyIterator();
         try (TailAdder<String> adder = TailAdder.<String>builder()
             .wrapped(i)
             .onlyIfEmpty(true)
             .callableAdder(() -> "c")
             .build()) {
-            assertEquals("c", adder.next());
-            assertFalse(adder.hasNext());
+            assertThat(adder.next()).isEqualTo("c");
+            assertThat(adder.hasNext()).isFalse();
         }
     }
 
 
     @Test
-    public void onlyIfNotEmptyOnNotEmpty() throws Exception {
+    void onlyIfNotEmptyOnNotEmpty() throws Exception {
         Iterator<String> i = Arrays.asList("a", "b").iterator();
         try (TailAdder<String> adder = TailAdder.<String>builder().wrapped(i).onlyIfNotEmpty(true).adder((s) -> "c").build()) {
-            assertEquals("a", adder.next());
-            assertEquals("b", adder.next());
-            assertTrue(adder.hasNext());
-            assertEquals("c", adder.next());
+            assertThat(adder.next()).isEqualTo("a");
+            assertThat(adder.next()).isEqualTo("b");
+            assertThat(adder.hasNext()).isTrue();
+            assertThat(adder.next()).isEqualTo("c");
         }
 
     }
 
 
     @Test
-    public void onlyIfNotEmptyOnEmpty() throws Exception {
+    void onlyIfNotEmptyOnEmpty() throws Exception {
         Iterator<String> i = Collections.emptyIterator();
         try (TailAdder<String> adder = TailAdder.<String>builder().wrapped(i).onlyIfNotEmpty(true).adder((s) -> "c").build()) {
-            assertFalse(adder.hasNext());
+            assertThat(adder.hasNext()).isFalse();
         }
     }
 
     @Test
-    public void tailNull() throws Exception {
+    void tailNull() throws Exception {
         Iterator<String> i = Collections.emptyIterator();
-        try (TailAdder<String> adder =  TailAdder.<String>builder().wrapped(i).adder((a) -> null).build()) {
-            assertNull(adder.next());
-            assertFalse(adder.hasNext());
+        try (TailAdder<String> adder = TailAdder.<String>builder().wrapped(i).adder((a) -> null).build()) {
+            assertThat(adder.next()).isNull();
+            assertThat(adder.hasNext()).isFalse();
         }
     }
 
 
     @Test
-    public void tailException() throws Exception {
+    void tailException() throws Exception {
         Iterator<String> i = Collections.emptyIterator();
         try (TailAdder<String> adder = TailAdder.<String>builder()
             .wrapped(i)
@@ -124,7 +123,7 @@ public class TailAdderTest {
                 throw new Exception();
             })
             .build()) {
-            assertFalse(adder.hasNext());
+            assertThat(adder.hasNext()).isFalse();
         }
     }
 

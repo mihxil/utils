@@ -64,7 +64,7 @@ public class HeadAdder<T> implements Iterator<T>, Unwrappable<Iterator<T>> {
             adderCount++;
             return nextFromAdder;
         }
-        if (hasFirst != null) {
+        if (hasFirst != null && hasFirst) {
             hasFirst = null;
             T result = first;
             first = null;

@@ -34,7 +34,7 @@ public class CountedMaxOffsetIterator<T>  extends MaxOffsetIterator<T>  implemen
 
     @Override
     public @NonNull Optional<Long> getSize() {
-        return wrappedCountedIterator.getSize().map(i -> Math.min(i - getOffset(), max));
+        return wrappedCountedIterator.getSize().map(i -> Math.max(0, Math.min(i - getOffset(), max)));
     }
 
     @Override

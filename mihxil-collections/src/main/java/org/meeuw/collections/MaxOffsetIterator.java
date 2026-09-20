@@ -1,18 +1,16 @@
 package org.meeuw.collections;
 
-import java.util.logging.Level;
-
 import lombok.Getter;
 import lombok.Singular;
 import lombok.extern.java.Log;
 
 import java.util.*;
 import java.util.function.Predicate;
+import java.util.logging.Level;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.meeuw.functional.Predicates;
-
 
 
 /**
@@ -23,7 +21,7 @@ import org.meeuw.functional.Predicates;
  */
 @SuppressWarnings("UnusedReturnValue")
 @Log
-public class MaxOffsetIterator<T> implements CloseablePeekingIterator<T> {
+public class MaxOffsetIterator<T> implements CloseablePeekingIterator<T>, Counted {
 
     protected final CloseableIterator<T> wrapped;
 
@@ -45,7 +43,10 @@ public class MaxOffsetIterator<T> implements CloseablePeekingIterator<T> {
     /**
      * The count of the next element. First value will be the supplied value of offset.
      */
+
     protected long count = 0;
+
+    private long returnedCount = 0;
 
     protected Boolean hasNext = null;
 
@@ -54,6 +55,13 @@ public class MaxOffsetIterator<T> implements CloseablePeekingIterator<T> {
     private RuntimeException exception;
 
     private Runnable callback;
+
+    private final List<AutoCloseable> autoCloseables = new ArrayList<>();
+    private boolean callbackCalled;
+    private boolean autoCloseablesClosed;
+    private boolean wrappedClosed;
+    private boolean closeWrappedOnExhaustion;
+    private boolean closed;
 
     public MaxOffsetIterator(Iterator<T> wrapped, Number max, boolean countNulls) {
         this(wrapped, max, 0L, countNulls);
@@ -106,6 +114,11 @@ public class MaxOffsetIterator<T> implements CloseablePeekingIterator<T> {
 
     }
 
+    @Override
+    public Long getCount() {
+        return returnedCount;
+    }
+
     protected static <S>  Predicate<S> effectiveCountPredicate(Predicate<S> countPredicate, boolean countNulls) {
         Predicate<S> effective = countPredicate == null ? Predicates.alwaysTrue() : countPredicate;
         if (! countNulls) {
@@ -120,40 +133,12 @@ public class MaxOffsetIterator<T> implements CloseablePeekingIterator<T> {
     }
 
     public MaxOffsetIterator<T> autoClose(AutoCloseable... closeables) {
-        final Runnable prev = callback;
-        callback = () -> {
-            try {
-                if (prev != null) {
-                    prev.run();
-                }
-            } finally {
-                for (AutoCloseable closeable : closeables) {
-                    try {
-                        closeable.close();
-                    } catch (Exception e) {
-                        log.log(Level.WARNING, e.getMessage(), e);
-                    }
-                }
-            }
-        };
+        Collections.addAll(autoCloseables, closeables);
         return this;
     }
 
     public MaxOffsetIterator<T> autoClose() {
-        final Runnable prev = callback;
-        callback = () -> {
-            try {
-                if (prev != null) {
-                    prev.run();
-                }
-            } finally {
-                try {
-                    wrapped.close();
-                } catch(Exception e){
-                    log.log(Level.WARNING, e.getMessage(), e);
-                }
-            }
-        };
+        closeWrappedOnExhaustion = true;
         return this;
     }
 
@@ -170,6 +155,7 @@ public class MaxOffsetIterator<T> implements CloseablePeekingIterator<T> {
         if (exception != null) {
             throw exception;
         }
+        returnedCount++;
         return next;
     }
 
@@ -216,8 +202,8 @@ public class MaxOffsetIterator<T> implements CloseablePeekingIterator<T> {
                 hasNext = true;
             }
 
-            if(!hasNext && callback != null) {
-                callback.run();
+            if (!hasNext) {
+                finishAfterExhaustion();
             }
         }
         return hasNext;
@@ -231,7 +217,90 @@ public class MaxOffsetIterator<T> implements CloseablePeekingIterator<T> {
 
     @Override
     public void close() throws Exception {
-        wrapped.close();
+        if (!closed) {
+            closed = true;
+            Exception failure = null;
+            try {
+                runCallback();
+            } catch (RuntimeException e) {
+                failure = e;
+            }
+            Exception autoCloseFailure = closeAutoCloseables();
+            if (autoCloseFailure != null) {
+                if (failure == null) {
+                    failure = autoCloseFailure;
+                } else {
+                    failure.addSuppressed(autoCloseFailure);
+                }
+            }
+            try {
+                closeWrapped();
+            } catch (Exception e) {
+                if (failure == null) {
+                    failure = e;
+                } else {
+                    failure.addSuppressed(e);
+                }
+            }
+            if (failure != null) {
+                throw failure;
+            }
+        }
+    }
+
+    private void finishAfterExhaustion() {
+        try {
+            runCallback();
+        } catch (RuntimeException e) {
+            log.log(Level.WARNING, e.getMessage(), e);
+        }
+        Exception failure = closeAutoCloseables();
+        if (closeWrappedOnExhaustion) {
+            try {
+                closeWrapped();
+            } catch (Exception e) {
+                log.log(Level.WARNING, e.getMessage(), e);
+            }
+        }
+        if (failure != null) {
+            log.log(Level.WARNING, failure.getMessage(), failure);
+        }
+    }
+
+    private void runCallback() {
+        if (!callbackCalled) {
+            callbackCalled = true;
+            if (callback != null) {
+                callback.run();
+            }
+        }
+    }
+
+    private Exception closeAutoCloseables() {
+        if (autoCloseablesClosed) {
+            return null;
+        }
+        autoCloseablesClosed = true;
+        Exception failure = null;
+        for (AutoCloseable closeable : autoCloseables) {
+            try {
+                closeable.close();
+            } catch (Exception e) {
+                if (failure == null) {
+                    failure = e;
+                } else {
+                    failure.addSuppressed(e);
+                }
+            }
+        }
+        return failure;
+    }
+
+    private void closeWrapped() throws Exception {
+        if (!wrappedClosed) {
+            wrappedClosed = true;
+            wrapped.close();
+        }
     }
 
     @Override
@@ -251,6 +320,6 @@ public class MaxOffsetIterator<T> implements CloseablePeekingIterator<T> {
     }
 
     public static <T> CountedMaxOffsetIterator.Builder<T> countedBuilder() {
-        return CountedMaxOffsetIterator._countedBuilder();
+        return CountedMaxOffsetIterator.<T>_countedBuilder();
     }
 }

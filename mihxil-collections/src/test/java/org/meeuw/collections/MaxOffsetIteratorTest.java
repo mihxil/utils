@@ -1,45 +1,45 @@
 package org.meeuw.collections;
 
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.junit.jupiter.api.Test;
-
 
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-public class MaxOffsetIteratorTest {
+class MaxOffsetIteratorTest {
 
     @Test
-    public void testMax() {
+    void appliesMax() {
         List<String> test = Arrays.asList("a", "b", "c", "d");
         assertThat(new MaxOffsetIterator<>(test.iterator(), 2).stream().collect(java.util.stream.Collectors.toList())).containsExactly("a", "b");
     }
 
     @Test
-    public void testMaxNull() {
+    void appliesNoMaxForNull() {
         List<String> test = Arrays.asList("a", "b", "c", "d");
         assertThat(new MaxOffsetIterator<>(test.iterator(), null).stream().collect(java.util.stream.Collectors.toList())).containsExactly("a", "b", "c", "d");
     }
 
     @Test
-    public void testMaxOffset() {
+    void appliesMaxAndOffset() {
         List<String> test = Arrays.asList("a", "b", null, "c", "d");
         assertThat(new MaxOffsetIterator<>(test.iterator(), 2, 1).stream().collect(java.util.stream.Collectors.toList())).containsExactly("b", null);
     }
 
     @Test
-    public void testMaxOffsetDontcountNulls() {
+    void doesNotCountNullsTowardsMaxAndOffset() {
         List<String> test = Arrays.asList("a", null, "b", "c", null, "d", "e");
         assertThat(new MaxOffsetIterator<>(test.iterator(), 2, 2, false).stream().collect(java.util.stream.Collectors.toList())).containsExactly("c", null, "d");
     }
 
     @Test
-    public void autoClose() {
+    void autoClose() {
         final boolean[] booleans = new boolean[2];
         AutoCloseable autoCloseable = () -> booleans[0] = true;
-        Runnable callback  = () -> booleans[1] = true;
+        Runnable callback = () -> booleans[1] = true;
         MaxOffsetIterator<String> i = MaxOffsetIterator
             .<String>builder()
             .wrapped(Arrays.asList("a", "b", "c").iterator())
@@ -53,9 +53,35 @@ public class MaxOffsetIteratorTest {
         assertThat(booleans[1]).isTrue();
     }
 
+    @Test
+    void explicitCloseRunsEveryConfiguredCleanupOnce() throws Exception {
+        AtomicInteger callbackCalls = new AtomicInteger();
+        AtomicInteger closeCalls = new AtomicInteger();
+        MaxOffsetIterator<String> iterator = MaxOffsetIterator
+            .<String>builder()
+            .wrapped(Collections.singletonList("a").iterator())
+            .callback(callbackCalls::incrementAndGet)
+            .build()
+            .autoClose(closeCalls::incrementAndGet);
+
+        iterator.close();
+        iterator.close();
+
+        assertThat(callbackCalls).hasValue(1);
+        assertThat(closeCalls).hasValue(1);
+    }
 
     @Test
-    public void testToString() {
+    void countExcludesSkippedOffsetElements() {
+        MaxOffsetIterator<String> iterator = new MaxOffsetIterator<>(Arrays.asList("a", "b", "c").iterator(), 2, 1);
+
+        assertThat(iterator.next()).isEqualTo("b");
+        assertThat(iterator.getCount()).isEqualTo(1);
+    }
+
+
+    @Test
+    void formatsToString() {
         List<String> test = Arrays.asList("a", "b", "c", "d");
         assertThat(new MaxOffsetIterator<>(test.iterator(), 2).toString()).matches("Closeable\\[.*]\\[0,2]");
 
@@ -64,7 +90,7 @@ public class MaxOffsetIteratorTest {
     }
 
     @Test
-    public void peeking() {
+    void peeking() {
         List<String> list = Arrays.asList("a", "b", "c", "d");
         PeekingIterator<String> i = MergedSortedIterator.peekingIterator(list.iterator());
         assertThat(i.peek()).isEqualTo("a");
@@ -85,14 +111,14 @@ public class MaxOffsetIteratorTest {
     }
 
     @Test
-    public void predicate() throws Exception {
+    void predicate() throws Exception {
         List<String> list = Arrays.asList("a", "b", "c", "d", "e");
 
         try (MaxOffsetIterator<String> mo = MaxOffsetIterator
             .<String>builder()
             .wrapped(list.iterator())
             .max(2)
-            .countPredicate(s -> ! "c".equals(s))
+            .countPredicate(s -> !"c".equals(s))
             .offset(1)
             .build()) {
             assertThat(mo.next()).isEqualTo("b");
@@ -104,9 +130,6 @@ public class MaxOffsetIteratorTest {
         }
 
     }
-
-
-
 
 
 }

@@ -4,75 +4,85 @@ import java.util.*;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 
-public class HeadAdderTest {
+class HeadAdderTest {
 
     @Test
-    public void addTo() {
+    void addTo() {
         Iterator<String> i = Arrays.asList("a", "b").iterator();
         HeadAdder<String> adder = HeadAdder.<String>builder().wrapped(i).adder((s) -> s + "c").build();
-        assertEquals("ac", adder.next());
-        assertEquals("a", adder.next());
-        assertEquals("b", adder.next());
-        assertEquals(false, adder.hasNext());
+        assertThat(adder.next()).isEqualTo("ac");
+        assertThat(adder.next()).isEqualTo("a");
+        assertThat(adder.next()).isEqualTo("b");
+        assertThat(adder.hasNext()).isFalse();
     }
 
     @Test
-    public void onlyIfEmptyOnNotEmpty() {
+    void onlyIfEmptyOnNotEmpty() {
         Iterator<String> i = Arrays.asList("a", "b").iterator();
         HeadAdder<String> adder = HeadAdder.<String>builder().wrapped(i).adder((s) -> s + "c").onlyIfEmpty(true).build();
-        assertEquals("a", adder.next());
-        assertEquals("b", adder.next());
-        assertEquals(false, adder.hasNext());
+        assertThat(adder.next()).isEqualTo("a");
+        assertThat(adder.next()).isEqualTo("b");
+        assertThat(adder.hasNext()).isFalse();
     }
 
 
     @Test
-    public void onlyIfEmptyOnEmpty() {
+    void onlyIfEmptyOnEmpty() {
         Iterator<String> i = Collections.<String>emptyList().iterator();
         HeadAdder<String> adder = HeadAdder.<String>builder().wrapped(i).adder((s) -> s + "c").onlyIfEmpty(true).build();
-        assertEquals("nullc", adder.next());
-        assertEquals(false, adder.hasNext());
+        assertThat(adder.next()).isEqualTo("nullc");
+        assertThat(adder.hasNext()).isFalse();
     }
 
 
     @Test
-    public void onlyIfNotEmptyOnNotEmpty() {
+    void onlyIfNotEmptyOnNotEmpty() {
         Iterator<String> i = Arrays.asList("a", "b").iterator();
         HeadAdder<String> adder = HeadAdder.<String>builder().wrapped(i).adder((s) -> s + "c").onlyIfNotEmpty(true).build();
-        assertEquals("ac", adder.next());
-        assertEquals("a", adder.next());
-        assertEquals("b", adder.next());
+        assertThat(adder.next()).isEqualTo("ac");
+        assertThat(adder.next()).isEqualTo("a");
+        assertThat(adder.next()).isEqualTo("b");
 
     }
 
 
     @Test
-    public void onlyIfNotEmptyOnEmpty() {
+    void onlyIfNotEmptyOnEmpty() {
         Iterator<String> i = Collections.<String>emptyList().iterator();
         HeadAdder<String> adder = HeadAdder.<String>builder().wrapped(i).adder((s) -> s + "c").onlyIfNotEmpty(true).build();
-        assertEquals(false, adder.hasNext());
+        assertThat(adder.hasNext()).isFalse();
     }
 
     @Test
-    public void headNull() {
+    void headNull() {
         Iterator<String> i = Collections.<String>emptyList().iterator();
         HeadAdder<String> adder = HeadAdder.<String>builder().wrapped(i).adder((s) -> null).build();
 
-        assertEquals(null, adder.next());
-        assertEquals(false, adder.hasNext());
+        assertThat(adder.next()).isNull();
+        assertThat(adder.hasNext()).isFalse();
     }
 
 
     @Test
-    public void headException() {
+    void headException() {
         Iterator<String> i = Collections.<String>emptyList().iterator();
-        HeadAdder<String> adder = HeadAdder.<String>builder().wrapped(i).adder((s) ->{
+        HeadAdder<String> adder = HeadAdder.<String>builder().wrapped(i).adder((s) -> {
             throw new RuntimeException();
         }).build();
 
-        assertEquals(false, adder.hasNext());
+        assertThat(adder.hasNext()).isFalse();
+    }
+
+    @Test
+    void nextOnAnEmptyIteratorThrows() {
+        HeadAdder<String> adder = HeadAdder.<String>builder()
+            .wrapped(Collections.<String>emptyList().iterator())
+            .build();
+
+        assertThatThrownBy(adder::next).isInstanceOf(NoSuchElementException.class);
     }
 }

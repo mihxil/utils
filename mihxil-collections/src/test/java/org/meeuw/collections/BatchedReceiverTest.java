@@ -17,10 +17,10 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
  * @since 1.68
  */
 @Log4j2
-public class BatchedReceiverTest {
+class BatchedReceiverTest {
 
     @Test
-    public void illegalConstruction() {
+    void illegalConstruction() {
         assertThatThrownBy(() ->
             BatchedReceiver.builder().build()).isInstanceOf(IllegalStateException.class);
 
@@ -32,7 +32,7 @@ public class BatchedReceiverTest {
     }
 
     @Test
-    public void testWithOffsetBatchGetter() {
+    void iteratesWithOffsetBatchGetter() {
         final List<String> result = new ArrayList<>();
         for (int i = 0; i < 23; i++) {
             result.add(String.valueOf((char) ('a' + i)));
@@ -53,7 +53,7 @@ public class BatchedReceiverTest {
 
 
     @Test
-    public void testWithOffset() {
+    void iteratesWithOffset() {
         final List<String> result = new ArrayList<>();
         for (int i = 0; i < 23; i++) {
             result.add("a" + i);
@@ -75,7 +75,7 @@ public class BatchedReceiverTest {
 
 
     @Test
-    public void testWithoutBatchSize() {
+    void iteratesWithoutBatchSize() {
         final List<String> result = new ArrayList<>();
         for (int i = 0; i < 23; i++) {
             result.add("a" + i);
@@ -110,13 +110,14 @@ public class BatchedReceiverTest {
         public Iterator<String> iterator() {
             return result.iterator();
         }
+
         static WithToken initial() {
-                return new WithToken(Arrays.asList("0", "a"), 1);
+            return new WithToken(Arrays.asList("0", "a"), 1);
         }
 
         static Optional<WithToken> forToken(Integer token) {
             if (token < 10) {
-                return Optional.of(new WithToken(Arrays.asList("a" + token , "b" + token), token + 1));
+                return Optional.of(new WithToken(Arrays.asList("a" + token, "b" + token), token + 1));
             } else {
                 return Optional.empty();
             }
@@ -125,7 +126,7 @@ public class BatchedReceiverTest {
 
 
     @Test
-    public void testWithTokens() {
+    void iteratesWithTokens() {
         BatchedReceiver<String> i =
             BatchedReceiver.<String>builder()
                 .initialAndResumption(WithToken::initial,
@@ -136,32 +137,80 @@ public class BatchedReceiverTest {
             "0", "a", "a1", "b1", "a2", "b2", "a3", "b3", "a4", "b4", "a5", "b5", "a6", "b6", "a7", "b7", "a8", "b8", "a9", "b9");
 
 
-
     }
 
-     @Test
-    public void testWithSupplier() {
-         Supplier<Optional<Iterator<String>>> supplier = new Supplier<Optional<Iterator<String>>>() {
-             int i = 10;
-             @Override
-             public Optional<Iterator<String>> get() {
-                 if (i-- > 0 ) {
-                     if (i % 2 == 0) {
-                         return Optional.of(Collections.emptyIterator());
-                     }
-                     return Optional.of(Arrays.asList(String.valueOf((char) ('a' + i)), "x" + i).iterator());
-                 } else {
-                     return Optional.empty();
-                 }
-             }
-         };
-         BatchedReceiver<String> i =
+    @Test
+    void iteratesWithSupplier() {
+        Supplier<Optional<Iterator<String>>> supplier = new Supplier<Optional<Iterator<String>>>() {
+            int i = 10;
+
+            @Override
+            public Optional<Iterator<String>> get() {
+                if (i-- > 0) {
+                    if (i % 2 == 0) {
+                        return Optional.of(Collections.emptyIterator());
+                    }
+                    return Optional.of(Arrays.asList(String.valueOf((char) ('a' + i)), "x" + i).iterator());
+                } else {
+                    return Optional.empty();
+                }
+            }
+        };
+        BatchedReceiver<String> i =
             BatchedReceiver.<String>builder()
                 .supplier(supplier)
                 .build();
 
         assertThat(i).toIterable().containsExactly(
             "j", "x9", "h", "x7", "f", "x5", "d", "x3", "b", "x1");
+    }
+
+    @Test
+    void closesExhaustedAndActiveBatches() {
+        AtomicInteger closes = new AtomicInteger();
+        Iterator<String> first = closeableIterator(Collections.singletonList("a").iterator(), closes);
+        Iterator<String> second = closeableIterator(Collections.singletonList("b").iterator(), closes);
+        Deque<Iterator<String>> batches = new ArrayDeque<>(Arrays.asList(first, second));
+        BatchedReceiver<String> receiver = BatchedReceiver.<String>builder()
+            .supplier(() -> Optional.ofNullable(batches.pollFirst()))
+            .build();
+
+        assertThat(receiver.next()).isEqualTo("a");
+        assertThat(receiver.next()).isEqualTo("b");
+        assertThat(closes).hasValue(1);
+
+        receiver.close();
+
+        assertThat(closes).hasValue(2);
+    }
+
+    private static <T> Iterator<T> closeableIterator(Iterator<T> delegate, AtomicInteger closes) {
+        return new CloseableTestIterator<>(delegate, closes);
+    }
+
+    private static class CloseableTestIterator<T> implements Iterator<T>, AutoCloseable {
+        private final Iterator<T> delegate;
+        private final AtomicInteger closes;
+
+        private CloseableTestIterator(Iterator<T> delegate, AtomicInteger closes) {
+            this.delegate = delegate;
+            this.closes = closes;
+        }
+
+        @Override
+        public boolean hasNext() {
+            return delegate.hasNext();
+        }
+
+        @Override
+        public T next() {
+            return delegate.next();
+        }
+
+        @Override
+        public void close() {
+            closes.incrementAndGet();
+        }
     }
 
 }

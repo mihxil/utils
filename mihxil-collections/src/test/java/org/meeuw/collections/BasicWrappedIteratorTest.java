@@ -10,14 +10,13 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Michiel Meeuwissen
-
  */
 class BasicWrappedIteratorTest {
     private final List<String> list = Arrays.asList("a", "b", "c");
 
 
     @Test
-    public void wrap() {
+    void wrap() {
         BasicWrappedIterator<String> i = new BasicWrappedIterator<>(list.iterator());
         assertThat(i.getSize()).isEmpty();
         assertThat(i.getTotalSize()).isEmpty();
@@ -25,7 +24,7 @@ class BasicWrappedIteratorTest {
     }
 
     @Test
-    public void wrapWithLong() {
+    void wrapWithLong() {
         BasicWrappedIterator<String> i = new BasicWrappedIterator<>(3L, list.iterator());
         assertThat(i.getSize()).contains(3L);
         assertThat(i.getTotalSize()).contains(3L);
@@ -33,7 +32,7 @@ class BasicWrappedIteratorTest {
     }
 
     @Test
-    public void wrapWithAtomicLong() {
+    void wrapWithAtomicLong() {
         BasicWrappedIterator<String> i = new BasicWrappedIterator<>(new AtomicLong(3), list.iterator());
         assertThat(i.getSize()).contains(3L);
         assertThat(i.getTotalSize()).contains(3L);

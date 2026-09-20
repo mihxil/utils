@@ -14,7 +14,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 class CountedMaxOffsetIteratorTest {
 
     @Test
-    public void test() {
+    void appliesOffsetAndMax() {
         List<String> list = Arrays.asList("a", "b", "c", "d", "e");
         CountedMaxOffsetIterator<String> i = MaxOffsetIterator
             .<String>countedBuilder()
@@ -31,6 +31,17 @@ class CountedMaxOffsetIteratorTest {
         assertThatThrownBy(i::next).isInstanceOf(NoSuchElementException.class);
 
         assertThat(i.toString()).matches("Counted\\[Closeable\\[.*]\\[1,2]");
+    }
+
+    @Test
+    void sizeIsZeroWhenOffsetExceedsSourceSize() {
+        CountedMaxOffsetIterator<String> iterator = MaxOffsetIterator
+            .<String>countedBuilder()
+            .wrapped(CountedIterator.of(Collections.singletonList("a")))
+            .offset(2)
+            .build();
+
+        assertThat(iterator.getSize()).contains(0L);
     }
 
 }

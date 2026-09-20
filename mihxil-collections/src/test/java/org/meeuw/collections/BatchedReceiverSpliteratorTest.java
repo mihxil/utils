@@ -16,10 +16,10 @@ import static org.assertj.core.api.InstanceOfAssertFactories.LIST;
  * @since 2.12
  */
 @Disabled("work in progress")
-public class BatchedReceiverSpliteratorTest {
+class BatchedReceiverSpliteratorTest {
 
     @Test
-    public void test() {
+    void iterates() {
         final List<String> result = new ArrayList<>();
         for (int i = 0; i < 23; i++) {
             result.add("a" + i);
@@ -35,11 +35,11 @@ public class BatchedReceiverSpliteratorTest {
 
         assertThat(i).asInstanceOf(LIST).containsExactly(result.toArray(new String[0]));
 
-   }
+    }
 
 
     @Test
-    public void testWithOffset() {
+    void iteratesWithOffset() {
         final List<String> result = new ArrayList<>();
         for (int i = 0; i < 23; i++) {
             result.add("a" + i);
@@ -56,14 +56,12 @@ public class BatchedReceiverSpliteratorTest {
 
         assertThat(i)
             .asInstanceOf(InstanceOfAssertFactories.LIST)
-            .containsExactly((Object[]) result.subList(10, result.size()).toArray(new String[result.size() -10]));
-
+            .containsExactly((Object[]) result.subList(10, result.size()).toArray(new String[result.size() - 10]));
     }
 
 
-
     @Test
-    public void testWithoutBatch() {
+    void iteratesWithoutBatch() {
         final List<String> result = new ArrayList<>();
         for (int i = 0; i < 23; i++) {
             result.add("a" + i);
@@ -80,6 +78,5 @@ public class BatchedReceiverSpliteratorTest {
                 .build();
 
         //assertThat(i).extracting().containsExactly(result.toArray(new String[0]));
-
     }
 }

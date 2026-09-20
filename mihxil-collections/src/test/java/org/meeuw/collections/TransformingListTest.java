@@ -10,11 +10,11 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @author Michiel Meeuwissen
  * @since 1.63
  */
-public class TransformingListTest {
+class TransformingListTest {
 
 
     @Test
-    public void testAdd() {
+    void adds() {
         List<Integer> set = new ArrayList<>();
         set.add(1);
         set.add(2);
@@ -29,7 +29,7 @@ public class TransformingListTest {
 
 
     @Test
-    public void testRemove() {
+    void removes() {
         List<Integer> set = new ArrayList<>();
         set.add(1);
         set.add(2);
@@ -43,7 +43,7 @@ public class TransformingListTest {
     }
 
     @Test
-    public void testChangeFirst() {
+    void changesFirst() {
         List<Integer> set = new ArrayList<>();
         set.add(1);
         set.add(2);
@@ -59,7 +59,7 @@ public class TransformingListTest {
     }
 
     @Test
-    public void setReplacesCachedValue() {
+    void setReplacesCachedValue() {
         List<Integer> set = new ArrayList<>(Arrays.asList(1, 2));
         TransformingList<String, Integer> transforming =
             new TransformingList<>(set, String::valueOf, Integer::parseInt);

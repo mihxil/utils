@@ -8,11 +8,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.*;
 
-public class CallbackIteratorTest {
+class CallbackIteratorTest {
 
 
     @Test
-    public void test() throws Exception {
+    void invokesCallback() throws Exception {
         Runnable runnable = mock(Runnable.class);
         try (CallbackIterator<String> i = CallbackIterator.<String>builder()
             .wrapped(Arrays.asList("A", "B").iterator())
@@ -34,7 +34,7 @@ public class CallbackIteratorTest {
     }
 
     @Test
-    public void modify() throws Exception {
+    void modify() throws Exception {
         List<String> list = new ArrayList<>();
         list.add("a");
         list.add("b");
@@ -54,15 +54,14 @@ public class CallbackIteratorTest {
 
 
     @Test
-    public void withCounted() {
+    void withCounted() {
         Runnable runnable = mock(Runnable.class);
         CallbackIterator<String> i = CallbackIterator.<String>builder()
             .wrapped(BasicWrappedIterator.<String>builder()
                 .wrapped(Arrays.asList("A", "B").iterator()).size(2L).build()
             )
             .callback(runnable)
-            .build()
-            ;
+            .build();
         assertThat(i.getCount()).isEqualTo(0);
 
         verifyNoInteractions(runnable);
@@ -78,7 +77,7 @@ public class CallbackIteratorTest {
 
 
     @Test
-    public void withoutCallback() {
+    void withoutCallback() {
         CallbackIterator<String> i = CallbackIterator.<String>builder()
             .wrapped(CountedIterator.of(Arrays.asList("A", "B")))
             .build();
