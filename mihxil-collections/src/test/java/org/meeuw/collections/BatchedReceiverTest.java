@@ -6,6 +6,7 @@ import lombok.extern.log4j.Log4j2;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Supplier;
+import java.util.stream.StreamSupport;
 
 import org.junit.jupiter.api.Test;
 
@@ -163,6 +164,20 @@ class BatchedReceiverTest {
 
         assertThat(i).toIterable().containsExactly(
             "j", "x9", "h", "x7", "f", "x5", "d", "x3", "b", "x1");
+    }
+
+    @Test
+    void iteratesAsSpliterator() {
+        List<String> result = Arrays.asList("a", "b", "c", "d");
+        BatchedReceiver<String> receiver = BatchedReceiver.<String>builder()
+            .batchGetter((offset, max) -> result.subList(
+                Math.min(offset.intValue(), result.size()),
+                Math.min(offset.intValue() + max, result.size())).iterator())
+            .batchSize(2)
+            .build();
+
+        assertThat(StreamSupport.stream(receiver.spliterator(), false)).containsExactlyElementsOf(result);
+        assertThat(receiver.spliterator().characteristics()).isEqualTo(Spliterator.ORDERED);
     }
 
     @Test

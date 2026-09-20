@@ -181,6 +181,20 @@ public class BatchedReceiver<T> implements CloseableIterator<T> {
         }
     }
 
+    /**
+     * Returns an ordered spliterator over this receiver.
+     * <p>
+     * The returned spliterator has an unknown size and consumes this receiver. It does not close
+     * the receiver automatically; prefer {@link #stream()} when stream traversal must close
+     * resource-backed batch iterators.
+     * </p>
+     *
+     * @return a spliterator over the values supplied by this receiver
+     */
+    public Spliterator<T> spliterator() {
+        return Spliterators.spliteratorUnknownSize(this, Spliterator.ORDERED);
+    }
+
     public static class Builder<T> {
 
         private Integer batchSize = null;
