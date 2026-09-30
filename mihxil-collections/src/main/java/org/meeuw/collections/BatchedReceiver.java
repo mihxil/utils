@@ -5,6 +5,7 @@ import lombok.extern.java.Log;
 
 import java.util.*;
 import java.util.function.*;
+import java.util.stream.Stream;
 
 /**
  * Given some API that supplies only 'batched' retrieval (so e.g. with offset and max/batchsize parameters),
@@ -293,6 +294,11 @@ public class BatchedReceiver<T> implements CloseableIterator<T> {
                 throw new IllegalStateException("No supplier defined");
             }
             return _build();
+        }
+
+        public Stream<T> stream() {
+            BatchedReceiver<T> built = build();
+            return built.stream();
         }
 
     }
