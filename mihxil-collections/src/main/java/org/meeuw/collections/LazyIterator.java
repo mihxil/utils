@@ -7,7 +7,6 @@ import java.util.Iterator;
 import java.util.Optional;
 import java.util.function.Supplier;
 
-import org.checkerframework.checker.nullness.qual.NonNull;
 import org.meeuw.functional.Unwrappable;
 
 /**
@@ -58,7 +57,7 @@ public class LazyIterator<T> implements CloseableIterator<T>, CountedIterator<T>
     }
 
     @Override
-    public @NonNull Optional<Long> getSize() {
+    public Optional<Long> getSize() {
         getSupplied();
         if (iterator instanceof CountedIterator) {
             return ((CountedIterator) iterator).getSize();

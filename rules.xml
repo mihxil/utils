@@ -25,11 +25,5 @@
         <ignoreVersion type="regex">^6(?:\..*)?$</ignoreVersion>
       </ignoreVersions>
     </rule>
-    <rule groupId="org.checkerframework">
-      <!-- remain java 8 compatible for now -->
-      <ignoreVersions>
-        <ignoreVersion type="regex">^4(?:\..*)?$</ignoreVersion>
-      </ignoreVersions>
-    </rule>
   </rules>
 </ruleset>

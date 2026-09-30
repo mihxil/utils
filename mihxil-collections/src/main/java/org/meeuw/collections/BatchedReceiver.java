@@ -180,7 +180,7 @@ public class BatchedReceiver<T> implements CloseableIterator<T> {
         }
     }
 
-    public static class Builder<T> {
+    public static class Builder<T> implements Iterable<T> {
 
         private Integer batchSize = null;
         private BiFunction<Long, Integer, Iterator<T>> batchGetter;
@@ -301,6 +301,11 @@ public class BatchedReceiver<T> implements CloseableIterator<T> {
             return built.stream();
         }
 
+        @Override
+
+        public Iterator<T> iterator() {
+            return build();
+        }
     }
 
 

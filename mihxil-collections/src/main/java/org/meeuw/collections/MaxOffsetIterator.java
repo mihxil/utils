@@ -8,8 +8,7 @@ import java.util.*;
 import java.util.function.Predicate;
 import java.util.logging.Level;
 
-import org.checkerframework.checker.nullness.qual.NonNull;
-import org.checkerframework.checker.nullness.qual.Nullable;
+import org.jspecify.annotations.Nullable;
 import org.meeuw.functional.Predicates;
 
 
@@ -81,7 +80,7 @@ public class MaxOffsetIterator<T> implements CloseablePeekingIterator<T>, Counte
 
     @lombok.Builder(builderClassName = "Builder")
     protected MaxOffsetIterator(
-        @NonNull Iterator<T> wrapped,
+        Iterator<T> wrapped,
         @Nullable Number max,
         @Nullable Number offset,
         @Nullable Predicate<T> countPredicate,

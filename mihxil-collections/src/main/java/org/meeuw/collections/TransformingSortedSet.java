@@ -4,7 +4,6 @@ import java.util.*;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-import org.checkerframework.checker.nullness.qual.NonNull;
 
 /**
  * @author Michiel Meeuwissen
@@ -45,7 +44,6 @@ public class TransformingSortedSet<T, S> extends AbstractSet<T> implements Sorte
      *
      * @return an iterator over transformed elements
      */
-    @NonNull
     @Override
     public Iterator<T> iterator() {
         return TransformingCollection.super.iterator();
@@ -100,7 +98,6 @@ public class TransformingSortedSet<T, S> extends AbstractSet<T> implements Sorte
      * @param toElement the exclusive upper bound
      * @return a transformed range view
      */
-    @NonNull
     @Override
     public SortedSet<T> subSet(T fromElement, T toElement) {
         return new TransformingSortedSet<>(wrapped.subSet(produce(fromElement), produce(toElement)), transformer, producer);
@@ -113,7 +110,6 @@ public class TransformingSortedSet<T, S> extends AbstractSet<T> implements Sorte
      * @param toElement the exclusive upper bound
      * @return a transformed head-range view
      */
-    @NonNull
     @Override
     public SortedSet<T> headSet(T toElement) {
         return new TransformingSortedSet<>(wrapped.headSet(produce(toElement)), transformer, producer);
@@ -125,7 +121,6 @@ public class TransformingSortedSet<T, S> extends AbstractSet<T> implements Sorte
      * @param fromElement the inclusive lower bound
      * @return a transformed tail-range view
      */
-    @NonNull
     @Override
     public SortedSet<T> tailSet(T fromElement) {
         return new TransformingSortedSet<>(wrapped.tailSet(produce(fromElement)), transformer, producer);

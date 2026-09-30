@@ -2,7 +2,6 @@ package org.meeuw.collections;
 
 import java.util.Optional;
 
-import org.checkerframework.checker.nullness.qual.NonNull;
 
 
 /**
@@ -21,7 +20,6 @@ class CountedPeekingIteratorImpl<T> extends CloseablePeekingIteratorImpl<T> impl
     }
 
     @Override
-    @NonNull
     public Optional<Long> getSize() {
         return wrapped.getSize();
     }
@@ -32,7 +30,6 @@ class CountedPeekingIteratorImpl<T> extends CloseablePeekingIteratorImpl<T> impl
     }
 
     @Override
-    @NonNull
     public Optional<Long> getTotalSize() {
         return wrapped.getTotalSize();
     }

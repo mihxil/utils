@@ -3,7 +3,6 @@ package org.meeuw.collections;
 import java.util.Iterator;
 import java.util.Optional;
 
-import org.checkerframework.checker.nullness.qual.NonNull;
 import org.meeuw.functional.Unwrappable;
 
 /**
@@ -38,7 +37,7 @@ public  abstract class WrappedIterator<T, S> implements CountedIterator<S>, Unwr
 
     @SuppressWarnings({"unchecked", "rawtypes"})
     @Override
-    public @NonNull Optional<Long> getSize() {
+    public Optional<Long> getSize() {
         if (wrapped instanceof CountedIterator) {
             return ((CountedIterator) wrapped).getSize();
         }
@@ -57,7 +56,7 @@ public  abstract class WrappedIterator<T, S> implements CountedIterator<S>, Unwr
 
     @SuppressWarnings({"unchecked", "rawtypes"})
     @Override
-    public @NonNull Optional<Long> getTotalSize() {
+    public Optional<Long> getTotalSize() {
         if (wrapped instanceof CountedIterator) {
             return ((CountedIterator) wrapped).getTotalSize();
         }

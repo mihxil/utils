@@ -3,7 +3,6 @@ package org.meeuw.collections;
 import java.util.Iterator;
 import java.util.Optional;
 
-import org.checkerframework.checker.nullness.qual.NonNull;
 import org.meeuw.functional.Unwrappable;
 
 /**
@@ -63,7 +62,6 @@ public class CallbackIterator<T> implements CountedIterator<T>, Unwrappable<Clos
 
     @SuppressWarnings("unchecked")
     @Override
-    @NonNull
     public Optional<Long> getSize() {
         if (wrapped instanceof CountedIterator) {
             return ((CountedIterator) wrapped).getSize();

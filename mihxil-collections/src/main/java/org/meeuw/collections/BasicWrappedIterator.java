@@ -4,7 +4,6 @@ import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.function.Supplier;
 
-import org.checkerframework.checker.nullness.qual.NonNull;
 
 /**
  * @author Michiel Meeuwissen
@@ -59,7 +58,7 @@ public class BasicWrappedIterator<T> extends WrappedIterator<T, T> {
     }
 
     @Override
-    public @NonNull Optional<Long> getSize() {
+    public Optional<Long> getSize() {
         if (size != null) {
             return Optional.ofNullable(size.get());
         } else {
@@ -68,7 +67,7 @@ public class BasicWrappedIterator<T> extends WrappedIterator<T, T> {
     }
 
     @Override
-    public @NonNull Optional<Long> getTotalSize() {
+    public Optional<Long> getTotalSize() {
         if (totalSize != null) {
             return Optional.ofNullable(totalSize.get());
         } else {

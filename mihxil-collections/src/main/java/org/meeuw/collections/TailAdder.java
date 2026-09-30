@@ -8,7 +8,6 @@ import java.util.function.Function;
 import java.util.logging.Level;
 import java.util.stream.Stream;
 
-import org.checkerframework.checker.nullness.qual.NonNull;
 import org.meeuw.functional.Functions;
 
 
@@ -139,7 +138,7 @@ public class TailAdder<T> implements CountedIterator<T> {
     }
 
     @Override
-    public @NonNull Optional<Long> getSize() {
+    public Optional<Long> getSize() {
         if (wrapped instanceof CountedIterator) {
             Optional<Long> wrappedSize = ((CountedIterator) wrapped).getSize();
             if (wrappedSize.isPresent()) {

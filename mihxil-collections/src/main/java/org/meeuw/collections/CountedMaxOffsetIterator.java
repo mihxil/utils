@@ -6,8 +6,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
 
-import org.checkerframework.checker.nullness.qual.NonNull;
-import org.checkerframework.checker.nullness.qual.Nullable;
+import org.jspecify.annotations.Nullable;
 import org.meeuw.functional.Unwrappable;
 
 /**
@@ -21,7 +20,7 @@ public class CountedMaxOffsetIterator<T>  extends MaxOffsetIterator<T>  implemen
 
     @lombok.Builder(builderClassName = "Builder", builderMethodName = "_countedBuilder")
     protected CountedMaxOffsetIterator(
-        @NonNull CountedIterator<T> wrapped,
+        CountedIterator<T> wrapped,
         @Nullable Number max,
         @Nullable Number offset,
         @Nullable @Singular List<Runnable> callbacks,
@@ -33,7 +32,7 @@ public class CountedMaxOffsetIterator<T>  extends MaxOffsetIterator<T>  implemen
 
 
     @Override
-    public @NonNull Optional<Long> getSize() {
+    public Optional<Long> getSize() {
         return wrappedCountedIterator.getSize().map(i -> Math.max(0, Math.min(i - getOffset(), max)));
     }
 
@@ -43,7 +42,7 @@ public class CountedMaxOffsetIterator<T>  extends MaxOffsetIterator<T>  implemen
     }
 
     @Override
-    public @NonNull Optional<Long> getTotalSize() {
+    public Optional<Long> getTotalSize() {
         return wrappedCountedIterator.getTotalSize();
     }
 

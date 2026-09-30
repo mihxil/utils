@@ -39,10 +39,9 @@
   </build>
   <dependencies>
     <dependency>
-      <groupId>org.checkerframework</groupId>
-      <artifactId>checker-qual</artifactId>
-      <version>3.55.1</version>
-      <optional>true</optional>
+      <groupId>org.jspecify</groupId>
+      <artifactId>jspecify</artifactId>
+      <version>1.0.1</version>
     </dependency>
     <dependency>
       <groupId>org.projectlombok</groupId>

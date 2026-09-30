@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.*;
 import java.util.function.Consumer;
 
-import org.checkerframework.checker.nullness.qual.NonNull;
 
 /**
  * A modifiable SortedSet that wraps another collection (changes are reflected), with an explicit sort order.
@@ -48,7 +47,6 @@ public class ResortedSortedSet<T> extends AbstractSet<T> implements SortedSet<T>
         this.addListeners = addListeners;
     }
 
-    @NonNull
     @Override
     public Iterator<T> iterator() {
         final Iterator<T> i = set.iterator();
@@ -106,20 +104,17 @@ public class ResortedSortedSet<T> extends AbstractSet<T> implements SortedSet<T>
 
     }
 
-    @NonNull
     @Override
     public SortedSet<T> subSet(T fromElement, T toElement) {
         return new ResortedSortedSet<>(set.subSet(fromElement, toElement), wrapped);
 
     }
 
-    @NonNull
     @Override
     public SortedSet<T> headSet(T toElement) {
         return new ResortedSortedSet<>(set.headSet(toElement), wrapped);
     }
 
-    @NonNull
     @Override
     public SortedSet<T> tailSet(T fromElement) {
         return new ResortedSortedSet<>(set.tailSet(fromElement), wrapped);

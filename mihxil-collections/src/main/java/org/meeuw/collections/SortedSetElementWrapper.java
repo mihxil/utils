@@ -2,7 +2,6 @@ package org.meeuw.collections;
 
 import java.util.*;
 
-import org.checkerframework.checker.nullness.qual.NonNull;
 
 /**
  * @author Michiel Meeuwissen
@@ -19,7 +18,6 @@ public abstract class SortedSetElementWrapper<T, S> extends AbstractSet<S> imple
         this.wrapped = wrapped;
     }
 
-    @NonNull
     @Override
     public Iterator<S> iterator() {
         return new Iterator<S>() {
@@ -65,19 +63,16 @@ public abstract class SortedSetElementWrapper<T, S> extends AbstractSet<S> imple
     }
 
 
-    @NonNull
     @Override
     public SortedSet<S> subSet(S fromElement, S toElement) {
         return sub(wrapped.subSet(find(fromElement), find(toElement)));
     }
 
-    @NonNull
     @Override
     public SortedSet<S> headSet(S toElement) {
         return sub(wrapped.headSet(find(toElement)));
     }
 
-    @NonNull
     @Override
     public SortedSet<S> tailSet(S fromElement) {
         return sub(wrapped.tailSet(find(fromElement)));

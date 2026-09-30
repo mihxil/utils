@@ -3,7 +3,6 @@ package org.meeuw.collections;
 import java.util.Collection;
 import java.util.Iterator;
 
-import org.checkerframework.checker.nullness.qual.NonNull;
 
 
 /**
@@ -28,7 +27,6 @@ public interface TransformingCollection<T, S, U extends Collection<T>, V extends
     V unwrap();
 
 
-    @NonNull
     @Override
     default Iterator<T> iterator() {
         final Iterator<S> i = unwrap().iterator();
