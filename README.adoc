@@ -45,8 +45,11 @@ Things like `memoize` (to memoize the value of a supplier), `closeable` (to make
 |===
 |Version |date |remarks
 
+| 1.24
+| 2026-10
+| `Optional<Long>` results were replaced by `OptionaLong`, which is not backwards compatible (only in new collections module)
 
-1.18
+| 1.18
 | 2026-08
 |
 Having collection module too.
@@ -74,5 +77,6 @@ A.o, introduction of 'CloseableSupplier' and 'UnwrappableSupplier' interfaces,
 | 1.0
 | 2020-11-30
 |
+
 |===
 
