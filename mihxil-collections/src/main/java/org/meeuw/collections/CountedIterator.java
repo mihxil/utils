@@ -54,7 +54,7 @@ public interface CountedIterator<T> extends Iterator<T>, CloseableIterator<T>, C
 
 
     /**
-     * The size, if known, of the collection this iterator is representing
+     * @return The size, if known, of the collection this iterator is representing
      */
     OptionalLong getSize();
 
@@ -68,6 +68,7 @@ public interface CountedIterator<T> extends Iterator<T>, CloseableIterator<T>, C
      * If the iterator is in some way restricted you may also want to report a total size, representing the unrestricted size.
      * <p>
      * The default implementation is {@link #getSize()}.
+     * @return An optional long containing the 'total' size of something this iterator is a view on
      */
     default OptionalLong getTotalSize() {
         return getSize();

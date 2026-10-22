@@ -3,6 +3,8 @@ package org.meeuw.collections;
 import java.util.*;
 import java.util.function.Supplier;
 
+import org.jspecify.annotations.Nullable;
+
 /**
  * @author Michiel Meeuwissen
  * @since 1.18 (since 0.32 in vpro-shared-util)
@@ -11,13 +13,13 @@ public class MergedSortedIterator<T>  extends BasicWrappedIterator<T> implements
 
     private final List<CountedIterator<T>> sources;
 
-    protected MergedSortedIterator(Supplier<Long> size, Supplier<Long> totalSize, Iterator<T> iterator, List<CountedIterator<T>> sources) {
+    protected MergedSortedIterator(Supplier<@Nullable Long> size, Supplier<@Nullable Long> totalSize, Iterator<T> iterator, List<CountedIterator<T>> sources) {
         super(size, totalSize, null, null, iterator);
         this.sources = sources;
     }
 
     /**
-     * This uses guava's {@link Iterators#mergeSorted}. This probable performs well, but will use a queue.
+     * This used guava's {@code Iterators#mergeSorted}. This probable performs well, but will use a queue.
      *
      */
     @SafeVarargs
@@ -36,7 +38,6 @@ public class MergedSortedIterator<T>  extends BasicWrappedIterator<T> implements
     /**
      * This uses a priority queue to merge sorted iterators efficiently.
      */
-    @SuppressWarnings("UnstableApiUsage")
     public static <T> MergedSortedIterator<T> merge(Comparator<? super T> comparator, Iterable<CountedIterator<T>> iterators) {
         List<CountedIterator<T>> sources = copyOf(iterators);
         return new MergedSortedIterator<>(
@@ -90,6 +91,7 @@ public class MergedSortedIterator<T>  extends BasicWrappedIterator<T> implements
         }
     }
 
+    @Nullable
     protected static <T> Long getSize(Iterable<CountedIterator<T>> iterators) {
         Long size = 0L;
         for (CountedIterator<?> c : iterators) {
@@ -104,6 +106,7 @@ public class MergedSortedIterator<T>  extends BasicWrappedIterator<T> implements
         return size;
     }
 
+    @Nullable
     protected static <T> Long getTotalSize(Iterable<CountedIterator<T>> iterators) {
         Long size = 0L;
         for (CountedIterator<?> c : iterators) {
@@ -122,7 +125,7 @@ public class MergedSortedIterator<T>  extends BasicWrappedIterator<T> implements
     protected static class SameThreadMergingIterator<S> implements Iterator<S> {
         final List<PeekingIterator<S>> iterators;
         final Comparator<? super S> comparator;
-        Optional<S> next = null;
+        @Nullable Optional<S> next = null;
         boolean needsFindNext = true;
 
 
@@ -141,6 +144,7 @@ public class MergedSortedIterator<T>  extends BasicWrappedIterator<T> implements
         }
 
         @Override
+        @Nullable
         public S next() {
             findNext();
             if (next == null){
@@ -172,14 +176,13 @@ public class MergedSortedIterator<T>  extends BasicWrappedIterator<T> implements
 
     protected static class PriorityQueueMergingIterator<S> implements Iterator<S> {
         private final PriorityQueue<S[]> queue;
-        private final List<Iterator<S>> iterators;
 
         @SuppressWarnings("unchecked")
         PriorityQueueMergingIterator(Comparator<? super S> comparator, Iterable<? extends Iterator<S>> iterators) {
             this.queue = new PriorityQueue<>((a, b) -> comparator.compare(a[0], b[0]));
-            this.iterators = new ArrayList<>();
+            List<Iterator<S>> iterators1 = new ArrayList<>();
             for (Iterator<S> i : iterators) {
-                this.iterators.add(i);
+                iterators1.add(i);
                 if (i.hasNext()) {
                     queue.add((S[]) new Object[]{i.next(), i});
                 }

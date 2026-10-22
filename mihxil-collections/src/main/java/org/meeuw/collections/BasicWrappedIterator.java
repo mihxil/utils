@@ -4,6 +4,8 @@ import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.function.Supplier;
 
+import org.jspecify.annotations.Nullable;
+
 
 /**
  * @author Michiel Meeuwissen
@@ -11,8 +13,8 @@ import java.util.function.Supplier;
  */
 public class BasicWrappedIterator<T> extends WrappedIterator<T, T> {
 
-    private final Supplier<Long> size;
-    private final Supplier<Long> totalSize;
+    private final @Nullable Supplier<@Nullable Long> size;
+    private final @Nullable Supplier<@Nullable Long> totalSize;
 
     private long count = 0;
 
@@ -24,10 +26,10 @@ public class BasicWrappedIterator<T> extends WrappedIterator<T, T> {
 
     @lombok.Builder(builderClassName = "Builder")
     protected BasicWrappedIterator(
-        Supplier<Long> sizeSupplier,
-        Supplier<Long> totalSizeSupplier,
-        Long size,
-        Long totalSize,
+        @Nullable Supplier<@Nullable Long> sizeSupplier,
+        @Nullable Supplier<@Nullable Long> totalSizeSupplier,
+        @Nullable Long size,
+        @Nullable Long totalSize,
         Iterator<T> wrapped) {
         super(wrapped);
         this.size = sizeSupplier != null ? sizeSupplier : () -> size;

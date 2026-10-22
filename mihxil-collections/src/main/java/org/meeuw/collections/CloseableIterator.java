@@ -29,6 +29,8 @@ public interface CloseableIterator<T> extends Iterator<T>, AutoCloseable {
 
     /**
      * @since 1.18 (since 2.9 in vpro-shared-util)
+     * @param <T> the type of elements returned by this iterator
+     * @return An empty iterator
      */
     static <T> CloseableIterator<T> empty() {
         return new CloseableIterator<T>() {
@@ -58,6 +60,7 @@ public interface CloseableIterator<T> extends Iterator<T>, AutoCloseable {
      * </p>
      *
      * @since 1.18 (since 2.9 in vpro-shared-util)
+     * @param <T> the type of elements returned by this iterator
      */
     static <T> CloseableIterator<T> of(final Iterator<T> iterator) {
         if (iterator instanceof CloseableIterator) {
@@ -69,6 +72,10 @@ public interface CloseableIterator<T> extends Iterator<T>, AutoCloseable {
         }
     }
 
+    /**
+     * @param <S> the type of elements returned by this iterator
+     * @param wrapped
+     */
     static <S> CloseablePeekingIterator<S> peeking(CloseableIterator<S> wrapped) {
         return wrapped == null ? null : wrapped.peeking();
     }

@@ -54,7 +54,7 @@ import java.util.stream.Stream;
  * <h4>An initial supplier and a 'next page'</h4>
  * This case could actually be simplified like so
  * <pre>
- *  {@code
+ * {@code
  *      public Iterator<ClientEntity> iterate(URIBuilder ub) {
  *           return BatchedReceiver.<ClientEntity>builder()
  *               .initialAndResumption(
@@ -63,11 +63,11 @@ import java.util.stream.Stream;
  *                     (result) -> result.getEntities().iterator()
  *               .build();
  *       }
- *   }
+ * }
  * </pre>
  * If the result is an {@link Iterable} itself, it can be
  * <pre>
- * @{code
+ * {@code
  *  public Iterator<ClientEntity> iterate(URIBuilder ub) {
  *             return BatchedReceiver.<ClientEntity>builder()
  *                 .initialAndResumption(
@@ -75,10 +75,12 @@ import java.util.stream.Stream;
  *                       (result) -> query(result.getNext())
  *                 .build();
  * }
+ * }
  * </pre>
  *
  * @author Michiel Meeuwissen
  * @since 1.18 (since 1.68 in vpro-shared-util)
+ * @param <T> Type of the elements of the iterator
  */
 @ToString
 @Log
@@ -180,6 +182,12 @@ public class BatchedReceiver<T> implements CloseableIterator<T> {
         }
     }
 
+
+    /**
+     *
+     * @param <T>
+     */
+
     public static class Builder<T> implements Iterable<T> {
 
         private Integer batchSize = null;
@@ -196,6 +204,7 @@ public class BatchedReceiver<T> implements CloseableIterator<T> {
          * @param initial    A supplier to get the object representing the first batch
          * @param resumption A function to get the next batch from the previous one
          * @param getter     A function to get the iterator from the object representing the batch
+         * @param <X>     Type of some holder value
          * @since 1.18 (since 5.6 in vpro-shared-util)
          */
         public <X> Builder<T> initialAndResumption(
