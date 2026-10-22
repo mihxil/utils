@@ -25,8 +25,8 @@ class CountedMaxOffsetIteratorTest {
 
         assertThat(i.getCount()).isEqualTo(0);
         assertThat(i.next()).isEqualTo("b");
-        assertThat(i.getSize()).contains(2L);
-        assertThat(i.getTotalSize()).contains(5L);
+        assertThat(i.getSize()).hasValue(2L);
+        assertThat(i.getTotalSize()).hasValue(5L);
         assertThat(i.next()).isEqualTo("c");
         assertThatThrownBy(i::next).isInstanceOf(NoSuchElementException.class);
 
@@ -41,7 +41,7 @@ class CountedMaxOffsetIteratorTest {
             .offset(2)
             .build();
 
-        assertThat(iterator.getSize()).contains(0L);
+        assertThat(iterator.getSize()).hasValue(0L);
     }
 
 }

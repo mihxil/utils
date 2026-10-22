@@ -71,8 +71,8 @@ class CallbackIteratorTest {
         verify(runnable).run();
         assertThat(i.hasNext()).isFalse();
 
-        assertThat(i.getSize()).contains(2L);
-        assertThat(i.getTotalSize()).contains(2L);
+        assertThat(i.getSize()).hasValue(2L);
+        assertThat(i.getTotalSize()).hasValue(2L);
     }
 
 

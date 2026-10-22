@@ -44,7 +44,7 @@ class LazyIteratorTest {
     void exposesTheSourceSizeWhenAvailable() {
         LazyIterator<String> iterator = LazyIterator.of(() -> CountedIterator.of(Arrays.asList("a", "b")));
 
-        assertThat(iterator.getSize()).contains(2L);
+        assertThat(iterator.getSize()).hasValue(2L);
     }
 
     private static class AutoCloseableIterator implements Iterator<String>, AutoCloseable {

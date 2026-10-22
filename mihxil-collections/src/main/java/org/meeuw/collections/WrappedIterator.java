@@ -1,7 +1,6 @@
 package org.meeuw.collections;
 
-import java.util.Iterator;
-import java.util.Optional;
+import java.util.*;
 
 import org.meeuw.functional.Unwrappable;
 
@@ -35,13 +34,13 @@ public  abstract class WrappedIterator<T, S> implements CountedIterator<S>, Unwr
     }
 
 
-    @SuppressWarnings({"unchecked", "rawtypes"})
+    @SuppressWarnings({"rawtypes"})
     @Override
-    public Optional<Long> getSize() {
+    public OptionalLong getSize() {
         if (wrapped instanceof CountedIterator) {
             return ((CountedIterator) wrapped).getSize();
         }
-        return Optional.empty();
+        return OptionalLong.empty();
 
     }
 
@@ -54,13 +53,13 @@ public  abstract class WrappedIterator<T, S> implements CountedIterator<S>, Unwr
         throw new UnsupportedOperationException();
     }
 
-    @SuppressWarnings({"unchecked", "rawtypes"})
+    @SuppressWarnings("rawtypes")
     @Override
-    public Optional<Long> getTotalSize() {
+    public OptionalLong getTotalSize() {
         if (wrapped instanceof CountedIterator) {
             return ((CountedIterator) wrapped).getTotalSize();
         }
-        return Optional.empty();
+        return OptionalLong.empty();
 
     }
 

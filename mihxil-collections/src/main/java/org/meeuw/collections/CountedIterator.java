@@ -56,7 +56,7 @@ public interface CountedIterator<T> extends Iterator<T>, CloseableIterator<T>, C
     /**
      * The size, if known, of the collection this iterator is representing
      */
-    Optional<Long> getSize();
+    OptionalLong getSize();
 
     /**
      * The current position. Will return {@code 1} after first successfull call to {@link #next()}, {@code 2} after the second one, and so on. It will return {@code 0} before the first call.
@@ -69,7 +69,7 @@ public interface CountedIterator<T> extends Iterator<T>, CloseableIterator<T>, C
      * <p>
      * The default implementation is {@link #getSize()}.
      */
-    default Optional<Long> getTotalSize() {
+    default OptionalLong getTotalSize() {
         return getSize();
     }
 
@@ -78,10 +78,13 @@ public interface CountedIterator<T> extends Iterator<T>, CloseableIterator<T>, C
      */
 
     default CloseableSpliterator<T> spliterator() {
-        Optional<Long> size = getSize();
-        Spliterator<T> spliterator = size
-            .map(s -> Spliterators.spliterator(this, s, Spliterator.SIZED))
-            .orElseGet(() -> Spliterators.spliteratorUnknownSize(this, 0));
+        OptionalLong size = getSize();
+        final Spliterator<T> spliterator;
+        if (size.isPresent()) {
+             spliterator  = Spliterators.spliterator(this, size.getAsLong(), Spliterator.SIZED);
+        } else {
+            spliterator = Spliterators.spliteratorUnknownSize(this, 0);
+        }
         return CloseableSpliterator.of(spliterator, this);
     }
 

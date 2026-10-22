@@ -93,9 +93,9 @@ public class MergedSortedIterator<T>  extends BasicWrappedIterator<T> implements
     protected static <T> Long getSize(Iterable<CountedIterator<T>> iterators) {
         Long size = 0L;
         for (CountedIterator<?> c : iterators) {
-            Optional<Long> s = c.getSize();
+            OptionalLong s = c.getSize();
             if (s.isPresent()) {
-                size += s.get();
+                size += s.getAsLong();
             } else {
                 size = null;
                 break;
@@ -107,9 +107,9 @@ public class MergedSortedIterator<T>  extends BasicWrappedIterator<T> implements
     protected static <T> Long getTotalSize(Iterable<CountedIterator<T>> iterators) {
         Long size = 0L;
         for (CountedIterator<?> c : iterators) {
-            Optional<Long> s = c.getTotalSize();
+            OptionalLong s = c.getTotalSize();
             if (s.isPresent()) {
-                size += s.get();
+                size += s.getAsLong();
             } else {
                 size = null;
                 break;

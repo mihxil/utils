@@ -1,7 +1,6 @@
 package org.meeuw.collections;
 
-import java.util.Iterator;
-import java.util.Optional;
+import java.util.*;
 
 import org.meeuw.functional.Unwrappable;
 
@@ -60,13 +59,12 @@ public class CallbackIterator<T> implements CountedIterator<T>, Unwrappable<Clos
         return hasNext;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
-    public Optional<Long> getSize() {
+    public OptionalLong getSize() {
         if (wrapped instanceof CountedIterator) {
             return ((CountedIterator) wrapped).getSize();
         }
-        return Optional.empty();
+        return OptionalLong.empty();
     }
 
     /**

@@ -138,19 +138,19 @@ public class TailAdder<T> implements CountedIterator<T> {
     }
 
     @Override
-    public Optional<Long> getSize() {
+    public OptionalLong getSize() {
         if (wrapped instanceof CountedIterator) {
-            Optional<Long> wrappedSize = ((CountedIterator) wrapped).getSize();
+            OptionalLong wrappedSize = ((CountedIterator) wrapped).getSize();
             if (wrappedSize.isPresent()) {
-                long l = wrappedSize.get();
+                long l = wrappedSize.getAsLong();
                 if ((!onlyIfEmpty || l == 0L) && (!onlyIfNotEmpty || l > 0L)) {
                     l += adder.length;
                 }
-                return Optional.of(l);
+                return OptionalLong.of(l);
             }
 
         }
-        return Optional.empty();
+        return OptionalLong.empty();
     }
 
     @Override

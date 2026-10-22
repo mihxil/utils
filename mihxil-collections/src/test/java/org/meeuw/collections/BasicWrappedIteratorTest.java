@@ -26,16 +26,16 @@ class BasicWrappedIteratorTest {
     @Test
     void wrapWithLong() {
         BasicWrappedIterator<String> i = new BasicWrappedIterator<>(3L, list.iterator());
-        assertThat(i.getSize()).contains(3L);
-        assertThat(i.getTotalSize()).contains(3L);
+        assertThat(i.getSize()).hasValue(3L);
+        assertThat(i.getTotalSize()).hasValue(3L);
         test(i);
     }
 
     @Test
     void wrapWithAtomicLong() {
         BasicWrappedIterator<String> i = new BasicWrappedIterator<>(new AtomicLong(3), list.iterator());
-        assertThat(i.getSize()).contains(3L);
-        assertThat(i.getTotalSize()).contains(3L);
+        assertThat(i.getSize()).hasValue(3L);
+        assertThat(i.getTotalSize()).hasValue(3L);
         test(i);
     }
 

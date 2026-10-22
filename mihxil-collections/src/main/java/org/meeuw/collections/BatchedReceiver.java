@@ -302,7 +302,6 @@ public class BatchedReceiver<T> implements CloseableIterator<T> {
         }
 
         @Override
-
         public Iterator<T> iterator() {
             return build();
         }

@@ -23,8 +23,8 @@ class MergedSortedIteratorTest {
         CountedIterator<String> merged = MergedSortedIterator.merge(Comparator.naturalOrder(), CountedIterator.of(l1), CountedIterator.of(l2));
 
         assertThat(merged.stream().collect(java.util.stream.Collectors.toList())).isEqualTo(Arrays.asList("a", "b", "c", "d", "e"));
-        assertThat(merged.getSize().get()).isEqualTo(5L);
-        assertThat(merged.getTotalSize().get()).isEqualTo(5L);
+        assertThat(merged.getSize()).hasValue(5L);
+        assertThat(merged.getTotalSize()).hasValue(5L);
 
 
     }
@@ -37,8 +37,8 @@ class MergedSortedIteratorTest {
         CountedIterator<String> merged = MergedSortedIterator.mergeInSameThread(Comparator.naturalOrder(), CountedIterator.of(l1), CountedIterator.of(l2));
 
         assertThat(merged.stream().collect(java.util.stream.Collectors.toList())).isEqualTo(Arrays.asList("a", "b", "c", "d", "e"));
-        assertThat(merged.getSize().get()).isEqualTo(5L);
-        assertThat(merged.getTotalSize().get()).isEqualTo(5L);
+        assertThat(merged.getSize()).hasValue(5L);
+        assertThat(merged.getTotalSize()).hasValue(5L);
 
 
     }
@@ -51,8 +51,8 @@ class MergedSortedIteratorTest {
         CountedIterator<String> merged = MergedSortedIterator.mergeInSameThread(Comparator.naturalOrder(), CountedIterator.of(l2), CountedIterator.of(l1));
 
         assertThat(merged.stream().collect(java.util.stream.Collectors.toList())).isEqualTo(Arrays.asList("a", "b", "c", "d", "e"));
-        assertThat(merged.getSize().get()).isEqualTo(5L);
-        assertThat(merged.getTotalSize().get()).isEqualTo(5L);
+        assertThat(merged.getSize()).hasValue(5L);
+        assertThat(merged.getTotalSize()).hasValue(5L);
 
     }
 
@@ -85,8 +85,8 @@ class MergedSortedIteratorTest {
             }
 
             @Override
-            public Optional<Long> getSize() {
-                return Optional.empty();
+            public OptionalLong getSize() {
+                return OptionalLong.empty();
             }
 
             @Override

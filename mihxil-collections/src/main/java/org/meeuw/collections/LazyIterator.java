@@ -3,8 +3,7 @@ package org.meeuw.collections;
 
 import lombok.Getter;
 
-import java.util.Iterator;
-import java.util.Optional;
+import java.util.*;
 import java.util.function.Supplier;
 
 import org.meeuw.functional.Unwrappable;
@@ -57,12 +56,12 @@ public class LazyIterator<T> implements CloseableIterator<T>, CountedIterator<T>
     }
 
     @Override
-    public Optional<Long> getSize() {
+    public OptionalLong getSize() {
         getSupplied();
         if (iterator instanceof CountedIterator) {
             return ((CountedIterator) iterator).getSize();
         } else {
-            return Optional.empty();
+            return OptionalLong.empty();
         }
 
     }

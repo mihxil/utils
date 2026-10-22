@@ -2,8 +2,7 @@ package org.meeuw.collections;
 
 import lombok.Singular;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.function.Predicate;
 
 import org.jspecify.annotations.Nullable;
@@ -32,8 +31,14 @@ public class CountedMaxOffsetIterator<T>  extends MaxOffsetIterator<T>  implemen
 
 
     @Override
-    public Optional<Long> getSize() {
-        return wrappedCountedIterator.getSize().map(i -> Math.max(0, Math.min(i - getOffset(), max)));
+    public OptionalLong getSize() {
+
+         OptionalLong s = wrappedCountedIterator.getSize();
+         if (s.isPresent()) {
+             return  OptionalLong.of(Math.max(0, Math.min(s.getAsLong() - getOffset(), max)));
+         } else {
+             return OptionalLong.empty();
+         }
     }
 
     @Override
@@ -42,7 +47,7 @@ public class CountedMaxOffsetIterator<T>  extends MaxOffsetIterator<T>  implemen
     }
 
     @Override
-    public Optional<Long> getTotalSize() {
+    public OptionalLong getTotalSize() {
         return wrappedCountedIterator.getTotalSize();
     }
 

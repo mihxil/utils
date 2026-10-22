@@ -172,7 +172,7 @@ class TailAdderTest {
             .adder(last -> last + 2)
             .build();
 
-        assertThat(iterator.getSize()).contains(3L);
+        assertThat(iterator.getSize()).hasValue(3L);
 
         TailAdder<Integer> onlyIfNotEmpty = TailAdder.<Integer>builder()
             .wrapped(CountedIterator.of(Collections.<Integer>emptyList()))
@@ -180,6 +180,6 @@ class TailAdderTest {
             .adder(last -> 1)
             .build();
 
-        assertThat(onlyIfNotEmpty.getSize()).contains(0L);
+        assertThat(onlyIfNotEmpty.getSize()).hasValue(0L);
     }
 }

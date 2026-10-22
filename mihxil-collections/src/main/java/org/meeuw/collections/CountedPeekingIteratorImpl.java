@@ -1,7 +1,6 @@
 package org.meeuw.collections;
 
-import java.util.Optional;
-
+import java.util.OptionalLong;
 
 
 /**
@@ -20,7 +19,7 @@ class CountedPeekingIteratorImpl<T> extends CloseablePeekingIteratorImpl<T> impl
     }
 
     @Override
-    public Optional<Long> getSize() {
+    public OptionalLong getSize() {
         return wrapped.getSize();
     }
 
@@ -30,7 +29,7 @@ class CountedPeekingIteratorImpl<T> extends CloseablePeekingIteratorImpl<T> impl
     }
 
     @Override
-    public Optional<Long> getTotalSize() {
+    public OptionalLong getTotalSize() {
         return wrapped.getTotalSize();
     }
 

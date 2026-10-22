@@ -58,18 +58,20 @@ public class BasicWrappedIterator<T> extends WrappedIterator<T, T> {
     }
 
     @Override
-    public Optional<Long> getSize() {
+    public OptionalLong getSize() {
         if (size != null) {
-            return Optional.ofNullable(size.get());
+            Long l = size.get();
+            return l == null ? OptionalLong.empty() : OptionalLong.of(l);
         } else {
             return super.getSize();
         }
     }
 
     @Override
-    public Optional<Long> getTotalSize() {
+    public OptionalLong getTotalSize() {
         if (totalSize != null) {
-            return Optional.ofNullable(totalSize.get());
+            Long l = totalSize.get();
+            return l == null ? OptionalLong.empty() : OptionalLong.of(l);
         } else {
             return super.getTotalSize();
         }
