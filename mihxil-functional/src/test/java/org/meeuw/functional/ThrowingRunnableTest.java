@@ -11,20 +11,23 @@ class ThrowingRunnableTest {
 
 
     @Test
-    public void withThrows() {
+    void withThrows() {
 
         ThrowingRunnable<IOException> withThrows = () -> {
             throw new IOException();
         };
         assertThatThrownBy(withThrows::run).isInstanceOf(IOException.class);
+        assertThatThrownBy(withThrows::runThrows).isInstanceOf(IOException.class);
     }
 
     @Test
-    public void withoutThrows() {
+    void withoutThrows() {
 
         ThrowingRunnable<IOException> withoutThrows = System.out::println;
 
         assertThatNoException().isThrownBy(withoutThrows::run);
+        assertThatNoException().isThrownBy(withoutThrows::runThrows);
+
     }
 
 }

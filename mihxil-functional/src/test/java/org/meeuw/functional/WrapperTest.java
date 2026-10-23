@@ -3,12 +3,12 @@ package org.meeuw.functional;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author Michiel Meeuwissen
  * @since 1.0
  */
+@SuppressWarnings("ConstantValue")
 class WrapperTest {
 
     public static class W extends Wrapper<String> {
@@ -20,7 +20,7 @@ class WrapperTest {
     }
 
     @Test
-    public void  equalsHashCodeNull() {
+    void equalsHashCodeNull() {
 
         W w = new W(null);
         assertThat(w.equals(new W(null))).isTrue();
@@ -36,7 +36,7 @@ class WrapperTest {
     }
 
     @Test
-    public void  equalsHashCode() {
+    void equalsHashCode() {
 
         W w = new W("foobar");
         assertThat(w.equals(new W("foobar"))).isTrue();
@@ -50,7 +50,6 @@ class WrapperTest {
         assertThat(w.equals("foobar")).isFalse();
 
         assertThat(w.toString()).isEqualTo("foobar(why)");
-
     }
 
 }

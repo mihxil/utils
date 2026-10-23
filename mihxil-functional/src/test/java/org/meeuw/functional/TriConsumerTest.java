@@ -62,9 +62,6 @@ class TriConsumerTest {
         assertThat(tri.withArg1("foo").toString()).isEqualTo("Tri(with arg1 foo)");
         assertThat(tri.withArg1("foo")).isEqualTo(tri.withArg1("foo"));
         assertThat(tri.withArg1("foo")).isNotEqualTo(tri.withArg1("bar"));
-
-
-
     }
 
     @Test
@@ -76,7 +73,6 @@ class TriConsumerTest {
         assertThat(tri.withArg2(1).toString()).isEqualTo("Tri(with arg2 1)");
         assertThat(tri.withArg2(1)).isEqualTo(tri.withArg2(1));
         assertThat(tri.withArg2(1)).isNotEqualTo(tri.withArg1("foot"));
-
     }
 
     @Test

@@ -11,7 +11,7 @@ class ThrowingBiFunctionTest {
 
 
     @Test
-    public void withThrows() {
+    void withThrows() {
 
         ThrowingBiFunction<String, Integer, String, IOException> withThrows = (a ,b) -> {
             throw new IOException();
@@ -49,7 +49,7 @@ class ThrowingBiFunctionTest {
     }
 
     @Test
-    public void withoutThrows() {
+    void withoutThrows() {
         ThrowingBiFunction<String, Integer, String,  IOException> withoutThrows = (a, b) -> a.toUpperCase() + ":" + b;
 
         ThrowAnyBiFunction<String, Integer, String> withoutThrowsAny = (a, b) -> a.toUpperCase()+ ":" + b + ":any";

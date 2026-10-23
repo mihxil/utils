@@ -12,7 +12,7 @@ class ThrowingTriFunctionTest {
 
 
     @Test
-    public void withThrows() {
+    void withThrows() {
 
         ThrowingTriFunction<String, Integer, Float, String, IOException> withThrows = (a ,b, c) -> {
             throw new IOException();
@@ -22,7 +22,7 @@ class ThrowingTriFunctionTest {
     }
 
     @Test
-    public void withoutThrows() {
+    void withoutThrows() {
         ThrowingTriFunction<String, Integer, Float, String,  IOException> withoutThrows = (a, b, c) -> a.toUpperCase() + ":" + b + ":" + c;
 
         ThrowAnyTriFunction<String, Integer, Float, String> withoutThrowsAny = (a, b, c) -> a.toUpperCase()+ ":" + b + ":" + c + ":any";
@@ -51,28 +51,28 @@ class ThrowingTriFunctionTest {
     }
 
     @Test
-    public void withArg3() {
+    void withArg3() {
         ThrowingTriFunction<String, Integer, Float, String, IOException> func = (s1, s2, s3) -> s1 + ":" + s2 + ":" + s3;
         ThrowingBiFunction<String, Integer, String, IOException> withArg3 = func.withArg3(3.0f);
         assertThat(withArg3.apply("Hello", 1)).isEqualTo("Hello:1:3.0");
     }
 
     @Test
-    public void withArg2() {
+    void withArg2() {
         ThrowingTriFunction<String, Integer, Float, String, IOException> func = (s1, s2, s3) -> s1 + ":" + s2 + ":" + s3;
         ThrowingBiFunction<String, Float, String, IOException> withArg2 = func.withArg2(1);
         assertThat(withArg2.apply("Hello", 3.0f)).isEqualTo("Hello:1:3.0");
     }
 
     @Test
-    public void withArg1() {
+    void withArg1() {
         ThrowingTriFunction<String, Integer, Float, String, IOException> func = (s1, s2, s3) -> s1 + ":" + s2 + ":" + s3;
         ThrowingBiFunction<Integer, Float, String, IOException> withArg1 = func.withArg1("foo");
         assertThat(withArg1.apply(1,  3.0f)).isEqualTo("foo:1:3.0");
     }
 
     @Test
-    public void andThen() {
+    void andThen() {
         ThrowingTriFunction<String, Integer, Float, String, IOException> func = (s1, s2, s3) -> s1 + ":" + s2 + ":" + s3;
 
         ThrowingTriFunction<String,  Integer, Float, String, IOException> andThen = func.andThen(s -> s + ":andthen");
@@ -82,7 +82,7 @@ class ThrowingTriFunctionTest {
     }
 
     @Test
-    public void ignoreArg() {
+    void ignoreArg() {
         ThrowingTriFunction<String, Integer, Float, String, IOException> func = (s1, s2, s3) -> s1 + ":" + s2 + ":" + s3;
         ThrowingQuadriFunction<String, Integer, Float, Double, String, IOException> ignoreArg4 = func.ignoreArg4();
         ThrowingQuadriFunction<String, Integer, Double, Float, String, IOException> ignoreArg3 = func.ignoreArg3();

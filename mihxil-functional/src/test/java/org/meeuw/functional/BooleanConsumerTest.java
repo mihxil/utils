@@ -10,7 +10,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class BooleanConsumerTest {
 
     @Test
-    public void test() {
+    void test() {
         final List<String> result = new ArrayList<>();
         BooleanConsumer c = new BooleanConsumer() {
             @Override

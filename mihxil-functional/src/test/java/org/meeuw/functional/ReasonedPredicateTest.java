@@ -72,19 +72,19 @@ class ReasonedPredicateTest {
 
 
     @Test
-    public void test2() {
+    void test2() {
         assertThat(testString2.test("b")).isFalse();
         assertThat(testString2.test("a")).isTrue();
     }
 
     @Test
-    public void test2WithReason() {
+    void test2WithReason() {
         assertThat(testString2.testWithReason("b").getAsBoolean()).isFalse();
         assertThat(testString2.testWithReason("a").getAsBoolean()).isTrue();
     }
 
     @Test
-    public void reason2() {
+    void reason2() {
         assertThat(testString2.testWithReason("b").getReason()).isEqualTo("input is not equal a");
         assertThat(testString2.testWithReason("b").toString()).isEqualTo("input is not equal a");
         assertThat(testString2.testWithReason("a").getReason()).isEqualTo("input is equal a");

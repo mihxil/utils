@@ -18,7 +18,7 @@ public class PredicatesTest {
 
     @SuppressWarnings({"ConstantConditions", "EqualsBetweenInconvertibleTypes", "EqualsWithItself"})
     @Test
-    public void testAlwaysFalse() {
+    void alwaysFalse() {
         Predicate<String> always = Predicates.always(false);
         assertThat(Predicates.<String>alwaysFalse().test("a")).isFalse();
         assertThat(Predicates.<String>alwaysFalse().toString()).isEqualTo("FALSE");
@@ -36,13 +36,13 @@ public class PredicatesTest {
     }
 
     @Test
-    public void alwaysTrue() {
+    void alwaysTrue() {
         assertThat(Predicates.<String>always(true).test("a")).isTrue();
         assertThat(Predicates.<String>alwaysTrue().toString()).isEqualTo("TRUE");
     }
 
     @Test
-    public void biAlwaysFalse() {
+    void biAlwaysFalse() {
         assertThat(Predicates.biAlways(false).test("a", "b")).isFalse();
         assertThat(Predicates.biAlwaysFalse().toString()).isEqualTo("FALSE");
         assertThat(Predicates.<String, Integer>biAlways(false, "nietes").toString()).isEqualTo("nietes");
@@ -51,7 +51,7 @@ public class PredicatesTest {
     }
 
     @Test
-    public void biAlwaysTrue() {
+    void biAlwaysTrue() {
         assertThat(Predicates.<String, Integer>biAlways(true).test("a", 2)).isTrue();
         assertThat(Predicates.<String, Integer>biAlwaysTrue().toString()).isEqualTo("TRUE");
         assertThat(Predicates.<String, Integer>biAlways(true, "waar").toString()).isEqualTo("waar");
@@ -59,13 +59,13 @@ public class PredicatesTest {
     }
 
     @Test
-    public void triAlwaysFalse() {
+    void triAlwaysFalse() {
         assertThat(Predicates.<String, Integer, Float>triAlways(false).test("a", 2, 3.0f)).isFalse();
         assertThat(Predicates.<String, Integer, Float>triAlwaysFalse().toString()).isEqualTo("FALSE");
     }
 
     @Test
-    public void triAlwaysTrue() {
+    void triAlwaysTrue() {
         assertThat(Predicates.<String, Integer, Float>triAlways(true).test("a", 2, 3.0f)).isTrue();
         assertThat(Predicates.<String, Integer, Float>triAlwaysTrue().toString()).isEqualTo("TRUE");
         assertThat(Predicates.<String, Integer, Float>triAlways(true, "ja").toString()).isEqualTo("ja");

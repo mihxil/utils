@@ -10,7 +10,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 class ThrowingAutoCloseableTest {
 
     @Test
-    public void withThrows() {
+    void withThrows() {
         ThrowingAutoCloseable<IOException> withThrows = () -> {
             throw new IOException();
         };
@@ -19,7 +19,7 @@ class ThrowingAutoCloseableTest {
     }
 
     @Test
-    public void withoutThrows() {
+    void withoutThrows() {
 
         ThrowingAutoCloseable<IOException> withoutThrows = () -> {};
 
@@ -27,7 +27,7 @@ class ThrowingAutoCloseableTest {
     }
 
     @Test
-    public void withAnyThrows() {
+    void withAnyThrows() {
 
         ThrowAnyAutoCloseable withThrows = () -> {
             throw new IOException();
@@ -37,7 +37,7 @@ class ThrowingAutoCloseableTest {
     }
 
     @Test
-    public void withoutAnyThrows() {
+    void withoutAnyThrows() {
         ThrowAnyAutoCloseable withoutThrows = () -> {};
 
         assertThatNoException().isThrownBy(withoutThrows::close);

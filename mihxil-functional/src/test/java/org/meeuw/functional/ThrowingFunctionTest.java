@@ -11,7 +11,7 @@ class ThrowingFunctionTest {
 
 
     @Test
-    public void withThrows() {
+    void withThrows() {
 
         ThrowingFunction<String, String, IOException> withThrows = (a) -> {
             throw new IOException();
@@ -27,7 +27,7 @@ class ThrowingFunctionTest {
     }
 
     @Test
-    public void withoutThrows() {
+    void withoutThrows() {
         ThrowingFunction<String, String,  IOException> withoutThrows = String::toUpperCase;
 
         ThrowAnyFunction<String, String> withoutThrowsAny = (a) -> a.toUpperCase()+ ":any";

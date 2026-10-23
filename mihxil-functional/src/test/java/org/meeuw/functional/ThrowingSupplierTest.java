@@ -12,7 +12,7 @@ class ThrowingSupplierTest {
 
 
     @Test
-    public void withThrows() {
+    void withThrows() {
 
         ThrowingSupplier<String, IOException> withThrows = () -> {
             throw new IOException();
@@ -26,7 +26,7 @@ class ThrowingSupplierTest {
     }
 
     @Test
-    public void withoutThrows() {
+    void withoutThrows() {
         ThrowingSupplier<String, IOException> withoutThrows = () -> "foobar";
 
         ThrowAnySupplier<String> withoutThrowsAny = () -> "foobarany";

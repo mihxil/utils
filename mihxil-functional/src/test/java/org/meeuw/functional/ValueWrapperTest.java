@@ -22,7 +22,7 @@ class ValueWrapperTest {
     }
 
     @Test
-    public void  equalsHashCodeNull() {
+    void equalsHashCodeNull() {
 
         W w = new W(null);
         assertThat(w.equals(new W(null))).isTrue();
@@ -40,7 +40,7 @@ class ValueWrapperTest {
     }
 
     @Test
-    public void  equalsHashCode() {
+    void equalsHashCode() {
 
         W w = new W("foobar");
         assertThat(w.equals(new W("foobar"))).isTrue();

@@ -1,7 +1,6 @@
 package org.meeuw.functional;
 
 import org.junit.jupiter.api.Test;
-import org.meeuw.functional.TernaryOperator;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -23,8 +22,6 @@ class TernaryOperatorTest {
         assertThat(TernaryOperator.minBy(String::compareTo).apply("a", "a", "b")).isEqualTo("a");
         assertThat(TernaryOperator.minBy(String::compareTo).apply("a", "b", "a")).isEqualTo("a");
         assertThat(TernaryOperator.minBy(String::compareTo).apply("b", "a", "a")).isEqualTo("a");
-
-
     }
 
     @Test
@@ -35,6 +32,5 @@ class TernaryOperatorTest {
         assertThat(TernaryOperator.maxBy(String::compareTo).apply("b", "c", "a")).isEqualTo("c");
         assertThat(TernaryOperator.maxBy(String::compareTo).apply("c", "a", "b")).isEqualTo("c");
         assertThat(TernaryOperator.maxBy(String::compareTo).apply("c", "b", "a")).isEqualTo("c");
-
     }
 }

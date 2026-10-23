@@ -17,7 +17,7 @@ class EquivalenceTest {
 
     @SuppressWarnings({"EqualsWithItself", "EqualsBetweenInconvertibleTypes", "ConstantConditions"})
     @Test
-    public void equivalence() {
+    void equivalence() {
         String a1 = "a";
         String a2 = "a";
         Equivalence<String> equivalence = Objects::equals;

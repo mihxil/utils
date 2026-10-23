@@ -7,11 +7,11 @@ import org.opentest4j.AssertionFailedError;
 
 import static org.assertj.core.api.Assertions.*;
 
-@SuppressWarnings({"ResultOfMethodCallIgnored", "EqualsWithItself"})
+@SuppressWarnings({"EqualsWithItself"})
 class OptionalBooleanTest {
 
     @Test
-    public void empty() {
+    void empty() {
         OptionalBoolean empty = OptionalBoolean.empty();
         assertThat(empty.isEmpty()).isTrue();
         assertThat(empty.isPresent()).isFalse();
@@ -34,7 +34,7 @@ class OptionalBooleanTest {
     }
 
     @Test
-    public void optionalTrue() {
+    void optionalTrue() {
         OptionalBoolean t = OptionalBoolean.optionalTrue();
         assertThat(t.isEmpty()).isFalse();
         assertThat(t.isPresent()).isTrue();
@@ -44,15 +44,12 @@ class OptionalBooleanTest {
         assertThat(t.orElse(true)).isTrue();
         assertThat(t.orElse(false)).isTrue();
         List<String> result = new ArrayList<>();
-        t.ifPresent(b -> {
-            result.add("if present " + b);
-        });
+        t.ifPresent(b -> result.add("if present " + b));
 
-        t.ifPresentOrElse(b -> {
-            result.add("if present or else " + b);
-        }, () -> {
-            throw new AssertionFailedError("Should not be called", null);
-        });
+        t.ifPresentOrElse(b -> result.add("if present or else " + b),
+            () -> {
+                throw new AssertionFailedError("Should not be called", null);
+            });
         assertThat(result).containsExactly("if present true", "if present or else true");
 
         assertThat(t.orElseThrow()).isTrue();
@@ -62,7 +59,7 @@ class OptionalBooleanTest {
 
 
     @Test
-    public void optionalFalse() {
+    void optionalFalse() {
         OptionalBoolean f = OptionalBoolean.optionalFalse();
         assertThat(f.isEmpty()).isFalse();
         assertThat(f.isPresent()).isTrue();
@@ -72,18 +69,12 @@ class OptionalBooleanTest {
         assertThat(f.orElse(true)).isFalse();
         assertThat(f.orElse(false)).isFalse();
         List<String> result = new ArrayList<>();
-        f.ifPresent(b -> {
-            result.add("if present " + b);
-        });
+        f.ifPresent(b -> result.add("if present " + b));
 
-        f.ifPresentOrElse(b -> {
-            result.add("if present or else " + b);
-        }, new Runnable() {
-            @Override
-            public void run() {
+        f.ifPresentOrElse(b -> result.add("if present or else " + b),
+            () -> {
                 throw new AssertionFailedError("Should not be called", null);
-            }
-        });
+            });
         assertThat(result).containsExactly("if present false", "if present or else false");
 
         assertThat(f.orElseThrow()).isFalse();
@@ -92,7 +83,7 @@ class OptionalBooleanTest {
     }
 
     @Test
-    public void equals() {
+    void equals() {
         assertThat(OptionalBoolean.empty()).isEqualTo(OptionalBoolean.empty());
         assertThat(OptionalBoolean.empty()).isNotEqualTo(OptionalBoolean.optionalTrue());
         assertThat(OptionalBoolean.empty()).isNotEqualTo(OptionalBoolean.optionalFalse());
@@ -106,7 +97,7 @@ class OptionalBooleanTest {
     }
 
     @Test
-    public void hashcode() {
+    void hashcode() {
         assertThat(OptionalBoolean.empty().hashCode()).isEqualTo(OptionalBoolean.empty().hashCode());
         assertThat(OptionalBoolean.empty().hashCode()).isNotEqualTo(OptionalBoolean.optionalTrue().hashCode());
         assertThat(OptionalBoolean.empty().hashCode()).isNotEqualTo(OptionalBoolean.optionalFalse().hashCode());
@@ -117,11 +108,10 @@ class OptionalBooleanTest {
     }
 
     @Test
-    public void toStringTest() {
+    void toStringTest() {
         assertThat(OptionalBoolean.empty().toString()).isEqualTo("OptionalBoolean.empty");
         assertThat(OptionalBoolean.optionalTrue().toString()).isEqualTo("OptionalBoolean[true]");
         assertThat(OptionalBoolean.optionalFalse().toString()).isEqualTo("OptionalBoolean[false]");
-
     }
 
 }
