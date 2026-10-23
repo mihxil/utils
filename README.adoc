@@ -45,7 +45,7 @@ Things like `memoize` (to memoize the value of a supplier), `closeable` (to make
 |===
 |Version |date |remarks
 
-| 1.24
+| 2.0
 | 2026-10
 | `Optional<Long>` results were replaced by `OptionaLong`, which is not backwards compatible (only in new collections module)
 
