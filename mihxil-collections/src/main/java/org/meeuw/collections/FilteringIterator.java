@@ -182,9 +182,9 @@ public class FilteringIterator<T> implements CloseableIterator<T>, Unwrappable<I
      * This translates the 'numberOfRecords' to a character to write if no records are outputted by the iterated since the last call to the callback.
      * The callback is called with the character. The idea is to write it simply to the stream, to keep it 'alive.
      * The use case is in MediaRestServiceImpl#iterate
-     * @param c
-     * @param callback
-     * @return
+     * @param c count
+     * @param callback to call after {@code c}
+     * @return a container for the parameters
      */
     public static KeepAlive keepAliveChars(long c, Function<Character, Boolean> callback) {
         final char[] writeChar = new char[]{

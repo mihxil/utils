@@ -184,7 +184,7 @@ public class BatchedReceiver<T> implements CloseableIterator<T> {
 
     /**
      *
-     * @param <T>
+     * @param <T> type of the entries to be interated
      */
 
     public static class Builder<T> implements Iterable<T> {
@@ -205,6 +205,7 @@ public class BatchedReceiver<T> implements CloseableIterator<T> {
          * @param getter     A function to get the iterator from the object representing the batch
          * @param <X>     Type of some holder value
          * @since 1.18 (since 5.6 in vpro-shared-util)
+         * @return this builder
          */
         public <X> Builder<T> initialAndResumption(
             Supplier<X> initial,
@@ -234,6 +235,8 @@ public class BatchedReceiver<T> implements CloseableIterator<T> {
          * @param resumption A function to get the next batch from the previous one
          * @see #initialAndResumption(Supplier, Function, Function)
          * @since 1.18 (since 5.6 in vpro-shared-util)
+         * @param <X> type of some iterable on {@code <T>} to obtain for every batch
+         * @return this builder
          */
         public <X extends Iterable<T>> Builder<T> initialAndResumption(
             Supplier<X> initial,
@@ -247,6 +250,7 @@ public class BatchedReceiver<T> implements CloseableIterator<T> {
 
         /**
          * @param batchGetter A function to get the next batch, the parameters are the current necessary offset, and batch size
+         *  @return this builder
          */
         public Builder<T> batchGetter(BiFunction<Long, Integer, Iterator<T>> batchGetter) {
             this.batchGetter = batchGetter;
@@ -255,11 +259,15 @@ public class BatchedReceiver<T> implements CloseableIterator<T> {
 
         /**
          * @param batchGetter For 'resumption token' like functionality, the offset and max argument can be irrelevant.
+         * @return this builder
          */
         public Builder<T> batchGetter(final Supplier<Iterator<T>> batchGetter) {
             return batchGetter((offset, max) -> batchGetter.get());
         }
 
+        /**
+         * @return this builder
+         */
         public Builder<T> batchSize(int batchSize) {
             this.batchSize = batchSize;
             return this;
