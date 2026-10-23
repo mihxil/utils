@@ -20,6 +20,9 @@ class ThrowingSupplierTest {
         assertThatThrownBy(
             withThrows::get
         ).isInstanceOf(IOException.class);
+        assertThatThrownBy(
+            withThrows::getThrows
+        ).isInstanceOf(IOException.class);
     }
 
     @Test
@@ -41,6 +44,9 @@ class ThrowingSupplierTest {
 
         assertThatNoException().isThrownBy(() -> {
             assertThat(withoutThrows.get()).isEqualTo("foobar");
+        });
+        assertThatNoException().isThrownBy(() -> {
+            assertThat(withoutThrows.getThrows()).isEqualTo("foobar");
         });
     }
 
