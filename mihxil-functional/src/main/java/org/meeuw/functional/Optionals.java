@@ -6,6 +6,9 @@ import java.util.OptionalLong;
 import org.jspecify.annotations.Nullable;
 
 
+/**
+ * @since 1.24
+ */
 public class Optionals {
 
     private Optionals() {}
@@ -21,7 +24,7 @@ public class Optionals {
 
     @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
     public static @Nullable Long orElse(OptionalLong l, @Nullable Long e) {
-        return l.isPresent() ? l.getAsLong() : e;
+        return l.isPresent() ? Long.valueOf(l.getAsLong()) : e;
     }
 
 }
