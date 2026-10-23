@@ -82,22 +82,19 @@ class ThrowingConsumerTest {
 
         assertThatNoException().isThrownBy(() -> withoutThrows.ignoreArg2().accept("bloa", 1));
         assertThatNoException().isThrownBy(() -> withoutThrows.ignoreArg2().acceptThrows("bloa", 1));
-
     }
 
     @Test
-    void withArg1() {
+    void withArg1() throws Exception {
         final List<String> list = new ArrayList<>();
         ThrowAnyConsumer<String> withoutThrows = list::add;
 
         assertThatNoException().isThrownBy(() -> withoutThrows.ignoreArg2().accept("bloa", 1));
-        assertThatNoException().isThrownBy(() -> withoutThrows.ignoreArg2().acceptThrows("bloa", 1));
+
         assertThat(list).containsExactly("bloa");
         withoutThrows.withArg1("foo").run();
-        assertThat(list).containsExactly("bloa", "foo");
-
-
-
+        withoutThrows.withArg1("bar").runThrows();
+        assertThat(list).containsExactly("bloa", "foo", "bar");
     }
 
 }
