@@ -193,16 +193,17 @@ public final class Functions {
     /**
      * Giving a {@link ThrowingFunction function}, morphs it into a {@link Callable} that ignores its argument and just calls the function with {@code null}.
      *
+     * @param <A> the type of the argument of the function
      * @param <R> the return value of the function, and of the resulting {@link Callable}
      * @param <E> the exception type that the function (and the callable) can throw
      * @param callable the function on which to base the new {@code Callable} on
      * @return a new function, which will use the given call its implementation. The argument of the function will be ignored, all calls just call the {@code Callable}.
      * @since 0.14
      */
-    public static <A1, R, E extends Exception > ThrowingFunction<A1, R, E> ignoreArg1(Callable<R> callable) {
-        return new ThrowingMonoWrapper<Callable<R>, A1, R, E>(callable, null, "function") {
+    public static <A, R, E extends Exception > ThrowingFunction<A, R, E> ignoreArg1(Callable<R> callable) {
+        return new ThrowingMonoWrapper<Callable<R>, A, R, E>(callable, null, "function") {
             @Override
-            public R applyWithException(A1 o) throws E {
+            public R applyWithException(A o) throws E {
                 try {
                     return callable.call();
                 } catch (Exception e) {

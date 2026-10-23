@@ -37,7 +37,6 @@ import java.util.stream.Stream;
  *         return BatchedReceiver.<ClientEntity>builder()
  *             .batchGetter(new Supplier<Iterator<ClientEntity>>() {
  *                 ClientEntitySet result;
- *                 @Override
  *                 public Iterator<ClientEntity> get() {
  *                     if (result != null) {
  *                         result = query(result.getNext());

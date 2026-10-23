@@ -33,7 +33,7 @@ public class SkippingIterator<T> implements Iterator<T> {
 
     /**
      * Default comparator is {@link Objects#equals(Object, Object)}
-     * @param wrapped
+     * @param wrapped iterator to wrap
      */
     public SkippingIterator(
         Iterator<T> wrapped) {

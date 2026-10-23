@@ -3,6 +3,7 @@ package org.meeuw.collections;
 import java.util.*;
 import java.util.stream.Stream;
 
+import org.jspecify.annotations.Nullable;
 import org.meeuw.functional.Unwrappable;
 
 
@@ -61,6 +62,8 @@ public interface CloseableIterator<T> extends Iterator<T>, AutoCloseable {
      *
      * @since 1.18 (since 2.9 in vpro-shared-util)
      * @param <T> the type of elements returned by this iterator
+     * @param iterator the iterator to morph
+     * @return the incoming iterator itself if already a {@link CloseableIterator}, otherwise a wrapper
      */
     static <T> CloseableIterator<T> of(final Iterator<T> iterator) {
         if (iterator instanceof CloseableIterator) {
@@ -74,9 +77,10 @@ public interface CloseableIterator<T> extends Iterator<T>, AutoCloseable {
 
     /**
      * @param <S> the type of elements returned by this iterator
-     * @param wrapped
+     * @param wrapped the iterator to peek
+     * @return {@code null} if {@code wrapped} is {@code null}, otherwise the result of {@link #peeking()}
      */
-    static <S> CloseablePeekingIterator<S> peeking(CloseableIterator<S> wrapped) {
+    static <S> @Nullable CloseablePeekingIterator<S> peeking(@Nullable CloseableIterator<S> wrapped) {
         return wrapped == null ? null : wrapped.peeking();
     }
 
@@ -92,6 +96,7 @@ public interface CloseableIterator<T> extends Iterator<T>, AutoCloseable {
 
     /**
      * If you need a {@link PeekingIterator}, this will make you one. It remains also a {@link CloseableIterator}
+     * @return a {@link CloseablePeekingIterator} wrapping this one
      */
     default CloseablePeekingIterator<T> peeking() {
         return new CloseablePeekingIteratorImpl<>(this);
