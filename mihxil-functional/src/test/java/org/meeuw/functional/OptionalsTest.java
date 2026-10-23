@@ -24,5 +24,7 @@ class OptionalsTest {
     @Test
     void orElse() {
         assertNull(Optionals.orElse(OptionalLong.empty(), null));
+        assertEquals(10, Optionals.orElse(OptionalLong.of(10), null));
+
     }
 }
