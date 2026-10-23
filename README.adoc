@@ -37,6 +37,54 @@ Things like `memoize` (to memoize the value of a supplier), `closeable` (to make
 
 == Collections
 
+The `mihxil-collections` module (since 1.18) contains utilities for `java.util.Iterator` and `java.util.Collection`, in package `org.meeuw.collections`. Most of them originate from `vpro-shared-util`.
+
+=== Iterator interfaces
+
+* link:mihxil-collections/src/main/java/org/meeuw/collections/CloseableIterator.java[`CloseableIterator`]: an `Iterator` that is also `AutoCloseable`. `CloseableIterator.of(iterator)` wraps any iterator (closing it if it is `AutoCloseable` itself).
+* link:mihxil-collections/src/main/java/org/meeuw/collections/PeekingIterator.java[`PeekingIterator`]: an iterator with a one-element lookahead (`peek()`), like guava's, but without the dependency.
+* link:mihxil-collections/src/main/java/org/meeuw/collections/CountedIterator.java[`CountedIterator`]: an iterator that knows its current position (`getCount()`), and optionally the size of what it iterates (`getSize()`) and of some 'total' (`getTotalSize()`), e.g. when it represents a page of a larger result.
+* Combinations of these: link:mihxil-collections/src/main/java/org/meeuw/collections/CloseablePeekingIterator.java[`CloseablePeekingIterator`], link:mihxil-collections/src/main/java/org/meeuw/collections/CountedPeekingIterator.java[`CountedPeekingIterator`].
+* link:mihxil-collections/src/main/java/org/meeuw/collections/CloseableSpliterator.java[`CloseableSpliterator`]: a `Spliterator` owning a closeable resource.
+
+=== Iterator implementations
+
+Most of these are wrappers around another iterator, and can be constructed with a (lombok generated) builder.
+
+* link:mihxil-collections/src/main/java/org/meeuw/collections/BatchedReceiver.java[`BatchedReceiver`]: presents an API that only supports batched retrieval (paging with offset/max, or some 'resumption token') as one simple `Iterator`.
++
+[source,java]
+----
+Iterator<String> i = BatchedReceiver.<String>builder()
+    .batchGetter((offset, max) -> apiClient.getPage(offset, max).iterator())
+    .batchSize(100)
+    .build();
+----
+* link:mihxil-collections/src/main/java/org/meeuw/collections/MaxOffsetIterator.java[`MaxOffsetIterator`], link:mihxil-collections/src/main/java/org/meeuw/collections/CountedMaxOffsetIterator.java[`CountedMaxOffsetIterator`]: implements 'offset' and 'max' on top of another iterator.
++
+[source,java]
+----
+MaxOffsetIterator<String> i = MaxOffsetIterator.<String>builder()
+    .wrapped(iterator)
+    .offset(10)
+    .max(20)
+    .build();
+----
+* link:mihxil-collections/src/main/java/org/meeuw/collections/FilteringIterator.java[`FilteringIterator`]: filters an iterator with a predicate, with optional 'keep alive' callbacks for when many consecutive elements are filtered out.
+* link:mihxil-collections/src/main/java/org/meeuw/collections/TransformingIterator.java[`TransformingIterator`]: maps the elements of an iterator with a function.
+* link:mihxil-collections/src/main/java/org/meeuw/collections/SkippingIterator.java[`SkippingIterator`]: skips elements based on comparison with the previous one (e.g. to remove consecutive duplicates).
+* link:mihxil-collections/src/main/java/org/meeuw/collections/HeadAdder.java[`HeadAdder`], link:mihxil-collections/src/main/java/org/meeuw/collections/TailAdder.java[`TailAdder`]: add elements at the start or at the end of an iterator (the latter possibly based on the last element).
+* link:mihxil-collections/src/main/java/org/meeuw/collections/MergedSortedIterator.java[`MergedSortedIterator`]: merges several sorted iterators into one sorted iterator. `merge(...)` uses a priority queue, `mergeInSameThread(...)` doesn't (so it is also usable with e.g. Hibernate).
+* link:mihxil-collections/src/main/java/org/meeuw/collections/LazyIterator.java[`LazyIterator`]: wraps a `Supplier<Iterator>`, delaying creation of the actual iterator until it is first used.
+* link:mihxil-collections/src/main/java/org/meeuw/collections/CallbackIterator.java[`CallbackIterator`]: calls a callback when iteration is finished.
+* link:mihxil-collections/src/main/java/org/meeuw/collections/WrappedIterator.java[`WrappedIterator`], link:mihxil-collections/src/main/java/org/meeuw/collections/BasicWrappedIterator.java[`BasicWrappedIterator`]: base classes for iterators wrapping another one.
+
+=== Collection wrappers
+
+* link:mihxil-collections/src/main/java/org/meeuw/collections/TransformingList.java[`TransformingList`], link:mihxil-collections/src/main/java/org/meeuw/collections/TransformingSortedSet.java[`TransformingSortedSet`]: modifiable views on a collection of other element types, given a 'transformer' and its inverse, a 'producer'. Changes are reflected in the wrapped collection.
+* link:mihxil-collections/src/main/java/org/meeuw/collections/ResortedSortedSet.java[`ResortedSortedSet`]: a modifiable `SortedSet` view on another collection, with an explicit sort order.
+* link:mihxil-collections/src/main/java/org/meeuw/collections/SortedSetElementWrapper.java[`SortedSetElementWrapper`], link:mihxil-collections/src/main/java/org/meeuw/collections/SortedSetSameElementWrapper.java[`SortedSetSameElementWrapper`]: base classes for `SortedSet` views on a wrapped sorted set.
+
 
 
 == Release history
