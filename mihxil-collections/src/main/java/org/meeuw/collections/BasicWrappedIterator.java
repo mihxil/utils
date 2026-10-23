@@ -6,7 +6,7 @@ import java.util.function.Supplier;
 
 import org.jspecify.annotations.Nullable;
 
-import static org.meeuw.collections.CountedIterator.*;
+import static org.meeuw.functional.Optionals.ofNullable;
 
 
 /**

@@ -4,8 +4,6 @@ import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Stream;
 
-import org.jspecify.annotations.Nullable;
-
 
 /**
  * An iterator that is also aware of the current position {@link #getCount()}, and optionally of the size of the object that is iterated {@link #getSize()}, and also optionally of a 'total' size (in case this iterator presents some sub-collection) {@link #getTotalSize()}.
@@ -109,9 +107,6 @@ public interface CountedIterator<T> extends Iterator<T>, CloseableIterator<T>, C
     }
 
 
-    static OptionalLong ofNullable(@Nullable Long l) {
-        return l == null ? OptionalLong.empty() : OptionalLong.of(l);
-    }
 
 
 }
