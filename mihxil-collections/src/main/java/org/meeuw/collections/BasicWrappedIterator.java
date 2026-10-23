@@ -6,6 +6,8 @@ import java.util.function.Supplier;
 
 import org.jspecify.annotations.Nullable;
 
+import static org.meeuw.collections.CountedIterator.*;
+
 
 /**
  * @author Michiel Meeuwissen
@@ -63,7 +65,7 @@ public class BasicWrappedIterator<T> extends WrappedIterator<T, T> {
     public OptionalLong getSize() {
         if (size != null) {
             Long l = size.get();
-            return l == null ? OptionalLong.empty() : OptionalLong.of(l);
+            return ofNullable(l);
         } else {
             return super.getSize();
         }
@@ -73,7 +75,7 @@ public class BasicWrappedIterator<T> extends WrappedIterator<T, T> {
     public OptionalLong getTotalSize() {
         if (totalSize != null) {
             Long l = totalSize.get();
-            return l == null ? OptionalLong.empty() : OptionalLong.of(l);
+            return  ofNullable(l);
         } else {
             return super.getTotalSize();
         }

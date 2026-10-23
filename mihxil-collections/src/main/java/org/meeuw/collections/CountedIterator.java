@@ -4,6 +4,7 @@ import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Stream;
 
+import org.jspecify.annotations.Nullable;
 
 
 /**
@@ -105,6 +106,11 @@ public interface CountedIterator<T> extends Iterator<T>, CloseableIterator<T>, C
     @Override
     default CountedPeekingIterator<T> peeking() {
         return new CountedPeekingIteratorImpl<>(this);
+    }
+
+
+    static OptionalLong ofNullable(@Nullable Long l) {
+        return l == null ? OptionalLong.empty() : OptionalLong.of(l);
     }
 
 
