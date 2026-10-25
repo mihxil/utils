@@ -69,6 +69,17 @@ class ThrowingBiFunctionTest {
 
     }
 
+    @Test
+    void morphs() throws IOException {
+        ThrowingBiFunction<String, Integer, String, IOException> func = (a, b) -> a + ":" + b;
+
+        assertThat(func.withArg2(2).applyWithException("a")).isEqualTo("a:2");
+        assertThat(func.withArg1("b").applyWithException(3)).isEqualTo("b:3");
+        assertThat(func.<Float>ignoreArg3().applyWithException("c", 4, 1.0f)).isEqualTo("c:4");
+        assertThat(func.<Float>ignoreArg2().applyWithException("d", 1.0f, 5)).isEqualTo("d:5");
+        assertThat(func.<Float>ignoreArg1().applyWithException(1.0f, "e", 6)).isEqualTo("e:6");
+    }
+
     protected void someMethod(ThrowingBiFunction<String, Integer, String, ? extends Exception> test ) {
         System.out.println(test.apply("foobar", 1));
     }
